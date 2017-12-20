@@ -1,39 +1,7 @@
 /*
-* Chapter 3 - Functions
-*/
-function min(n1, n2) {
-    return (n1 < n2 ? n1 : n2);
-}
-
-function isEven(num) {
-    num = Math.abs(num);
-    if (num === 0) {
-        return true;
-    } else if (num === 1) {
-        return false;
-    } else {
-        return isEven(num - 2);
-    }
-}
-
-function countChar(str, char) {
-    var count = 0;
-    for (var i = 0; i < str.length; i++) {
-        if (str[i] === char)
-            count++;
-    }
-    return count;
-}
-
-function countBs(str) {
-    return countChar(str, 'B');
-}
-
-/*
-* chapter 4 - Data Structures
+* chapter 4 - Data Structures - Reading Examples
 */
 
-// reading examples
 var journal = [];
 var map = {};
 
@@ -85,7 +53,10 @@ for (var i = 0; i < JOURNAL.length; i++) {
         entry.events.push("peanut teeth");
 }
 
-// exercises
+/*
+* chapter 4 - Data Structures - Exercises
+*/
+
 // The Sum of a Range
 function range(start, stop, step) {
     var arr = [];
@@ -129,9 +100,7 @@ function reverseArrayInPlace(arrayValue) {
     }
 }
 
-
 // A List
-
 function arrayToList(arr) {
     var list = null;
     for (var i = arr.length - 1; i > -1; i--)
@@ -139,15 +108,15 @@ function arrayToList(arr) {
     return list;
 }
 
-function arrayToListRecurs(arr) {
-    function buildList(index) {
-        if (index == arr.length - 1)
-            return {value: arr[index], rest: null};
-        else
-            return {value: arr[index], rest: buildList(index + 1)};
-    }
-    return buildList(0);
-}
+// function arrayToListRecurs(arr) {
+//     function buildList(index) {
+//         if (index == arr.length - 1)
+//             return {value: arr[index], rest: null};
+//         else
+//             return {value: arr[index], rest: buildList(index + 1)};
+//     }
+//     return buildList(0);
+// }
 
 function listToArray(list) {
     var arr = [];
@@ -157,14 +126,14 @@ function listToArray(list) {
     return arr;
 }
 
-function listToArray(list) {
-    var arr = [];
-    while (list) {
-        arr.push(list.value);
-        list = list.rest;
-    }
-    return arr;
-}
+// function listToArray2(list) {
+//     var arr = [];
+//     while (list) {
+//         arr.push(list.value);
+//         list = list.rest;
+//     }
+//     return arr;
+// }
 
 function prepend(element, list) {
     return {value: element, rest: list};
@@ -180,21 +149,50 @@ function nth(list, n) {
 }
 
 // Deep Comparison
-
 function deepEqual(o1, o2) {
-    if (o1 === o2) {
-    } else if (typeof(o1) === 'object' && typeof(o2) === 'object') {
-        if (o1 === null || o2 === null) {
-            return false;
-        }
+    if(o1 === o2 || o1 === null || o2 === null) {
+        return o1 === o2;
+    }
+    if (typeof(o1) === 'object' && typeof(o2) === 'object') {
         for (var k in o1) {
-            if (!deepEqual(o1[k], o2[k]))
+            if (!deepEqual(o1[k], o2[k])) {
                 return false;
+            }
         }
         for (var k in o2) {
-            if (!deepEqual(o2[k], o1[k]))
+            if (!deepEqual(o2[k], o1[k])) {
                 return false;
+            }
         }
+        return true;
     }
-    return true;
+    return o1 === o2;
 }
+
+function deepEqual2 (o1, o2) {
+    if(o1 === o2 || o1 === null || o2 === null) {
+        return o1 === o2;
+    }
+    if (typeof(o1) === 'object' && typeof(o2) === 'object') {
+        var props1 = 0, props2 = 0;
+        for (var k in o1) {
+            props1++;
+        }
+        for (var k in o2) {
+            props2++;
+            if (!(k in o1) || !deepEqual(o2[k], o1[k])) {
+                return false;
+            }
+        }
+        return props1 === props2;
+    }
+    return o1 === o2;
+}
+
+
+/*
+* Questions
+*/
+
+// Tabs/spaces, and formatting multi-line if statements
+// any times where returns in a node environment will be different than in browser?
