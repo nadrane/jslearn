@@ -92,7 +92,7 @@ console.log(arrays.reduce(function(a, b) {
 
 
 // Mother-child age difference
-// Helpers
+// helpers
 function average(array) {
   function plus(a, b) { return a + b; }
   return array.reduce(plus) / array.length;
@@ -113,7 +113,7 @@ function ageDiff(person) {
 
 console.log(average(ancestry.filter(hasKnownMother).map(ageDiff)));
 
-// Updated syntax
+// updated syntax
 var differences = ancestry.filter(function(person) {
   return (person.mother in byName);
 }).map(function(person) {
