@@ -122,21 +122,45 @@ var differences = ancestry.filter(function(person) {
 });
 
 
+// Historical life expectancy
+
+function groupBy(accum, person) {
+  var century = Math.ceil(person.died / 100);
+  if (!(century in accum)) {
+    accum[century] = [];
+  }
+  accum[century].push(person.died - person.born);
+  return accum;
+}
+
+var ageMap = ancestry.reduce(groupBy, {});
+
+for (var k in ageMap) {
+  console.log(k + ': ' + average(ageMap[k]));
+}
 
 
+// Every and then some
 
+function every(array, test) {
+  for (var i = 0; i < array.length; i++) {
+    if (!test(array[i])) {
+      return false;
+    }
+  }
+  return true;
+}
 
+function some(array, test) {
+  for (var i = 0; i < array.length; i++) {
+    if (test(array[i])) {
+      return true;
+    }
+  }
+  return false;
+}
 
-
-
-
-/*
-* To do
-*/
-// redo Great-great-great-great section
-// revisit "Passing along arguments" and Binding
-
-
+some(arr, function(item) {return !isNaN(item);});
 
 
 /*
@@ -157,3 +181,11 @@ noisy(Boolean)(0);
 // Pretty confused on the "Passing along arguments" and apply section - why two returns? What is getting passed to what? Can we maybe walk through it with the noisy example?
 // Same goes for binding - I don't understand it
 // Struggled with family tree exercise quite a bit
+
+
+
+/*
+* To do
+*/
+// redo Great-great-great-great section
+// revisit "Passing along arguments" and Binding

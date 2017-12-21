@@ -194,5 +194,4 @@ function deepEqual2 (o1, o2) {
 * Questions
 */
 
-// Tabs/spaces, and formatting multi-line if statements
 // any times where returns in a node environment will be different than in browser?
