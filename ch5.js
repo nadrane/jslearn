@@ -92,6 +92,34 @@ console.log(arrays.reduce(function(a, b) {
 }));
 
 
+// Mother-child age difference
+
+function average(array) {
+  function plus(a, b) { return a + b; }
+  return array.reduce(plus) / array.length;
+}
+var byName = {};
+ancestry.forEach(function(person) {
+  byName[person.name] = person;
+});
+
+// first attempt
+function hasKnownMother(person) {
+  return person.mother in byName;
+}
+
+function ageDiff(person) {
+  return person.born - byName[person.mother].born;
+}
+
+console.log(average(ancestry.filter(hasKnownMother).map(ageDiff)));
+
+// updated syntax
+var differences = ancestry.filter(function(person) {
+  return (person.mother in byName);
+}).map(function(person) {
+  return person.born - byName[person.mother].born;
+});
 
 
 
@@ -102,8 +130,11 @@ console.log(arrays.reduce(function(a, b) {
 
 
 
-
-
+/*
+* To do
+*/
+// redo Great-great-great-great section
+// revisit "Passing along arguments" and Binding
 
 
 
