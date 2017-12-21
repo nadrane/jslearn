@@ -1,8 +1,8 @@
 /*
-* chapter 5 - Higher-Order Functions - Reading Examples
+* Chapter 5 - Higher-Order Functions - Reading Examples
 */
 
-// updated phi map
+// Updated phi map
 
 function gatherCorrelations(journal) {
   var phis = {};
@@ -74,14 +74,13 @@ ancestry.reduce(function(accum, cur) {
   else return accum;
 });
 
-
 arrays.reduce(function(a, b) {
   return a.concat(b);
 });
 
 
 /*
-* chapter 5 - Exercises
+* Chapter 5 - Exercises
 */
 
 // Flattening
@@ -93,7 +92,7 @@ console.log(arrays.reduce(function(a, b) {
 
 
 // Mother-child age difference
-
+// Helpers
 function average(array) {
   function plus(a, b) { return a + b; }
   return array.reduce(plus) / array.length;
@@ -114,7 +113,7 @@ function ageDiff(person) {
 
 console.log(average(ancestry.filter(hasKnownMother).map(ageDiff)));
 
-// updated syntax
+// Updated syntax
 var differences = ancestry.filter(function(person) {
   return (person.mother in byName);
 }).map(function(person) {
@@ -164,7 +163,7 @@ some(arr, function(item) {return !isNaN(item);});
 
 
 /*
-* Questions
+* Questions for Nick
 */
 
 // in example below, how does JS know to map 0 to arg? Not sure I'm following exactly how this is working. Is noisy(Boolean) returning a function (with access to the original Bool functionality), that now has 0 as its arg?
@@ -178,10 +177,8 @@ function noisy(f) {
 }
 noisy(Boolean)(0);
 
-// Pretty confused on the "Passing along arguments" and apply section - why two returns? What is getting passed to what? Can we maybe walk through it with the noisy example?
+// Pretty confused on the "Passing along arguments" and apply section - why two returns? What is getting passed to what? Maybe walk through it with the noisy example?
 // Same goes for binding - I don't understand it
-// Struggled with family tree exercise quite a bit
-
 
 
 /*
