@@ -5,20 +5,21 @@
 // Updated phi map
 
 function gatherCorrelations(journal) {
-  var phis = {};
+  const phis = {};
   journal.forEach(function(entry) {
     entry.events.forEach(function(event) {
-      if (!(event in phis))
-        phis[event] = phi(tableFor(event, journal));
+      if (!(event in phis)) phis[event] = phi(tableFor(event, journal));
     });
   });
   return phis;
 }
 
 function greaterThan(n) {
-  return function(m) { return m > n; };
+  return function(m) {
+    return m > n;
+  };
 }
-var greaterThan10 = greaterThan(10;)
+var greaterThan10 = greaterThan(10);
 
 // Filtering an array
 
@@ -31,28 +32,31 @@ function filter(array, test) {
   }
   return passed;
 }
-console.log(filter(ancestry, function(person) {
-  return person.born > 1900 && person.born < 1925;
-}));
+console.log(
+  filter(ancestry, function(person) {
+    return person.born > 1900 && person.born < 1925;
+  })
+);
 // built-in method
 ancestry.filter(function(person) {
-  return person.born > 1900 && person.born < 1925
+  return person.born > 1900 && person.born < 1925;
 });
 
 // Transforming with map
 
 function map(array, transform) {
   var mapped = [];
-  for (var i = 0; i < array.length; i++)
-    mapped.push(transform(array[i]));
+  for (var i = 0; i < array.length; i++) mapped.push(transform(array[i]));
   return mapped;
 }
 var overNinety = ancestry.filter(function(person) {
   return person.died - person.born > 90;
 });
-console.log(map(overNinety, function(person) {
-  return person.name;
-}));
+console.log(
+  map(overNinety, function(person) {
+    return person.name;
+  })
+);
 // built-in method
 overNinety.map(function(person) {
   return person.name;
@@ -62,13 +66,16 @@ overNinety.map(function(person) {
 
 function reduce(array, combine, start) {
   var current = start;
-  for (var i = 0; i < array.length; i++)
-    current = combine(current, array[i]);
+  for (var i = 0; i < array.length; i++) current = combine(current, array[i]);
   return current;
 }
-reduce([1, 2, 3, 4], function(a, b) {
-  return a + b;
-}, 0);
+reduce(
+  [1, 2, 3, 4],
+  function(a, b) {
+    return a + b;
+  },
+  0
+);
 ancestry.reduce(function(accum, cur) {
   if (cur.born < accum.born) return cur;
   else return accum;
@@ -78,7 +85,6 @@ arrays.reduce(function(a, b) {
   return a.concat(b);
 });
 
-
 /*
 * Chapter 5 - Exercises
 */
@@ -86,15 +92,18 @@ arrays.reduce(function(a, b) {
 // Flattening
 
 var arrays = [[1, 2, 3], [4, 5], [6]];
-console.log(arrays.reduce(function(a, b) {
-  return a.concat(b);
-}));
-
+console.log(
+  arrays.reduce(function(a, b) {
+    return a.concat(b);
+  })
+);
 
 // Mother-child age difference
 // helpers
 function average(array) {
-  function plus(a, b) { return a + b; }
+  function plus(a, b) {
+    return a + b;
+  }
   return array.reduce(plus) / array.length;
 }
 var byName = {};
@@ -114,12 +123,13 @@ function ageDiff(person) {
 console.log(average(ancestry.filter(hasKnownMother).map(ageDiff)));
 
 // updated syntax
-var differences = ancestry.filter(function(person) {
-  return (person.mother in byName);
-}).map(function(person) {
-  return person.born - byName[person.mother].born;
-});
-
+var differences = ancestry
+  .filter(function(person) {
+    return person.mother in byName;
+  })
+  .map(function(person) {
+    return person.born - byName[person.mother].born;
+  });
 
 // Historical life expectancy
 
@@ -135,9 +145,8 @@ function groupBy(accum, person) {
 var ageMap = ancestry.reduce(groupBy, {});
 
 for (var k in ageMap) {
-  console.log(k + ': ' + average(ageMap[k]));
+  console.log(k + ": " + average(ageMap[k]));
 }
-
 
 // Every and then some
 
@@ -159,8 +168,9 @@ function some(array, test) {
   return false;
 }
 
-some(arr, function(item) {return !isNaN(item);});
-
+some(arr, function(item) {
+  return !isNaN(item);
+});
 
 /*
 * Questions for Nick
@@ -179,7 +189,6 @@ noisy(Boolean)(0);
 
 // Pretty confused on the "Passing along arguments" and apply section - why two returns? What is getting passed to what? Maybe walk through it with the noisy example?
 // Same goes for binding - I don't understand it
-
 
 /*
 * To do

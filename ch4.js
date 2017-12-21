@@ -2,8 +2,8 @@
 * chapter 4 - Data Structures - Reading Examples
 */
 
-var journal = [];
-var map = {};
+const journal = [];
+const map = {};
 
 function phi(table) {
   return (table[3] * table[0] - table[2] * table[1]) /
@@ -18,39 +18,36 @@ function hasEvent(event, entry) {
 }
 
 function tableFor(event, journal) {
-  var table = [0, 0, 0, 0];
-  for (var i = 0; i < journal.length; i++) {
-    var entry = journal[i], index = 0;
-    if (hasEvent(event, entry))
-      index += 1;
-    if (entry.squirrel)
-      index += 2;
+  const table = [0, 0, 0, 0];
+  for (let i = 0; i < journal.length; i++) {
+    let entry = journal[i],
+      index = 0;
+    if (hasEvent(event, entry)) { index += 1; }
+    if (entry.squirrel) { index += 2; }
     table[index]++;
   }
   return table;
 }
 
 function gatherCorrelations(journal) {
-  var phis = {};
-  for (var entry = 0; entry < journal.length; entry++) {
-    var events = journal[entry].events;
-    for (var i = 0; i < events.length; i++) {
-      var event = events[i];
-      if (!(event in phis))
-        phis[event] = phi(tableFor(event, journal));
+  const phis = {};
+  for (let entry = 0; entry < journal.length; entry++) {
+    const events = journal[entry].events;
+    for (let i = 0; i < events.length; i++) {
+      const event = events[i];
+      if (!(event in phis)) { phis[event] = phi(tableFor(event, journal)); }
     }
   }
   return phis;
 }
 
-for (var event in correlations)
-  if (correlations[event] > 0.1 || correlations[event] < - 0.1)
-    console.log("The correlation of", event, "is", correlations[event]);
+for (const event in correlations) {
+  if (correlations[event] > 0.1 || correlations[event] < -0.1) { console.log('The correlation of', event, 'is', correlations[event]); }
+}
 
-for (var i = 0; i < JOURNAL.length; i++) {
-  var entry = JOURNAL[i];
-  if (hasEvent("peanuts", entry) && !hasEvent("brushed teeth", entry))
-    entry.events.push("peanut teeth");
+for (let i = 0; i < JOURNAL.length; i++) {
+  const entry = JOURNAL[i];
+  if (hasEvent('peanuts', entry) && !hasEvent('brushed teeth', entry)) { entry.events.push('peanut teeth'); }
 }
 
 /*
@@ -59,42 +56,38 @@ for (var i = 0; i < JOURNAL.length; i++) {
 
 // The Sum of a Range
 function range(start, stop, step) {
-  var arr = [];
-  if(!step)
-    step = (start > stop ? -1 : 1)
-  if (step > 0)
-    for (var i = start; i <= stop; i += step)
-      arr.push(i);
-  else
-    for (var j = start; j >= stop; j += step)
-      arr.push(j);
+  const arr = [];
+  if (!step) { step = (start > stop ? -1 : 1); }
+  if (step > 0) {
+    for (let i = start; i <= stop; i += step) { arr.push(i); }
+  } else {
+    for (let j = start; j >= stop; j += step) { arr.push(j); }
+  }
   return arr;
 }
 
 function sum(arr) {
-  var total = 0;
-  for (var i = 0; i < arr.length; i++)
-    total += arr[i];
+  let total = 0;
+  for (let i = 0; i < arr.length; i++) { total += arr[i]; }
   return total;
 }
 
 function altSum(arr) {
-  var reducer = (accumulator, currentValue) => accumulator + currentValue;
+  const reducer = (accumulator, currentValue) => accumulator + currentValue;
   return arr.reduce(reducer);
 }
 
 // Reversing an Array
 function reverseArray(arr) {
-  var newArr = [];
-  for (var i = arr.length - 1; i > -1; i--)
-    newArr.push(arr[i]);
+  const newArr = [];
+  for (let i = arr.length - 1; i > -1; i--) { newArr.push(arr[i]); }
   return newArr;
 }
 
 function reverseArrayInPlace(arrayValue) {
-  length = arrayValue.length
-  for (var i = 0, n = Math.floor(length / 2); i < n; i++) {
-    var temp = arrayValue[i];
+  length = arrayValue.length;
+  for (let i = 0, n = Math.floor(length / 2); i < n; i++) {
+    const temp = arrayValue[i];
     arrayValue[i] = arrayValue[length - 1 - i];
     arrayValue[length - 1 - i] = temp;
   }
@@ -102,9 +95,8 @@ function reverseArrayInPlace(arrayValue) {
 
 // A List
 function arrayToList(arr) {
-  var list = null;
-  for (var i = arr.length - 1; i > -1; i--)
-    list = {value: arr[i], rest: list};
+  let list = null;
+  for (let i = arr.length - 1; i > -1; i--) { list = { value: arr[i], rest: list }; }
   return list;
 }
 
@@ -119,8 +111,8 @@ function arrayToList(arr) {
 // }
 
 function listToArray(list) {
-  var arr = [];
-  for (var node = list; node; node = node.rest) {
+  const arr = [];
+  for (let node = list; node; node = node.rest) {
     arr.push(node.value);
   }
   return arr;
@@ -136,24 +128,20 @@ function listToArray(list) {
 // }
 
 function prepend(element, list) {
-  return {value: element, rest: list};
+  return { value: element, rest: list };
 }
 
 function nth(list, n) {
-  if (!list)
-    return undefined;
-  else if (n === 0)
-    return list.value;
-  else
-    return nth(list.rest, n - 1);
+  if (!list) { return undefined; } else if (n === 0) { return list.value; }
+  return nth(list.rest, n - 1);
 }
 
 // Deep Comparison
 function deepEqual(o1, o2) {
-  if(o1 === o2 || o1 === null || o2 === null) {
+  if (o1 === o2 || o1 === null || o2 === null) {
     return o1 === o2;
   }
-  if (typeof(o1) === 'object' && typeof(o2) === 'object') {
+  if (typeof (o1) === 'object' && typeof (o2) === 'object') {
     for (var k in o1) {
       if (!deepEqual(o1[k], o2[k])) {
         return false;
@@ -169,12 +157,13 @@ function deepEqual(o1, o2) {
   return o1 === o2;
 }
 
-function deepEqual2 (o1, o2) {
-  if(o1 === o2 || o1 === null || o2 === null) {
+function deepEqual2(o1, o2) {
+  if (o1 === o2 || o1 === null || o2 === null) {
     return o1 === o2;
   }
-  if (typeof(o1) === 'object' && typeof(o2) === 'object') {
-    var props1 = 0, props2 = 0;
+  if (typeof (o1) === 'object' && typeof (o2) === 'object') {
+    let props1 = 0,
+      props2 = 0;
     for (var k in o1) {
       props1++;
     }
@@ -189,9 +178,3 @@ function deepEqual2 (o1, o2) {
   return o1 === o2;
 }
 
-
-/*
-* Questions
-*/
-
-// any times where returns in a node environment will be different than in browser?

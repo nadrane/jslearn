@@ -12,16 +12,14 @@ function isEven(num) {
     return true;
   } else if (num === 1) {
     return false;
-  } else {
-    return isEven(num - 2);
   }
+  return isEven(num - 2);
 }
 
 function countChar(str, char) {
-  var count = 0;
-  for (var i = 0; i < str.length; i++) {
-    if (str[i] === char)
-      count++;
+  let count = 0;
+  for (let i = 0; i < str.length; i++) {
+    if (str[i] === char) { count++; }
   }
   return count;
 }
