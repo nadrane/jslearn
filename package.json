@@ -1,10 +1,9 @@
 {
   "name": "eloquent",
   "version": "1.0.0",
-  "description": "",
-  "main": "ancestry.js",
+  "description": "eloquentJS reading and exercises",
+  "main": "scratch.js",
   "scripts": {
-    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,11 +16,8 @@
     "url": "https://github.com/machajew/eloquent/issues"
   },
   "homepage": "https://github.com/machajew/eloquent#readme",
-  "dependencies": {
-    "express": "^4.16.2",
-    "lodash": "^4.17.4"
-  },
   "devDependencies": {
+    "eslint": "^4.14.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.8.0"
   }
