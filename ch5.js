@@ -1,18 +1,20 @@
 /*
 * Chapter 5 - Higher-Order Functions - Reading Examples
 */
+/* eslint-disable */
 
 // Updated phi map
 
 function gatherCorrelations(journal) {
   const phis = {};
-  journal.forEach(function(entry) {
+  journal.forEach(function (entry) {
     entry.events.forEach(function(event) {
       if (!(event in phis)) phis[event] = phi(tableFor(event, journal));
     });
   });
   return phis;
 }
+gatherCorrelations();
 
 function greaterThan(n) {
   return function(m) {
@@ -24,32 +26,27 @@ var greaterThan10 = greaterThan(10);
 // Filtering an array
 
 function filter(array, test) {
-  var passed = [];
-  for (var i = 0; i < array.length; i++) {
+  const passed = [];
+  for (let i = 0; i < array.length; i += 1) {
     if (test(array[i])) {
       passed.push(array[i]);
     }
   }
   return passed;
 }
-console.log(
-  filter(ancestry, function(person) {
-    return person.born > 1900 && person.born < 1925;
-  })
-);
+console.log(filter(ancestry, person =>
+  person.born > 1900 && person.born < 1925));
 // built-in method
-ancestry.filter(function(person) {
-  return person.born > 1900 && person.born < 1925;
-});
+ancestry.filter(person => person.born > 1900 && person.born < 1925);
 
 // Transforming with map
 
 function map(array, transform) {
-  var mapped = [];
-  for (var i = 0; i < array.length; i++) mapped.push(transform(array[i]));
+  const mapped = [];
+  for (let i = 0; i < array.length; i += 1) mapped.push(transform(array[i]));
   return mapped;
 }
-var overNinety = ancestry.filter(function(person) {
+const overNinety = ancestry.filter(function(person) {
   return person.died - person.born > 90;
 });
 console.log(
@@ -58,9 +55,7 @@ console.log(
   })
 );
 // built-in method
-overNinety.map(function(person) {
-  return person.name;
-});
+overNinety.map(person => person.name);
 
 // Summarizing with reduce
 
@@ -81,9 +76,7 @@ ancestry.reduce(function(accum, cur) {
   else return accum;
 });
 
-arrays.reduce(function(a, b) {
-  return a.concat(b);
-});
+arrays.reduce((a, b) => a.concat(b));
 
 /*
 * Chapter 5 - Exercises
@@ -91,7 +84,7 @@ arrays.reduce(function(a, b) {
 
 // Flattening
 
-var arrays = [[1, 2, 3], [4, 5], [6]];
+const arrays = [[1, 2, 3], [4, 5], [6]];
 console.log(
   arrays.reduce(function(a, b) {
     return a.concat(b);
@@ -106,7 +99,7 @@ function average(array) {
   }
   return array.reduce(plus) / array.length;
 }
-var byName = {};
+const byName = {};
 ancestry.forEach(function(person) {
   byName[person.name] = person;
 });
@@ -171,27 +164,3 @@ function some(array, test) {
 some(arr, function(item) {
   return !isNaN(item);
 });
-
-/*
-* Questions for Nick
-*/
-
-// in example below, how does JS know to map 0 to arg? Not sure I'm following exactly how this is working. Is noisy(Boolean) returning a function (with access to the original Bool functionality), that now has 0 as its arg?
-function noisy(f) {
-  return function(arg) {
-    console.log("calling with", arg);
-    var val = f(arg);
-    console.log("called with", arg, "- got", val);
-    return val;
-  };
-}
-noisy(Boolean)(0);
-
-// Pretty confused on the "Passing along arguments" and apply section - why two returns? What is getting passed to what? Maybe walk through it with the noisy example?
-// Same goes for binding - I don't understand it
-
-/*
-* To do
-*/
-// redo Great-great-great-great section
-// revisit "Passing along arguments" and Binding

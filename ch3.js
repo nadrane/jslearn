@@ -5,25 +5,27 @@
 function min(n1, n2) {
   return (n1 < n2 ? n1 : n2);
 }
+min();
 
 function isEven(num) {
-  num = Math.abs(num);
-  if (num === 0) {
+  const absNum = Math.abs(num);
+  if (absNum === 0) {
     return true;
-  } else if (num === 1) {
+  } else if (absNum === 1) {
     return false;
   }
-  return isEven(num - 2);
+  return isEven(absNum - 2);
 }
+isEven();
 
 function countChar(str, char) {
   let count = 0;
-  for (let i = 0; i < str.length; i++) {
-    if (str[i] === char) { count++; }
+  for (let i = 0; i < str.length; i += 1) {
+    if (str[i] === char) { count += 1; }
   }
   return count;
 }
-
 function countBs(str) {
   return countChar(str, 'B');
 }
+countBs();

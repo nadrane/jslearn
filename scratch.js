@@ -1,24 +1,25 @@
-const journal = [];
-const map = {};
-
-function once() {
-  return true;
+function once(f) {
+  let state = 0;
+  const x = function x(...theArgs) {
+    state += 1;
+    if (state === 1) {
+      return f.bind(null, theArgs);
+    }
+    return undefined;
+  };
+  return x;
 }
 
-// Homework
+function argBark(...theArgs) {
+  for (let i = 0; i < theArgs.length; i += 1) {
+    console.log(theArgs[i]);
+  }
+}
 
-// look up lodash, go through and implement lodash function (map, function, reuce, filter, etc)
-// specific ones - look at sort,look for things that have a predicate
-// always use const, look at links re: scope of let/const/var
+const dec1 = once(argBark);
+dec1('hi');
 
-// when get bored, implement all recursively
+const ancestry = {};
 
-// Work through chapter 11 of eloquentJS
-
-// after 11, nick has an exercise to implement a regex engine
-
-// write a json parser (a recursive descent parser)
-
-// then eloquent through ch 15
-
-// solve game of life in 2 ways - 1 is storing state in dom itself (data attirbutes), & storing state in javascript
+// built-in method
+ancestry.filter(person => person.born > 1900 && person.born < 1925);
