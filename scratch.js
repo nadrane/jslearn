@@ -1,13 +1,25 @@
+// function once(f) {
+//   let state = 0;
+//   const x = function x(...theArgs) {
+//     state += 1;
+//     if (state === 1) {
+//       return f.bind(null, theArgs);
+//     }
+//     return undefined;
+//   };
+//   return x;
+// }
+
 function once(f) {
   let state = 0;
-  const x = function x(...theArgs) {
+  return (...theArgs) => {
     state += 1;
     if (state === 1) {
-      return f.bind(null, theArgs);
+      return f(...theArgs);
     }
-    return undefined;
+
+    return `this was the ${state} call!`;
   };
-  return x;
 }
 
 function argBark(...theArgs) {
