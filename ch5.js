@@ -71,9 +71,11 @@ reduce(
   },
   0
 );
-ancestry.reduce(function(accum, cur) {
-  if (cur.born < accum.born) return cur;
-  else return accum;
+ancestry.reduce((accum, cur) => {
+  if (cur.born < accum.born) {
+    return cur;
+  }
+  return accum;
 });
 
 arrays.reduce((a, b) => a.concat(b));
@@ -84,12 +86,9 @@ arrays.reduce((a, b) => a.concat(b));
 
 // Flattening
 
-const arrays = [[1, 2, 3], [4, 5], [6]];
-console.log(
-  arrays.reduce(function(a, b) {
-    return a.concat(b);
-  })
-);
+console.log(arrays.reduce((accum, cur) => {
+  return accum.concat(cur)
+}));
 
 // Mother-child age difference
 // helpers
@@ -117,12 +116,8 @@ console.log(average(ancestry.filter(hasKnownMother).map(ageDiff)));
 
 // updated syntax
 var differences = ancestry
-  .filter(function(person) {
-    return person.mother in byName;
-  })
-  .map(function(person) {
-    return person.born - byName[person.mother].born;
-  });
+  .filter(person => person.mother in byName)
+  .map(person => person.born - byName[person.mother].born);
 
 // Historical life expectancy
 

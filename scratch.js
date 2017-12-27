@@ -10,6 +10,8 @@
 //   return x;
 // }
 
+/* eslint no-console: "off" */
+
 function once(f) {
   let state = 0;
   return (...theArgs) => {
@@ -17,7 +19,6 @@ function once(f) {
     if (state === 1) {
       return f(...theArgs);
     }
-
     return `this was the ${state} call!`;
   };
 }
@@ -35,3 +36,14 @@ const ancestry = {};
 
 // built-in method
 ancestry.filter(person => person.born > 1900 && person.born < 1925);
+
+
+ancestry.filter(person => person.father === 'Carel Haverbeke');
+
+const byName = {};
+
+const differences = ancestry
+  .filter(person => person.mother in byName)
+  .map(person => person.born - byName[person.mother].born);
+
+console.log(differences);
