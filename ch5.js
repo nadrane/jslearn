@@ -120,7 +120,7 @@ var differences = ancestry
   .map(person => person.born - byName[person.mother].born);
 
 // Historical life expectancy
-
+// first attempt
 function groupBy(accum, person) {
   var century = Math.ceil(person.died / 100);
   if (!(century in accum)) {
@@ -135,6 +135,23 @@ var ageMap = ancestry.reduce(groupBy, {});
 for (var k in ageMap) {
   console.log(k + ": " + average(ageMap[k]));
 }
+// second attempt with higher order option
+function groupBy(array, groupOf) {
+  const groups = {};
+  array.forEach((element) => {
+    const groupName = groupOf(element);
+    if (groupName in groups) {
+      groups[groupName].push(element);
+    } else {
+      groups[groupName] = [element];
+    }
+  });
+  return groups;
+}
+groupBy();
+
+const byCentury = groupBy(ancestry, person => Math.ceil(person.died / 100));
+
 
 // Every and then some
 
@@ -156,6 +173,5 @@ function some(array, test) {
   return false;
 }
 
-some(arr, function(item) {
-  return !isNaN(item);
-});
+every([NaN, NaN, NaN], elem => Number.isNaN(elem));
+some([1, 2, NaN], elem => Number.isNaN(elem));
