@@ -174,6 +174,29 @@ sc.draw(3, 2);
 
 // 3. Sequence Interface
 
+function ArraySeq(arr) {
+  this.holder = [].concat(arr);
+  this.seqLength = this.holder.length;
+}
+ArraySeq.prototype.iterate = function arrayIterate(num, func) {
+  const iterate = Math.min(num, this.seqLength);
+  for (let i = 0; i < iterate; i += 1) {
+    func(this.holder[i]);
+  }
+};
+function RangeSeq(from, to) {
+  const range = Array.from(new Array((to - from) + 1), (x, i) => i + from);
+  this.inner = new ArraySeq(range);
+}
+RangeSeq.prototype.iterate = function rangeIterate(num, func) {
+  return this.inner.iterate(num, func);
+};
+
+function logFive(seqObj) {
+  seqObj.iterate(5, console.log);
+}
+logFive(new RangeSeq(100, 1000));
+
 
 /*
 * Chapter 6 - Questions
