@@ -1,8 +1,11 @@
 /* eslint no-console: "off" */
+
 /*
 * Chapter 6 - The Secret Life of Objects - Reading
 */
+
 // sample dataset
+
 const MOUNTAINS = [
   { name: 'Kilimanjaro', height: 5895, country: 'Tanzania' },
   { name: 'Everest', height: 8848, country: 'Nepal' },
@@ -14,6 +17,7 @@ const MOUNTAINS = [
 ];
 
 // TextCell construction, prototype, and helpers
+
 function repeat(string, times) {
   let result = '';
   for (let i = 0; i < times; i += 1) {
@@ -24,13 +28,13 @@ function repeat(string, times) {
 function TextCell(text) {
   this.text = text.split('\n');
 }
-TextCell.prototype.minWidth = function minWidth() {
+TextCell.prototype.minWidth = function textCellMinWidth() {
   return this.text.reduce((accum, line) => Math.max(accum, line.length), 0);
 };
-TextCell.prototype.minHeight = function minHeight() {
+TextCell.prototype.minHeight = function textCellMinHeight() {
   return this.text.length;
 };
-TextCell.prototype.draw = function draw(width, height) {
+TextCell.prototype.draw = function textCellDraw(width, height) {
   const result = [];
   for (let i = 0; i < height; i += 1) {
     const line = this.text[i] || '';
@@ -42,7 +46,7 @@ function RTextCell(text) {
   TextCell.call(this, text);
 }
 RTextCell.prototype = Object.create(TextCell.prototype);
-RTextCell.prototype.draw = function draw(width, height) {
+RTextCell.prototype.draw = function rTextCellDraw(width, height) {
   const result = [];
   for (let i = 0; i < height; i += 1) {
     const line = this.text[i] || '';
@@ -52,21 +56,23 @@ RTextCell.prototype.draw = function draw(width, height) {
 };
 
 // UnderlinedCell construction and prototype
+
 function UnderlinedCell(inner) {
   this.inner = inner;
 }
-UnderlinedCell.prototype.minWidth = function minWidth() {
+UnderlinedCell.prototype.minWidth = function underlinedCellMinWidth() {
   return this.inner.minWidth();
 };
-UnderlinedCell.prototype.minHeight = function minHeight() {
+UnderlinedCell.prototype.minHeight = function underlinedCellMinHeight() {
   return this.inner.minHeight() + 1;
 };
-UnderlinedCell.prototype.draw = function draw(width, height) {
+UnderlinedCell.prototype.draw = function underlinedCellDraw(width, height) {
   return this.inner.draw(width, height - 1)
     .concat([repeat('-', width)]);
 };
 
 // load dataset into memory
+
 function dataTable(data) {
   const keys = Object.keys(data[0]);
   const headers = keys.map(key => (
@@ -85,6 +91,7 @@ function dataTable(data) {
 }
 
 // core table building program
+
 function rowHeights(rows) {
   return rows.map(row => (
     row.reduce((max, cell) => (
@@ -116,9 +123,56 @@ function drawTable(rows) {
 }
 console.log(drawTable(dataTable(MOUNTAINS)));
 
+
 /*
 * Chapter 6 - Exercises
 */
+
+// 1. A Vector Type
+
+function Vector(x, y) {
+  this.x = Number(x);
+  this.y = Number(y);
+}
+
+Vector.prototype.plus = function plus(otherVec) {
+  const newX = this.x + otherVec.x;
+  const newY = this.y + otherVec.y;
+  return new Vector(newX, newY);
+};
+
+Vector.prototype.minus = function minus(otherVec) {
+  const newX = this.x - otherVec.x;
+  const newY = this.y - otherVec.y;
+  return new Vector(newX, newY);
+};
+
+Object.defineProperty(Vector.prototype, 'length', {
+  get: function length() {
+    return Math.sqrt((this.x ** 2) + (this.y ** 2));
+  },
+});
+
+// 2. Another Cell
+
+function StretchCell(cell, width, height) {
+  this.inner = cell;
+  this.stretchWidth = width;
+  this.stretchHeight = height;
+}
+StretchCell.prototype.minWidth = function stretchCellMinWdith() {
+  return Math.max(this.stretchWidth, this.inner.minWidth());
+};
+StretchCell.prototype.minHeight = function stretchCellMinHeight() {
+  return Math.max(this.stretchHeight, this.inner.minHeight());
+};
+StretchCell.prototype.draw = function stretchCellDraw(width, height) {
+  return this.inner.draw(width, height);
+};
+const sc = new StretchCell(new TextCell('abc'), 1, 2);
+sc.draw(3, 2);
+
+// 3. Sequence Interface
 
 
 /*
