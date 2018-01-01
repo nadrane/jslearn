@@ -172,7 +172,7 @@ StretchCell.prototype.draw = function stretchCellDraw(width, height) {
 const sc = new StretchCell(new TextCell('abc'), 1, 2);
 sc.draw(3, 2);
 
-// 3. Sequence Interface
+// 3. Sequence Interface - v1
 
 function ArraySeq(arr) {
   this.holder = [].concat(arr);
@@ -197,7 +197,34 @@ function logFive(seqObj) {
 }
 logFive(new RangeSeq(100, 1000));
 
+// v2 - with state
 
-/*
-* Chapter 6 - Questions
-*/
+function ArraySeqTwo(arr) {
+  this.holder = [].concat(arr);
+  this.index = 0;
+}
+ArraySeqTwo.prototype.next = function getNext() {
+  const current = this.holder[this.index];
+  this.index += 1;
+  return current;
+};
+Object.defineProperty(ArraySeqTwo.prototype, 'end', {
+  get: function atTheEnd() {
+    const past = this.index >= this.holder.length;
+    if (past) {
+      this.index = 0;
+      return past;
+    }
+    return false;
+  },
+});
+
+function iterator(obj, func, num) {
+  for (let i = 0; i < num; i += 1) {
+    if (obj.end) {
+      break;
+    }
+    func(obj.next());
+  }
+}
+iterator(new ArraySeq([1, 2]), console.log, 5);
