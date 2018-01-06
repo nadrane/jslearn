@@ -56,23 +56,42 @@
 //   foo.count += 1; // `foo` refers to itself
 // }
 
-function foo() {
-	console.log( this.a );
-}
+// function foo() {
+//  console.log( this.a );
+// }
 
-function doFoo(fn) {
-	// `fn` is just another reference to `foo`
+// function doFoo(fn) {
+//  // `fn` is just another reference to `foo`
 
-	fn(); // <-- call-site!
-}
+//  fn(); // <-- call-site!
+// }
 
-var obj = {
-	a: 2,
-	foo: function() {
-    console.log( this.a );
-  },
-};
+// var obj = {
+//  a: 2,
+//  foo: function() {
+//     console.log( this.a );
+//   },
+// };
 
-var a = "oops, global"; // `a` also property on global object
+// var a = "oops, global"; // `a` also property on global object
 
-doFoo( obj.foo ); // "oops, global"
+// doFoo( obj.foo ); // "oops, global"
+
+// var one = {
+//   a: 'hello',
+// };
+
+// var two = {
+//   a: 'hi'
+// };
+
+// Object.defineProperty(two, 'b', {
+//   value: 'second',
+//   writable: false,
+//   configurable: true,
+//   enumerable: true,
+// });
+
+// function ryan() {
+//   // ...
+// }
