@@ -95,3 +95,14 @@
 // function ryan() {
 //   // ...
 // }
+
+// var funcs = [];
+
+// for (var i = 0; i < 6; i++) {
+//   console.log('printing: ' + i);
+// 	funcs.push( function(){
+// 		console.log( i );
+// 	} );
+// }
+
+// funcs[3]();		// 3
