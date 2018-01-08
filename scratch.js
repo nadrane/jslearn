@@ -36,7 +36,6 @@
 // // built-in method
 // ancestry.filter(person => person.born > 1900 && person.born < 1925);
 
-
 // ancestry.filter(person => person.father === 'Carel Haverbeke');
 
 // const byName = {};
@@ -46,7 +45,6 @@
 //   .map(person => person.born - byName[person.mother].born);
 
 // console.log(differences);
-
 
 // function foo() {
 //   console.log('hey');
@@ -100,9 +98,27 @@
 
 // for (var i = 0; i < 6; i++) {
 //   console.log('printing: ' + i);
-// 	funcs.push( function(){
-// 		console.log( i );
-// 	} );
+//  funcs.push( function(){
+//  console.log( i );
+//  });
 // }
 
-// funcs[3]();		// 3
+// funcs[3]();
+
+// {
+//   // destructure (with default value assignments)
+//   let {
+//     options: {
+//       remove = defaults.options.remove,
+//       enable = defaults.options.enable,
+//       instance = defaults.options.instance
+//     } = {},
+//     log: { warn = defaults.log.warn, error = defaults.log.error } = {}
+//   } = config;
+
+//   // restructure
+//   config = {
+//     options: { remove, enable, instance },
+//     log: { warn, error }
+//   };
+// }
