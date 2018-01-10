@@ -1,4 +1,5 @@
-/* eslint no-console: "off" */
+/* eslint-disable */
+
 // function once(f) {
 //   let state = 0;
 //   const x = function x(...theArgs) {
@@ -71,9 +72,9 @@
 //   },
 // };
 
-// var a = "oops, global"; // `a` also property on global object
+// var a = 'oops, global'; // `a` also property on global object
 
-// doFoo( obj.foo ); // "oops, global"
+// doFoo( obj.foo ); // 'oops, global'
 
 // var one = {
 //   a: 'hello',
