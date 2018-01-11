@@ -1,7 +1,9 @@
 /* eslint no-console: 'off' */
+
 /*
 * Helpers
 */
+
 const Helper = {
   // custom floor helper function to make sure negative #s (like -0.5) round toward zero
   myFloor(num) {
@@ -155,8 +157,12 @@ console.log(_);
 /*
 *  lodash functions implemented recursively
 */
+
 const loRecur = {
   dropWhile: function dropWhile(arr, func) {
+    if (!func) {
+      return arr;
+    }
     if (!func(arr[0])) {
       return arr;
     }
@@ -181,10 +187,14 @@ const loRecur = {
     }());
   },
 
-  // not complete - had trouble with this one using recursion
-  takeRightWhile(arr, func) {
-    return func;
-    //
+  takeRightWhile(array, someFunc) {
+    function iter(arr, index, func) {
+      if (func(arr[index])) {
+        return iter(arr, index + 1, func);
+      }
+      return arr.slice(0, index);
+    }
+    return iter(array.reverse(), 0, someFunc);
   },
 
   countBy: function countBy(arr, func) {
@@ -213,7 +223,6 @@ const loRecur = {
     return every(arr.slice(0, half), func) && every(arr.slice(half, length), func);
   },
 
-  // think this isn't right
   find(arr, func) {
     return (function innerFind(index = 0) {
       if (arr[index] === undefined) {
@@ -251,12 +260,5 @@ const loRecur = {
     return some(arr.slice(0, half), func) || some(arr.slice(half, length), func);
   },
 };
-console.log(loRecur);
 
-
-/* eslint max-len: 'off' */
-/*
-* Questions
-*/
-// Some of my recursive functions create separate inner functions - is that "cheating?" - i.e. should all of these be able to be possible without a separate inner function?
-// Similarly, is using IIFE's as I have in some cases bad practice? I have read different things about this.
+module.exports = loRecur;

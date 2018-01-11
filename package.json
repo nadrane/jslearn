@@ -4,7 +4,7 @@
   "description": "eloquentJS reading and exercises",
   "main": "scratch.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node ./node_modules/mocha/bin/mocha tests/**/*test*.js -w"
   },
   "repository": {
     "type": "git",
@@ -17,9 +17,11 @@
   },
   "homepage": "https://github.com/machajew/eloquent#readme",
   "devDependencies": {
+    "chai": "^4.1.2",
     "eslint": "^4.14.0",
     "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.8.0"
+    "eslint-plugin-import": "^2.8.0",
+    "mocha": "^4.1.0"
   },
   "dependencies": {
     "lodash": "^4.17.4"
