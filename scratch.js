@@ -123,3 +123,14 @@
 //     log: { warn, error }
 //   };
 // }
+
+const _ = require('lodash');
+
+var objects = [{ 'x': 4 }, { 'x': 5 }, { 'x': 11 }, { 'x': 40 }, { 'x': 55 }];
+
+console.log(_.sortedIndexBy(objects, { 'x': 1 }, function(o) { return o.x; }));
+
+
+function myFloor(num) {
+  return num - (num % 1);
+}

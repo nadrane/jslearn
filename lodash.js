@@ -1,7 +1,65 @@
 /* eslint no-console: 'off' */
+/*
+* Helpers
+*/
+const Helper = {
+  // custom floor helper function to make sure negative #s (like -0.5) round toward zero
+  myFloor(num) {
+    return Math.abs(num - (num % 1));
+  },
+
+  // combine counts of two objects
+  combineCounts(objA, objB) {
+    const fin = {};
+    const keysA = Object.keys(objA);
+    const keysB = Object.keys(objB);
+    for (let i = 0; i < keysA.length; i += 1) {
+      const key = keysA[i];
+      if (!(key in fin)) {
+        fin[key] = objA[key];
+      } else {
+        fin[key] += objA[key];
+      }
+    }
+    for (let i = 0; i < keysB.length; i += 1) {
+      const key = keysB[i];
+      if (!(key in fin)) {
+        fin[key] = objB[key];
+      } else {
+        fin[key] += objB[key];
+      }
+    }
+    return fin;
+  },
+
+  // merge arrays between two objects
+  combineArrays(objA, objB) {
+    const fin = {};
+    const keysA = Object.keys(objA);
+    const keysB = Object.keys(objB);
+    for (let i = 0; i < keysA.length; i += 1) {
+      const key = keysA[i];
+      if (!(key in fin)) {
+        fin[key] = objA[key].slice();
+      } else {
+        fin[key] = fin[key].concat(objA[key]);
+      }
+    }
+    for (let i = 0; i < keysB.length; i += 1) {
+      const key = keysB[i];
+      if (!(key in fin)) {
+        fin[key] = objB[key].slice();
+      } else {
+        fin[key] = fin[key].concat(objB[key]);
+      }
+    }
+    return fin;
+  },
+};
+
 
 /*
-* Select lodash functions implemented iteratively
+*  lodash functions implemented iteratively
 */
 
 const _ = {
@@ -93,34 +151,57 @@ const _ = {
 };
 console.log(_);
 
-/*
-* Select lodash functions implemented recursively
-*/
 
+/*
+*  lodash functions implemented recursively
+*/
 const loRecur = {
-  dropWhile(arr, func) {
-    //
+  dropWhile: function dropWhile(arr, func) {
+    if (!func(arr[0])) {
+      return arr;
+    }
+    return dropWhile(arr.slice(1), func);
   },
 
-  sortedIndexBy(arr, val) {
+  sortedIndexBy(arr, val, func) {
+    const targetValue = func(val);
     return (function find(start = 0, end = arr.length - 1) {
-      const mid = Math.floor((start + end) / 2);
-      if (start >= end) {
-        return (val >= arr[mid] ? mid : mid - 1);
+      const middleIndex = Helper.myFloor((start + end) / 2);
+      const middleValue = func(arr[middleIndex]);
+      if (targetValue === middleValue || start >= end) {
+        return (targetValue <= middleValue ? middleIndex : middleIndex + 1);
       }
-      if (val > arr[mid]) {
-        return find(mid + 1, end);
+      if (targetValue > middleValue) {
+        return find(middleIndex + 1, end);
       }
-      return find(start, mid - 1);
+      if (targetValue < middleValue) {
+        return find(start, middleIndex - 1);
+      }
+      return undefined;
     }());
   },
 
+  // not complete - had trouble with this one using recursion
   takeRightWhile(arr, func) {
+    return func;
     //
   },
 
-  countBy(arr, func) {
-    //
+  countBy: function countBy(arr, func) {
+    if (arr.length === 1) {
+      return { [func(arr[0])]: 1 };
+    }
+    const { length } = arr;
+    const half = Math.floor(length / 2);
+    const left = arr.slice(0, half);
+    const right = arr.slice(half, length);
+    return Helper.combineCounts(
+      {},
+      Helper.combineCounts(
+        countBy(left, func),
+        countBy(right, func),
+      ),
+    );
   },
 
   every: function every(arr, func) {
@@ -132,12 +213,33 @@ const loRecur = {
     return every(arr.slice(0, half), func) && every(arr.slice(half, length), func);
   },
 
+  // think this isn't right
   find(arr, func) {
-    //
+    return (function innerFind(index = 0) {
+      if (arr[index] === undefined) {
+        return undefined;
+      } else if (func(arr[index])) {
+        return arr[index];
+      }
+      return innerFind(index + 1);
+    }());
   },
 
-  groupBy(arr, func) {
-    //
+  groupBy: function groupBy(arr, func) {
+    if (arr.length === 1) {
+      return { [func(arr[0])]: arr.slice() };
+    }
+    const { length } = arr;
+    const half = Math.floor(length / 2);
+    const left = arr.slice(0, half);
+    const right = arr.slice(half, length);
+    return Helper.combineArrays(
+      {},
+      Helper.combineArrays(
+        groupBy(left, func),
+        groupBy(right, func),
+      ),
+    );
   },
 
   some: function some(arr, func) {
@@ -149,7 +251,12 @@ const loRecur = {
     return some(arr.slice(0, half), func) || some(arr.slice(half, length), func);
   },
 };
-
 console.log(loRecur);
 
-loRecur.sortedIndexBy([1, 4, 7, 11, 44], 10);
+
+/* eslint max-len: 'off' */
+/*
+* Questions
+*/
+// Some of my recursive functions create separate inner functions - is that "cheating?" - i.e. should all of these be able to be possible without a separate inner function?
+// Similarly, is using IIFE's as I have in some cases bad practice? I have read different things about this.
