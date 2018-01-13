@@ -8,5 +8,3 @@ router.get('/', (req, res, next) => {
 });
 
 module.exports = router;
-
-console.log('hello world');
