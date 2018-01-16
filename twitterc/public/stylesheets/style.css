@@ -1,8 +1,15 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #e6ecf0;
 }
 
-a {
-  color: #00B7FF;
+nav {
+  margin-bottom: 1em;
+}
+
+#left-panel {
+  background-color: red;
+}
+
+#right-panel {
+  background-color: green;
 }
