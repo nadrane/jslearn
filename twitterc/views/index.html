@@ -4,8 +4,13 @@
 Welcome
 {% endblock %}
 
-{% block content %}
-<div>
-    <p>Maybe a footer could go here.</p>
-</div>
-    {% endblock %}
+{% block tweets %}
+
+{% for tweet in tweets %}
+    <div class="innerbox align-middle"><p class="handle"><strong>Firstname Lastname AKA {{ tweet.u_id }} </strong><span class="text-muted">@handle · 35m ago AKA {{ tweet.datetime }}</span></p><p id="ok">{{ tweet.text }}</p></div>
+{% else %}
+    <div class="innerbox align-middle"><p class="handle"><strong></strong><span class="text-muted"></span></p><p id="ok">No tweets!</p></div>
+{% endfor %}
+{% endblock %}
+
+

@@ -11,50 +11,43 @@
     <link rel="stylesheet" href="/stylesheets/style.css">
   </head>
     <body>
-        <nav class="navbar sticky-top navbar-dark bg-dark">
-          <a class="navbar-brand" href="#">Sticky top</a>
+        
+        <nav class="navbar navbar-expand-md sticky-top navbar-dark bg-dark">
+            <a class="navbar-brand" href="/">TwitterC</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link mx-1" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mx-1" href="/">My Tweets</a>
+                    </li>
+                    <li class="nav-item">
+                            <a class="nav-link mx-1" href="/">Logout</a>
+                        </li>
+                </ul>
+                <button class="btn btn-primary my-2 my-sm-0" type="submit">Tweet</button>
+            </div>
         </nav>
         <div class="container-fluid">
             <div class="row justify-content-center no-gutters">
-                <div id="left-panel" class="panel col-md-3 text-center">
-                    <div class="innerbox">
-                        <h3>@username</h3>
-                        <p><a href="/">See my tweets</a></p>
+                <div class="panel col-md-3 text-center">
+                    <div id="control-box">
+                        <h3>@handle</h3>
+                        <button type="button" class="btn btn-primary my-2">Tweet</button>
+                        <hr>
+                        <p><a class="panel-link" href="/">My tweets</a></p>
+                        <p><a class="panel-link" href="/">All tweets</a></p>
                     </div>
                 </div>
                 <div class="col-1"></div>
                 <div id="right-panel" class="panel col-md-7">
-                    <div class="innerbox align-middle">
-                        <p class="handle"><strong>@user</strong></p>
-                        <p id="ok">This is my tweet. This is my tweet.This is my tweet.This is my tweet.This is my tweet.This is my tweet.This is my tweet.This is my tweet.This is my tweet.</p>
-                    </div>
-                    <div class="innerbox align-middle">
-                            <p class="handle"><strong>@user</strong></p>
-                            <p id="ok">This is my tweet. This is my tweet.This is my tweet.This is my tweet.This is my tweet.This is my tweet.This is my tweet.This is my tweet.This is my tweet.</p>
-                    </div>
-                    <div class="innerbox align-middle">
-                            <p class="handle"><strong>@user</strong></p>
-                            <p id="ok">This is my tweet. This is my tweet.This is my tweet.This is my tweet.This is my tweet.This is my tweet.This is my tweet.This is my tweet.This is my tweet.</p>
-                    </div>
-                    <div class="innerbox align-middle">
-                            <p class="handle"><strong>@user</strong></p>
-                            <p id="ok">This is my tweet. This is my tweet.This is my tweet.This is my tweet.This is my tweet.This is my tweet.This is my tweet.This is my tweet.This is my tweet.</p>
-                    </div>
-                    <div class="innerbox align-middle">
-                            <p class="handle"><strong>@user</strong></p>
-                            <p id="ok">This is my tweet. This is my tweet.This is my tweet.This is my tweet.This is my tweet.This is my tweet.This is my tweet.This is my tweet.This is my tweet.</p>
-                    </div>
-                    <div class="innerbox align-middle">
-                            <p class="handle"><strong>@user</strong></p>
-                            <p id="ok">This is my tweet. This is my tweet.This is my tweet.This is my tweet.This is my tweet.This is my tweet.This is my tweet.This is my tweet.This is my tweet.</p>
-                    </div>
-                    <div class="innerbox align-middle">
-                            <p class="handle"><strong>@user</strong></p>
-                            <p id="ok">This is my tweet. This is my tweet.This is my tweet.This is my tweet.This is my tweet.This is my tweet.This is my tweet.This is my tweet.This is my tweet.</p>
-                    </div>
+                    {% block tweets %}{% endblock %}
                 </div>
             </div>
-            {% block content %}{% endblock %} 
         </div>
     </body>
 </html>

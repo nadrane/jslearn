@@ -1,10 +1,12 @@
 const express = require('express');
-
 const router = express.Router();
+const fs = require('fs');
+
+const tweets = JSON.parse(fs.readFileSync('tweets.json'));
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-  res.render('index', { title: 'David M!HEY!sd' });
+  res.render('index', { tweets: tweets });
 });
 
 module.exports = router;
