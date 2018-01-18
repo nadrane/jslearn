@@ -9,7 +9,7 @@ const bodyParser = require('body-parser');
 const nunjucks = require('nunjucks');
 
 const index = require('./routes/index');
-const users = require('./routes/users');
+const user = require('./routes/user');
 
 const app = express();
 
@@ -29,7 +29,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/users', users);
+app.use('/user', user);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

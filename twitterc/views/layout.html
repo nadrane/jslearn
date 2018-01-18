@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="/stylesheets/style.css">
   </head>
     <body>
-        
         <nav class="navbar navbar-expand-md sticky-top navbar-dark bg-dark">
             <a class="navbar-brand" href="/">TwitterC</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,16 +25,38 @@
                             <a class="nav-link mx-1" href="/">Logout</a>
                         </li>
                 </ul>
-                <button class="btn btn-primary my-2 my-sm-0" type="submit">Tweet</button>
+                <button class="btn btn-primary my-2 my-sm-0" data-toggle="modal" data-target="#exampleModal">Tweet</button>
             </div>
         </nav>
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Tweet something!</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <textarea class="form-control" id="tweetbox" rows="3"></textarea>
+                            </div>
+                            <div class="form-group text-right">
+                                <button type="button" class="btn btn-primary mr-auto">Tweet</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="container-fluid">
             <div class="row justify-content-center no-gutters">
                 <div class="panel col-md-3 text-center">
                     <div class="box-top">
                         <div id="control-box">
                             <h3>@handle</h3>
-                            <button type="button" class="btn btn-primary my-2">Tweet</button>
+                            <button type="button" class="btn btn-primary my-2" data-toggle="modal" data-target="#exampleModal">Tweet</button>
                             <hr>
                             <p><a class="panel-link" href="/">My tweets</a></p>
                             <p><a class="panel-link" href="/">All tweets</a></p>
@@ -46,8 +67,8 @@
                 <div class="panel col-md-7">
                     {% if user %}
                         <div class="text-center">
-                            <h4>hi</h4>
-                            <p>here's some user info</p>
+                            <h4>{{ user.handle }}</h4>
+                            <p>{{ user.fname }} {{ user.lname }} {{ user.id }}</p>
                         </div>
                     {% endif %}
                     {% block tweets %}{% endblock %}

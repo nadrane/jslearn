@@ -4,10 +4,10 @@ const fs = require('fs');
 const router = express.Router();
 
 /* GET home page. */
-router.get('/', (req, res, next) => {
+router.get('/', (req, res) => {
   fs.readFile('tweets.json', (err, data) => {
     if (err) throw err;
-    res.render('index', { tweets: JSON.parse(data), user: 'foo' });
+    res.render('index', { tweets: JSON.parse(data) });
   });
 });
 
