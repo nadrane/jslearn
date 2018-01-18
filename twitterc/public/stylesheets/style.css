@@ -6,10 +6,13 @@ nav {
   margin-bottom: .5em;
 }
 
-.panel {
-  margin: 1em;
+.box-top {
   border-style: solid;
   border-width: 1px 0px 0px 0px;
+}
+
+.panel {
+  margin: 1em;
 }
 
 .innerbox, #control-box {
@@ -19,13 +22,9 @@ nav {
   border-width: 0px 1px 1px 1px;
 }
 
-.innerbox, #control-box {
-  padding: 0.75em;
-  border-style: solid;
-  border-width: 0px 1px 1px 1px;
-}
-
 .handle {
   margin: 0;
 }
+
+
 

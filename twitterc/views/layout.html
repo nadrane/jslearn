@@ -20,9 +20,6 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link mx-1" href="/">Home</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link mx-1" href="/">My Tweets</a>
                     </li>
                     <li class="nav-item">
@@ -35,16 +32,24 @@
         <div class="container-fluid">
             <div class="row justify-content-center no-gutters">
                 <div class="panel col-md-3 text-center">
-                    <div id="control-box">
-                        <h3>@handle</h3>
-                        <button type="button" class="btn btn-primary my-2">Tweet</button>
-                        <hr>
-                        <p><a class="panel-link" href="/">My tweets</a></p>
-                        <p><a class="panel-link" href="/">All tweets</a></p>
+                    <div class="box-top">
+                        <div id="control-box">
+                            <h3>@handle</h3>
+                            <button type="button" class="btn btn-primary my-2">Tweet</button>
+                            <hr>
+                            <p><a class="panel-link" href="/">My tweets</a></p>
+                            <p><a class="panel-link" href="/">All tweets</a></p>
+                        </div>
                     </div>
                 </div>
                 <div class="col-1"></div>
-                <div id="right-panel" class="panel col-md-7">
+                <div class="panel col-md-7">
+                    {% if user %}
+                        <div class="text-center">
+                            <h4>hi</h4>
+                            <p>here's some user info</p>
+                        </div>
+                    {% endif %}
                     {% block tweets %}{% endblock %}
                 </div>
             </div>
