@@ -1,5 +1,5 @@
 body {
-  background-color: #e6ecf0;
+  background-color: #E9F5FD;
 }
 
 nav {
@@ -17,7 +17,7 @@ nav {
 
 .innerbox, #control-box {
   background-color: white;
-  padding: 0.75em;
+  padding: 1em;
   border-style: solid;
   border-width: 0px 1px 1px 1px;
 }
@@ -26,5 +26,11 @@ nav {
   margin: 0;
 }
 
-
+#user-prof {
+  background-color: white;
+  padding: 1em;
+  border: 1px solid black;
+  border-radius: 5px;
+  margin-bottom: 2em;
+}
 

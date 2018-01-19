@@ -1,20 +1,18 @@
 {% extends "layout.html" %}
 
 {% block title %}
-hello
+{{ user.handle }}
 {% endblock %}
 
 {% block tweets %}
-<div class="box-top">
-    {% for tweet in tweets %}
-        <div class="innerbox align-middle">
-            <p class="handle"><strong>Firstname Lastname AKA {{ tweet.u_id }} </strong><span class="text-muted">@handle · 35m ago AKA {{ tweet.datetime }}</span></p>
-            <p>{{ tweet.text }}</p>
-        </div>
-    {% else %}
-        <div class="innerbox align-middle">
-            <p>No tweets!</p>
-        </div>
-    {% endfor %}
+{% for tweet in tweets %}
+<div class="innerbox align-middle">
+    <p class="handle"><strong>{{ user.fname }} {{ user.lname }} </strong><span class="text-muted"><a href="/user?id={{ user.id }}">@{{ user.handle }}</a> · 35m ago AKA {{ tweet.datetime }}</span></p>
+    <p>{{ tweet.text }}</p>
 </div>
+{% else %}
+<div class="innerbox align-middle">
+    <p>No tweets!</p>
+</div>
+{% endfor %}
 {% endblock %}
