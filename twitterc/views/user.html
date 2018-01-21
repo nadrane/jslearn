@@ -7,7 +7,10 @@
 {% block tweets %}
 {% for tweet in tweets %}
 <div class="innerbox align-middle">
-    <p class="handle"><strong>{{ user.fname }} {{ user.lname }} </strong><span class="text-muted"><a href="/user?id={{ user.id }}">@{{ user.handle }}</a> · 35m ago AKA {{ tweet.datetime }}</span></p>
+    <p class="handle">
+        <strong><a class="name-link" href="/user?id={{ user.id }}">{{ user.fname }} {{ user.lname }}</a> </strong>
+        <span class="text-muted">@{{ user.handle }} · 35m ago AKA {{ tweet.datetime }}</span>
+    </p>
     <p>{{ tweet.text }}</p>
 </div>
 {% else %}
