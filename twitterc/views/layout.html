@@ -13,6 +13,7 @@
     <body>
         <nav class="navbar navbar-expand-md sticky-top navbar-dark bg-dark">
             <a class="navbar-brand" href="/">TwitterC</a>
+            {% if login %}
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -27,6 +28,7 @@
                 </ul>
                 <button class="btn btn-primary my-2 my-sm-0" data-toggle="modal" data-target="#exampleModal">Tweet</button>
             </div>
+            {% endif %}
         </nav>
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -62,7 +64,8 @@
                             <p><a class="panel-link" href="/">My tweets</a></p>
                             <p><a class="panel-link" href="/">All tweets</a></p>
                         {% else %}
-                            <a href="/">Login</a>
+                            <p><a href="/login">Login</a></p>
+                            <p><a href="/register">Register</a></p>
                         {% endif %}
                         </div>
                     </div>

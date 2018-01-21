@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>
+          {% if register %}Register{% else %}Login{% endif %} - Twitterc
+        </title>
+        <!-- Latest compiled and minified Boostrap CSS + dependencies -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+        <!-- App stylesheets -->
+        <link rel="stylesheet" href="/stylesheets/style.css">
+        <!-- App js -->
+        <script>var users = {{ users | dump | safe }};</script>
+        <script src="/javascripts/access.js"></script>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-md sticky-top navbar-dark bg-dark">
+            <a class="navbar-brand" href="/">TwitterC</a>
+        </nav>
+        <div class="container-fluid">
+            <div class="row align-items-center justify-content-center no-gutters">
+                <div class="login-panel col-11 col-md-9 col-lg-4">
+                    <h3 class="text-danger">
+                      {% if register %}Register{% else %}Sign in{% endif %}
+                    </h3>
+                    <form action="/login" method="post" class="mb-2">
+                        <div class="form-group">
+                            <label for="InputEmail" class="mt-2"><strong>User</strong></label>
+                            <input type="input" class="form-control" id="user" name="user" placeholder="username">
+                        </div>
+                        <div class="form-group">
+                            <label for="InputPassword1"><strong>Password</strong></label>
+                            <input type="password" class="form-control" id="InputPassword1" name="password" placeholder="Password">
+                        </div>
+                        <button type="submit" class="btn btn-primary mb-2">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -5,10 +5,25 @@ const users = require('../users.json');
 
 const router = express.Router();
 
+/* GET login */
+router.get('/login', (req, res) => {
+  res.render('access', { users });
+});
+
+/* GET register */
+router.get('/register', (req, res) => {
+  res.render('access', { users, register: true });
+});
+
+/* POST to root - submit tweet */
+router.post('/', (req, res) => {
+  //
+});
+
 /* GET root */
 router.get('/', (req, res) => {
   let login = false;
-  if (req.session.id === 3) {
+  if (req.session.david === 3) {
     login = true;
   }
   res.render('index', { tweets, users, login });
@@ -89,3 +104,6 @@ module.exports = router;
 // why do we launch in console with DEBUG=twitterc:* npm start ?
 // in this file, is the read to tweets.JSON happening every time a GET request is submitted?
 // is it sloppy to have nested asynch calls (e.g. 2 readFile calls)
+
+// best practices for accessing JS vars from server in client?
+// // used <script>var users = {{ users | dump | safe }};</script> but unsure how dump+safe work

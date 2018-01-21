@@ -1,3 +1,5 @@
+/* Global styles */
+
 body {
   background-color: #E9F5FD;
 }
@@ -6,10 +8,16 @@ nav {
   margin-bottom: .5em;
 }
 
+.name-link {
+  color: black;
+}
+
 .box-top {
   border-style: solid;
   border-width: 1px 0px 0px 0px;
 }
+
+/* Tweet feed styles */
 
 .panel {
   margin: 1em;
@@ -34,6 +42,20 @@ nav {
   margin-bottom: 2em;
 }
 
-.name-link {
-  color: black;
+/* Login + register styles */
+
+.login-panel {
+  margin-top: 5em;
+  height: auto;
+  padding: 25px;
+  text-align: center;
+  background-color: white;
+  border: 1px solid grey;
+  border-radius: 5px;
+}
+
+.login-panel .form-group {
+  margin-left: auto;
+  margin-right: auto;
+  width: 65%;
 }
