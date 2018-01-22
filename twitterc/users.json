@@ -1,5 +1,1 @@
-[
-  { "id": 0, "fname": "David", "lname": "Mack", "handle": "machajew" },
-  { "id": 1, "fname": "Joe", "lname": "Smith", "handle": "jsmith11" },
-  { "id": 2, "fname": "Mark", "lname": "Zuck", "handle": "zucky" }
-]
+[{"id":0,"fname":"David","lname":"Mack","handle":"machajew"},{"id":1,"fname":"Joe","lname":"Smith","handle":"jsmith11"},{"id":2,"fname":"Mark","lname":"Zuck","handle":"zucky"},{"id":3,"fname":"rahm","lname":"emanuel","handle":"mrmayor"},{"id":4,"fname":"dan","lname":"daniels","handle":"asdf"},{"id":5,"fname":"dan","lname":"daniels","handle":"asdf"}]

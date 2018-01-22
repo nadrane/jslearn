@@ -22,11 +22,21 @@
                     <h3 class="text-danger">
                     {% if register %}Register{% else %}Sign in{% endif %}
                     </h3>
-                    <form action="/login" method="post" class="mb-2">
+                    <form action="{% if register %}/register{% else %}/login{% endif %}" method="post" class="mb-2">
                         <div class="form-group">
                             <label for="user" class="mt-2"><strong>User</strong></label>
                             <input type="input" class="form-control" id="user" name="user" placeholder="username">
                         </div>
+                        {% if register %}
+                        <div class="form-group">
+                            <label for="fname" class="mt-2"><strong>First Name</strong></label>
+                            <input type="input" class="form-control" id="fname" name="fname" placeholder="First Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="lname" class="mt-2"><strong>Last Name</strong></label>
+                            <input type="input" class="form-control" id="lname" name="lname" placeholder="Last Name">
+                        </div>
+                        {% endif %}
                         <input type="hidden" value="null" name="user_id" id="user_id" />
                         <button id="user-btn" type="submit" class="btn btn-primary mb-2">Submit</button>
                     </form>

@@ -21,6 +21,22 @@ router.get('/register', (req, res) => {
   res.render('access', { users, register: true });
 });
 
+/* POST to register - write new user and set session */
+router.post('/register', (req, res) => {
+  const newId = users.length;
+  users.push({
+    id: newId,
+    fname: req.body.fname,
+    lname: req.body.lname,
+    handle: req.body.user,
+  });
+  fs.writeFile('users.json', JSON.stringify(users), (err) => {
+    if (err) throw err;
+    req.session.user_id = newId;
+    res.redirect('/');
+  });
+});
+
 /* GET root */
 router.get('/', (req, res) => {
   let sessionID = false;
@@ -33,8 +49,7 @@ router.get('/', (req, res) => {
 /* POST to root - submit tweet */
 router.post('/', (req, res) => {
   tweets.unshift({
-    u_id: 2,
-    handle: 'zucky',
+    u_id: req.session.user_id,
     datetime: 1,
     text: req.body.tweetbox,
   });
