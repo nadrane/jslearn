@@ -10,15 +10,17 @@ router.get('/login', (req, res) => {
   res.render('access', { users });
 });
 
+/* POST to login - set user session */
+router.post('/login', (req, res) => {
+  req.session.david = 3;
+  res.redirect('/');
+});
+
 /* GET register */
 router.get('/register', (req, res) => {
   res.render('access', { users, register: true });
 });
 
-/* POST to root - submit tweet */
-router.post('/', (req, res) => {
-  //
-});
 
 /* GET root */
 router.get('/', (req, res) => {
