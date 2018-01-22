@@ -12,7 +12,7 @@ router.get('/login', (req, res) => {
 
 /* POST to login - set user session */
 router.post('/login', (req, res) => {
-  req.session.david = 3;
+  req.session.user_id = req.body.user_id;
   res.redirect('/');
 });
 
@@ -21,14 +21,13 @@ router.get('/register', (req, res) => {
   res.render('access', { users, register: true });
 });
 
-
 /* GET root */
 router.get('/', (req, res) => {
-  let login = false;
-  if (req.session.david === 3) {
-    login = true;
+  let sessionID = false;
+  if (req.session.user_id) {
+    sessionID = req.session.user_id;
   }
-  res.render('index', { tweets, users, login });
+  res.render('index', { tweets, users, sessionID });
 });
 
 /* POST to root - submit tweet */
@@ -47,10 +46,16 @@ router.post('/', (req, res) => {
 
 /* GET user view */
 router.get('/user', (req, res) => {
+  let sessionID = false;
+  if (req.session.user_id) {
+    sessionID = req.session.user_id;
+  }
   // user lookup
   const user = users[req.query.id];
   tweets.filter(tweet => tweet.u_id === parseInt(req.query.id, 10));
-  res.render('user', { tweets, user });
+  res.render('user', {
+    tweets, users, user, sessionID,
+  });
 });
 
 // /* GET root */

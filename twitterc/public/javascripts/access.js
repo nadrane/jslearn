@@ -4,7 +4,7 @@ button.addEventListener('click', (event) => {
   if (!usermatch) {
     alert('no user');
     event.preventDefault();
+  } else {
+    document.getElementById('user_id').value = usermatch.id;
   }
-  document.getElementById('user').value = usermatch.id;
-  event.preventDefault();
 });
