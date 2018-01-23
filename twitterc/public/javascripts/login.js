@@ -4,7 +4,8 @@ const userInput = document.getElementById('user');
 
 // validate username submitted
 button.addEventListener('click', (event) => {
-  const usermatch = users.find(user => user.handle === document.getElementById('user').value);
+  const currentInput = document.getElementById('user').value;
+  const usermatch = users.find(user => user.handle === currentInput);
   if (!usermatch) {
     warn.innerText = "User doesn't exist";
     event.preventDefault();
