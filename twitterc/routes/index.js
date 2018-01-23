@@ -67,9 +67,10 @@ router.get('/user', (req, res) => {
   }
   // user lookup
   const user = users[req.query.id];
-  tweets.filter(tweet => tweet.u_id === parseInt(req.query.id, 10));
+  const userTweets = tweets.filter(tweet =>
+    parseInt(tweet.u_id, 10) === parseInt(req.query.id, 10));
   res.render('user', {
-    tweets, users, user, sessionID,
+    tweets: userTweets, users, user, sessionID,
   });
 });
 
