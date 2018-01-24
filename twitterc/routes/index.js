@@ -12,7 +12,8 @@ router.get('/login', (req, res) => {
 
 /* POST to login - set user session */
 router.post('/login', (req, res) => {
-  req.session.user_id = parseInt(req.body.user_id, 10);
+  req.session.sessionUser = users[req.body.user_id];
+  // req.session.user_id = parseInt(req.body.user_id, 10);
   res.redirect('/');
 });
 
@@ -24,32 +25,33 @@ router.get('/register', (req, res) => {
 /* POST to register - write new user and set session */
 router.post('/register', (req, res) => {
   const newId = users.length;
-  users.push({
+  const newUser = {
     id: newId,
     fname: req.body.fname,
     lname: req.body.lname,
     handle: req.body.user,
-  });
+  };
+  users.push(newUser);
   fs.writeFile('users.json', JSON.stringify(users), (err) => {
     if (err) throw err;
-    req.session.user_id = newId;
+    req.session.sessionUser = newUser;
     res.redirect('/');
   });
 });
 
 /* GET root */
 router.get('/', (req, res) => {
-  let sessionID = false;
-  if (req.session.user_id !== undefined) {
-    sessionID = req.session.user_id;
-  }
-  res.render('index', { tweets, users, sessionID });
+  // let sessionID = false;
+  // if (req.session.sessionUser) {
+  //   sessionID = req.session.user_id;
+  // }
+  res.render('index', { tweets, users, session: req.session.sessionUser });
 });
 
 /* POST to root - submit tweet */
 router.post('/', (req, res) => {
   tweets.unshift({
-    u_id: parseInt(req.session.user_id, 10),
+    u_id: req.session.sessionUser.id,
     datetime: 1,
     text: req.body.tweetbox,
   });
@@ -61,16 +63,16 @@ router.post('/', (req, res) => {
 
 /* GET user view */
 router.get('/user', (req, res) => {
-  let sessionID = false;
-  if (req.session.user_id !== undefined) {
-    sessionID = req.session.user_id;
-  }
+  // let sessionID = false;
+  // if (req.session.user_id !== undefined) {
+  //   sessionID = req.session.user_id;
+  // }
   // user lookup
   const user = users[req.query.id];
   const userTweets = tweets.filter(tweet =>
     parseInt(tweet.u_id, 10) === parseInt(req.query.id, 10));
   res.render('user', {
-    tweets: userTweets, users, user, sessionID,
+    tweets: userTweets, user, session: req.session.sessionUser,
   });
 });
 

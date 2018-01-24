@@ -13,14 +13,14 @@
     <body>
         <nav class="navbar navbar-expand-md sticky-top navbar-dark bg-dark">
             <a class="navbar-brand" href="/">TwitterC</a>
-            {% if (sessionID !== false) %}
+            {% if session %}
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link mx-1" href="/user?id={{ users[sessionID].id }}">My Tweets</a>
+                        <a class="nav-link mx-1" href="/user?id={{ session.id }}">My Tweets</a>
                     </li>
                     <li class="nav-item">
                             <a class="nav-link mx-1" href="/login">Logout</a>
@@ -57,11 +57,11 @@
                 <div class="panel col-md-3 text-center">
                     <div class="box-top">
                         <div id="control-box">
-                        {% if (sessionID !== false) %}
-                            <h3>@{{users[sessionID].handle}}</h3>
+                        {% if session %}
+                            <h3>@{{session.handle}}</h3>
                             <button type="button" class="btn btn-primary my-2" data-toggle="modal" data-target="#exampleModal">Tweet</button>
                             <hr>
-                            <p><a class="panel-link" href="/user?id={{ users[sessionID].id }}">My tweets</a></p>
+                            <p><a class="panel-link" href="/user?id={{ session.id }}">My tweets</a></p>
                             <p><a class="panel-link" href="/">All tweets</a></p>
                         {% else %}
                             <p><a href="/login">Login</a></p>
@@ -85,7 +85,7 @@
                         {% block tweets %}{% endblock %}
                     </div>
                 </div>
-                <div><p>The user id is: {{ sessionID }}</p></div>
+                <div><p>The session user handle is: {{ session.handle }}</p></div>
             </div>
         </div>
     </body>
