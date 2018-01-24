@@ -12,7 +12,7 @@ router.get('/login', (req, res) => {
 
 /* POST to login - set user session */
 router.post('/login', (req, res) => {
-  req.session.user_id = req.body.user_id;
+  req.session.user_id = parseInt(req.body.user_id, 10);
   res.redirect('/');
 });
 
@@ -40,7 +40,7 @@ router.post('/register', (req, res) => {
 /* GET root */
 router.get('/', (req, res) => {
   let sessionID = false;
-  if (req.session.user_id) {
+  if (req.session.user_id !== undefined) {
     sessionID = req.session.user_id;
   }
   res.render('index', { tweets, users, sessionID });
@@ -49,7 +49,7 @@ router.get('/', (req, res) => {
 /* POST to root - submit tweet */
 router.post('/', (req, res) => {
   tweets.unshift({
-    u_id: req.session.user_id,
+    u_id: parseInt(req.session.user_id, 10),
     datetime: 1,
     text: req.body.tweetbox,
   });
@@ -62,7 +62,7 @@ router.post('/', (req, res) => {
 /* GET user view */
 router.get('/user', (req, res) => {
   let sessionID = false;
-  if (req.session.user_id) {
+  if (req.session.user_id !== undefined) {
     sessionID = req.session.user_id;
   }
   // user lookup

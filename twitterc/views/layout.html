@@ -13,7 +13,7 @@
     <body>
         <nav class="navbar navbar-expand-md sticky-top navbar-dark bg-dark">
             <a class="navbar-brand" href="/">TwitterC</a>
-            {% if sessionID %}
+            {% if (sessionID !== false) %}
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -23,7 +23,7 @@
                         <a class="nav-link mx-1" href="/user?id={{ users[sessionID].id }}">My Tweets</a>
                     </li>
                     <li class="nav-item">
-                            <a class="nav-link mx-1" href="/">Logout</a>
+                            <a class="nav-link mx-1" href="/login">Logout</a>
                         </li>
                 </ul>
                 <button class="btn btn-primary my-2 my-sm-0" data-toggle="modal" data-target="#exampleModal">Tweet</button>
@@ -57,7 +57,7 @@
                 <div class="panel col-md-3 text-center">
                     <div class="box-top">
                         <div id="control-box">
-                        {% if sessionID %}
+                        {% if (sessionID !== false) %}
                             <h3>@{{users[sessionID].handle}}</h3>
                             <button type="button" class="btn btn-primary my-2" data-toggle="modal" data-target="#exampleModal">Tweet</button>
                             <hr>
@@ -85,6 +85,7 @@
                         {% block tweets %}{% endblock %}
                     </div>
                 </div>
+                <div><p>The user id is: {{ sessionID }}</p></div>
             </div>
         </div>
     </body>

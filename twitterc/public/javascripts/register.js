@@ -14,17 +14,26 @@ function isAlphaNumeric(str) {
   return true;
 }
 
-const button = document.getElementById('user-btn');
+const button = document.getElementById('access-btn');
 const warn = document.getElementById('access-warn');
+const userInput = document.getElementById('user');
 
 button.addEventListener('click', (event) => {
-  const currentInput = document.getElementById('user');
+  const currentInput = document.getElementById('user').value;
   const usermatch = users.find(user => user.handle === currentInput);
-  if (usermatch) {
-    alert('already taken');
+  if (!isAlphaNumeric(currentInput)) {
+    warn.innerText = 'Invalid username';
     event.preventDefault();
-  } else if (isAlphaNumeric()) {
-    //
+  } else if (usermatch) {
+    warn.innerText = 'Username taken';
+    event.preventDefault();
+  }
+});
+
+userInput.addEventListener('input', () => {
+  // remove warning when text changes
+  if (warn.innerText.length !== 0) {
+    warn.innerText = '';
   }
 });
 
