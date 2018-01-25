@@ -96,8 +96,10 @@ module.exports = router;
 // Why do we launch in console with DEBUG=twitterc:* npm start ?
 // In this file, is the read to tweets.JSON happening every time a GET request is submitted?
 // Is it sloppy to have nested asynch calls (e.g. 2 readFile calls - see below)
-// Best practices for accessing JS vars from server in client?
+// Can we walk through best practices for accessing JS vars from server in client?
 // >> I used <script>var users = {{ users | dump | safe }}; Do w/ Ajax? Nunjucks?
+// >> What benchmarks should I use for how much data gets sent over in a given request?
+
 
 /*
 * Old + for reference
