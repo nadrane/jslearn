@@ -59,7 +59,6 @@ router.get('/', (req, res) => {
 
 /* POST to root - submit tweet */
 router.post('/', (req, res) => {
-  console.log(req.body.tweetbox);
   tweets.unshift({
     u_id: req.session.sessionUser.id,
     datetime: Date.now(),
@@ -90,17 +89,18 @@ module.exports = router;
 * Questions
 */
 
-// what does bin/www do? To what extent/depth level should I be comfortable with configuring that?
-// same for app.js
-// why do we launch in console with DEBUG=twitterc:* npm start ?
-// in this file, is the read to tweets.JSON happening every time a GET request is submitted?
-// is it sloppy to have nested asynch calls (e.g. 2 readFile calls - see below)
-// best practices for accessing JS vars from server in client?
-// // used <script>var users = {{ users | dump | safe }};</script> but unsure how dump+safe work
-
+// Think I need more depth on Express - self-config vs. generator, app.js
+// Want to understand bin/www -- to what extent/depth should I be able to know/manipulate
+// Session+cookies configuration, best practices + resources
+// More general Q's about server stuff - next() and err handling
+// Why do we launch in console with DEBUG=twitterc:* npm start ?
+// In this file, is the read to tweets.JSON happening every time a GET request is submitted?
+// Is it sloppy to have nested asynch calls (e.g. 2 readFile calls - see below)
+// Best practices for accessing JS vars from server in client?
+// >> I used <script>var users = {{ users | dump | safe }}; Do w/ Ajax? Nunjucks?
 
 /*
-* Old/for reference
+* Old + for reference
 */
 
 // /* GET root */
