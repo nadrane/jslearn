@@ -84,6 +84,25 @@ router.get('/user', (req, res) => {
   });
 });
 
+module.exports = router;
+
+/*
+* Questions
+*/
+
+// what does bin/www do? To what extent/depth level should I be comfortable with configuring that?
+// same for app.js
+// why do we launch in console with DEBUG=twitterc:* npm start ?
+// in this file, is the read to tweets.JSON happening every time a GET request is submitted?
+// is it sloppy to have nested asynch calls (e.g. 2 readFile calls - see below)
+// best practices for accessing JS vars from server in client?
+// // used <script>var users = {{ users | dump | safe }};</script> but unsure how dump+safe work
+
+
+/*
+* Old/for reference
+*/
+
 // /* GET root */
 // router.get('/', (req, res) => {
 //   fs.readFile('tweets.json', (err, data) => {
@@ -125,18 +144,3 @@ router.get('/user', (req, res) => {
 //     });
 //   });
 // });
-
-module.exports = router;
-
-/*
-* Questions
-*/
-
-// what does bin/www do? To what extent/depth level should I be comfortable with configuring that?
-// same for app.js
-// why do we launch in console with DEBUG=twitterc:* npm start ?
-// in this file, is the read to tweets.JSON happening every time a GET request is submitted?
-// is it sloppy to have nested asynch calls (e.g. 2 readFile calls)
-
-// best practices for accessing JS vars from server in client?
-// // used <script>var users = {{ users | dump | safe }};</script> but unsure how dump+safe work
