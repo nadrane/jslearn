@@ -9,9 +9,9 @@
 <div class="innerbox align-middle">
     <p class="handle">
         <strong><a class="name-link" href="/user?id={{ user.id }}">{{ user.fname }} {{ user.lname }}</a> </strong>
-        <span class="text-muted">@{{ user.handle }} · 35m ago AKA {{ tweet.datetime }}</span>
+        <span class="text-muted">@{{ user.handle }} · {{ (((currentTime - tweet.datetime) / 1000) / 60) | round }}m ago</span>
     </p>
-    <p>{{ tweet.text }}</p>
+    <p>{{ tweet.text | striptags(true) | escape | nl2br }}</p>
 </div>
 {% else %}
 <div class="innerbox align-middle">

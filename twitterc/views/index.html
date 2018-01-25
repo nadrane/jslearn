@@ -1,3 +1,4 @@
+
 {% extends "layout.html" %}
 
 {% block title %}
@@ -9,9 +10,11 @@ Welcome
 <div class="innerbox align-middle">
     <p class="handle">
         <strong><a class="name-link" href="/user?id={{ users[tweet.u_id].id }}">{{ users[tweet.u_id].fname }} {{ users[tweet.u_id].lname }}</a> </strong>
-        <span class="text-muted">@{{ users[tweet.u_id].handle }} · 35m ago AKA {{ tweet.datetime }}</span>
+        <span class="text-muted">@{{ users[tweet.u_id].handle }} · {{ (((currentTime - tweet.datetime) / 1000) / 60) | round }}m ago</span>
     </p>
-    <p>{{ tweet.text }}</p>
+    <p>
+    {{ tweet.text | striptags(true) | escape | nl2br }}
+    </p>
 </div>
 {% else %}
 <div class="innerbox align-middle">

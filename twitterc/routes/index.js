@@ -17,6 +17,14 @@ router.post('/login', (req, res) => {
   res.redirect('/');
 });
 
+/* GET logout */
+router.get('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) throw err;
+    res.redirect('/');
+  });
+});
+
 /* GET register */
 router.get('/register', (req, res) => {
   res.render('access', { users, register: true });
@@ -41,18 +49,20 @@ router.post('/register', (req, res) => {
 
 /* GET root */
 router.get('/', (req, res) => {
-  // let sessionID = false;
-  // if (req.session.sessionUser) {
-  //   sessionID = req.session.user_id;
-  // }
-  res.render('index', { tweets, users, session: req.session.sessionUser });
+  res.render('index', {
+    tweets,
+    users,
+    session: req.session.sessionUser,
+    currentTime: Date.now(),
+  });
 });
 
 /* POST to root - submit tweet */
 router.post('/', (req, res) => {
+  console.log(req.body.tweetbox);
   tweets.unshift({
     u_id: req.session.sessionUser.id,
-    datetime: 1,
+    datetime: Date.now(),
     text: req.body.tweetbox,
   });
   fs.writeFile('tweets.json', JSON.stringify(tweets), (err) => {
@@ -63,16 +73,14 @@ router.post('/', (req, res) => {
 
 /* GET user view */
 router.get('/user', (req, res) => {
-  // let sessionID = false;
-  // if (req.session.user_id !== undefined) {
-  //   sessionID = req.session.user_id;
-  // }
-  // user lookup
   const user = users[req.query.id];
   const userTweets = tweets.filter(tweet =>
     parseInt(tweet.u_id, 10) === parseInt(req.query.id, 10));
   res.render('user', {
-    tweets: userTweets, user, session: req.session.sessionUser,
+    tweets: userTweets,
+    user,
+    session: req.session.sessionUser,
+    currentTime: Date.now(),
   });
 });
 

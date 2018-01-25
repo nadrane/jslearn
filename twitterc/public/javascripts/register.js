@@ -19,14 +19,16 @@ const warn = document.getElementById('access-warn');
 const userInput = document.getElementById('user');
 
 button.addEventListener('click', (event) => {
-  const currentInput = document.getElementById('user').value;
-  const usermatch = users.find(user => user.handle === currentInput);
+  const currentInput = userInput.value;
   if (!isAlphaNumeric(currentInput)) {
     warn.innerText = 'Invalid username';
     event.preventDefault();
-  } else if (usermatch) {
-    warn.innerText = 'Username taken';
-    event.preventDefault();
+  } else {
+    const usermatch = users.find(user => user.handle === currentInput);
+    if (usermatch) {
+      warn.innerText = 'Username taken';
+      event.preventDefault();
+    }
   }
 });
 

@@ -25,7 +25,7 @@
                     <form action="{% if register %}/register{% else %}/login{% endif %}" method="post" class="mb-2">
                         <div class="form-group">
                             <label for="user" class="mt-2"><strong>User</strong></label>
-                            <input type="input" class="form-control" id="user" name="user" placeholder="username">
+                            <input type="input" class="form-control" id="user" name="user" placeholder="username" autocomplete="off">
                             <small id="access-warn"></small>
                         </div>
                         {% if register %}
