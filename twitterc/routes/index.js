@@ -1,5 +1,6 @@
 const express = require('express');
 const fs = require('fs');
+const helpers = require('../helpers.js');
 const tweets = require('../tweets.json');
 const users = require('../users.json');
 
@@ -13,7 +14,6 @@ router.get('/login', (req, res) => {
 /* POST to login - set user session */
 router.post('/login', (req, res) => {
   req.session.sessionUser = users[req.body.user_id];
-  // req.session.user_id = parseInt(req.body.user_id, 10);
   res.redirect('/');
 });
 
@@ -50,7 +50,7 @@ router.post('/register', (req, res) => {
 /* GET root */
 router.get('/', (req, res) => {
   res.render('index', {
-    tweets,
+    tweets: helpers.timeAgo(tweets),
     users,
     session: req.session.sessionUser,
     currentTime: Date.now(),
@@ -61,7 +61,7 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
   tweets.unshift({
     u_id: req.session.sessionUser.id,
-    datetime: Date.now(),
+    dateTime: Date.now(),
     text: req.body.tweetbox,
   });
   fs.writeFile('tweets.json', JSON.stringify(tweets), (err) => {
@@ -76,7 +76,7 @@ router.get('/user', (req, res) => {
   const userTweets = tweets.filter(tweet =>
     parseInt(tweet.u_id, 10) === parseInt(req.query.id, 10));
   res.render('user', {
-    tweets: userTweets,
+    tweets: helpers.timeAgo(userTweets),
     user,
     session: req.session.sessionUser,
     currentTime: Date.now(),
@@ -119,7 +119,7 @@ module.exports = router;
 //     newtweets.unshift({
 //       u_id: 2,
 //       handle: 'zucky',
-//       datetime: 1,
+//       dateTime: 1,
 //       text: req.body.tweetbox,
 //     });
 //     fs.writeFile('tweets.json', JSON.stringify(newtweets), (writeerr) => {
