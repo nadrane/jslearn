@@ -20,10 +20,10 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link mx-1" href="/user?id={{ session.id }}">My Tweets</a>
+                        <a class="nav-link mx-1" href="/tweets/user?id={{ session.id }}">My Tweets</a>
                     </li>
                     <li class="nav-item">
-                            <a class="nav-link mx-1" href="/logout">Logout</a>
+                            <a class="nav-link mx-1" href="/auth/logout">Logout</a>
                         </li>
                 </ul>
                 <button class="btn btn-primary my-2 my-sm-0" data-toggle="modal" data-target="#exampleModal">Tweet</button>
@@ -40,7 +40,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="/" method="post">
+                        <form action="/tweets" method="post">
                             <div class="form-group">
                                 <textarea class="form-control" id="tweetbox" name="tweetbox" rows="3"></textarea>
                             </div>
@@ -65,11 +65,11 @@
                             <h3>@{{session.handle}}</h3>
                             <button type="button" class="btn btn-primary my-2" data-toggle="modal" data-target="#exampleModal">Tweet</button>
                             <hr>
-                            <p><a class="panel-link" href="/user?id={{ session.id }}">My tweets</a></p>
+                            <p><a class="panel-link" href="/tweets/user?id={{ session.id }}">My tweets</a></p>
                             <p><a class="panel-link" href="/">All tweets</a></p>
                         {% else %}
-                            <p><a href="/login">Login</a></p>
-                            <p><a href="/register">Register</a></p>
+                            <p><a href="/auth/login">Login</a></p>
+                            <p><a href="/auth/register">Register</a></p>
                         {% endif %}
                         </div>
                     </div>
@@ -80,7 +80,7 @@
                     <div id="user-prof">
                         <div class="text-center">
                             <img src="https://d38ru1hah4xv9w.cloudfront.net/assets/user-icon-76fcc00a285be58d0623baa5e4bc13ec0b2e55c846f4f3d1cbbdb6904290c1b6.jpg">
-                            <h4 class="my-2"><a href="/user?id={{ user.id }}">@{{ user.handle }}</a></h4>
+                            <h4 class="my-2"><a href="/tweets/user?id={{ user.id }}">@{{ user.handle }}</a></h4>
                             <p>{{ user.fname }} {{ user.lname }}</p>
                         </div>
                     </div>

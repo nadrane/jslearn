@@ -22,7 +22,7 @@
                     <h3 class="text-danger">
                     {% if register %}Register{% else %}Sign in{% endif %}
                     </h3>
-                    <form action="{% if register %}/register{% else %}/login{% endif %}" method="post" class="mb-2">
+                    <form action="{% if register %}/auth/register{% else %}/auth/login{% endif %}" method="post" class="mb-2">
                         <div class="form-group">
                             <label for="user" class="mt-2"><strong>User</strong></label>
                             <input type="input" class="form-control" id="user" name="user" placeholder="username" autocomplete="off">

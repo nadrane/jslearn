@@ -1,0 +1,1 @@
+Several spots on front-end where I have links as, e.g. href="/tweets/user?id={{ users[tweet.u_id].id }}"> --- When I changed my routing at one point, I had to go through and update every link. Is there a smarter way to do that?

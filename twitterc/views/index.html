@@ -9,7 +9,7 @@ Welcome
 {% for tweet in tweets %}
 <div class="innerbox align-middle">
     <p class="handle">
-        <strong><a class="name-link" href="/user?id={{ users[tweet.u_id].id }}">{{ users[tweet.u_id].fname }} {{ users[tweet.u_id].lname }}</a> </strong>
+        <strong><a class="name-link" href="/tweets/user?id={{ users[tweet.u_id].id }}">{{ users[tweet.u_id].fname }} {{ users[tweet.u_id].lname }}</a> </strong>
         <span class="text-muted">@{{ users[tweet.u_id].handle }} · {{ tweet.ago }}</span>
     </p>
     <p>
@@ -17,7 +17,7 @@ Welcome
     </p>
 </div>
 {% else %}
-<div class="innerbox align-middle">
+<div class="innerbox align-middle text-center">
     <p>No tweets!</p>
 </div>
 {% endfor %}
