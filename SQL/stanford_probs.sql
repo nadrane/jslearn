@@ -117,10 +117,65 @@ select (select avg(ascore)
   Social Media
 **************************************************************/
 /**************************************************************
-  For each movie that has at least one rating, find the highest number of stars that movie received. 
-  Return the movie title and number of stars. Sort by movie title.
+  Find the names of all students who are friends with someone named Gabriel. 
 **************************************************************/
 
 select Highschooler.name
 from Friend join Highschooler on Friend.ID1 = Highschooler.ID
 where ID2 in (select ID from Highschooler where name = "Gabriel");
+
+/**************************************************************
+  For every student who likes someone 2 or more grades younger than themselves, 
+  return that student's name and grade, and the name and grade of the student they like. 
+**************************************************************/
+
+select H1.name, H1.grade, H2.name, H2.grade
+from Likes, Highschooler H1, Highschooler H2
+where Likes.ID1 = H1.ID and Likes.ID2 = H2.ID
+and H1.grade - H2.grade >= 2;
+
+/**************************************************************
+  For every pair of students who both like each other, return the name and grade of both students. 
+  Include each pair only once, with the two names in alphabetical order. 
+**************************************************************/
+
+select H1.name, H1.grade, H2.name, H2.grade
+from Likes L1 join Highschooler H1 on L1.ID1 = H1.ID 
+join Highschooler H2 on L1.ID2 = H2.ID
+where H1.name < H2.name and
+exists (select * from Likes L2 where L1.id1 = L2.id2 and L1.id2 = L2.id1);
+
+/**************************************************************
+  Find all students who do not appear in the Likes table (as a student who likes or is liked) 
+  and return their names and grades. Sort by grade, then by name within each grade. 
+**************************************************************/
+
+select name, grade
+from Highschooler
+where ID not in (select ID1 as id from Likes union select ID2 as id from Likes)
+order by grade, name;
+
+/**************************************************************
+  For every situation where student A likes student B, but we have no information about whom B likes 
+  (that is, B does not appear as an ID1 in the Likes table), return A and B's names and grades. 
+**************************************************************/
+
+select H1.name, H1.grade, H2.name, H2.grade
+from Likes L1 join Highschooler H1 on L1.ID1 = H1.ID 
+join Highschooler H2 on L1.ID2 = H2.ID
+where L1.ID2 not in (select L2.ID1 from Likes L2);
+
+/**************************************************************
+  Find names and grades of students who only have friends in the same grade. 
+  Return the result sorted by grade, then by name within each grade. 
+**************************************************************/
+
+select distinct H1.name, H1.grade
+from Friend F1 join Highschooler H1 on F1.ID1 = H1.ID
+where not exists 
+(select * 
+from Friend F2 join Highschooler H2 on F2.ID2 = H2.ID
+where F2.ID1 = F1.ID1 
+and H2.grade <> H1.grade)
+order by H1.grade, H1.name;
+
