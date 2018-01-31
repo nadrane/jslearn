@@ -179,3 +179,119 @@ where F2.ID1 = F1.ID1
 and H2.grade <> H1.grade)
 order by H1.grade, H1.name;
 
+/**************************************************************
+  For each student A who likes a student B where the two are not friends, 
+  find if they have a friend C in common (who can introduce them!). 
+  For all such trios, return the name and grade of A, B, and C. 
+**************************************************************/
+
+select H1.name, H1.grade, H2.name, H2.grade,
+  (select Highschooler.Name 
+  from Friend join Highschooler on Friend.ID2 = Highschooler.ID
+  where Friend.ID1 = Likes.ID1 
+  and Friend.ID2 in (select Friend.ID2 
+                    from Friend 
+                    where Friend.ID1 = Likes.ID2)),
+  (select Highschooler.grade 
+  from Friend join Highschooler on Friend.ID2 = Highschooler.ID
+  where Friend.ID1 = Likes.ID1 
+  and Friend.ID2 in (select Friend.ID2 
+                    from Friend 
+                    where Friend.ID1 = Likes.ID2))
+from Likes join Highschooler H1 on Likes.ID1 = H1.ID
+join Highschooler H2 on Likes.ID2 = H2.ID
+where not exists (select *
+                  from Friend F1
+                  where F1.ID1 = Likes.ID1 and F1.ID2 = Likes.ID2)
+and exists (select * from Friend F2
+            where F2.ID1 = Likes.ID1 and F2.ID2 in
+            (select F3.ID2 from Friend F3 where F3.ID1 = Likes.ID2));
+
+/**************************************************************
+  Find the difference between the number of students 
+  in the school and the number of different first names. 
+**************************************************************/
+
+select (select count(ID) from Highschooler)
+- (select count(distinct name) from Highschooler);
+
+/**************************************************************
+  Find the name and grade of all students who are 
+  liked by more than one other student. 
+**************************************************************/
+
+select Highschooler.name, Highschooler.grade
+from Likes join Highschooler on Likes.ID2 = Highschooler.ID
+group by Likes.ID2
+having count(*) > 1;
+
+/* alternate/technically safer version */
+
+select
+(select name from Highschooler where ID = Likes.ID2),
+(select grade from Highschooler where ID = Likes.ID2)
+from Likes join Highschooler on Likes.ID2 = Highschooler.ID
+group by Likes.ID2
+having count(*) > 1;
+
+
+
+/**************************************************************
+  Movie - modifications
+**************************************************************/
+/**************************************************************
+  Add the reviewer Roger Ebert to your database, with an rID of 209. 
+**************************************************************/
+
+insert into Reviewer values (209, 'Roger Ebert');
+
+/**************************************************************
+  Insert 5-star ratings by James Cameron for all movies in the database. 
+  Leave the review date as NULL. 
+**************************************************************/
+
+insert into Rating
+  select 207, mID, 5, NULL
+  from Movie;
+
+/**************************************************************
+  For all movies that have an average rating of 4 stars or higher, add 25 to the release year. 
+  (Update the existing tuples; don't insert new tuples.) 
+**************************************************************/
+
+update Movie
+set year = year + 25
+where mID in (select mID
+from Rating
+group by mID
+having avg(stars) >=4);
+
+/**************************************************************
+  Remove all ratings where the movie's year is before 1970 or after 2000, 
+  and the rating is fewer than 4 stars. 
+**************************************************************/
+
+delete from Rating
+where stars < 4
+and mID in
+(select mID from Movie where year < 1970 or year > 2000);
+
+
+
+/**************************************************************
+  Social Media - modifications
+**************************************************************/
+/**************************************************************
+  It's time for the seniors to graduate. Remove all 12th graders from Highschooler. 
+**************************************************************/
+
+delete from Highschooler
+where grade = 12;
+
+/**************************************************************
+  If two students A and B are friends, and A likes B but not vice-versa, remove the Likes tuple.  
+**************************************************************/
+
+delete from Likes
+where ID2 in (select ID2 from Friend where Friend.ID1 = Likes.ID1)
+and ID2 not in (select L.ID1 from Likes L where L.ID2 = Likes.ID1);
