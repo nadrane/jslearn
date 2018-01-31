@@ -1,3 +1,4 @@
+// modules
 const express = require('express');
 const path = require('path');
 const favicon = require('serve-favicon');
@@ -5,6 +6,7 @@ const logger = require('morgan');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const nunjucks = require('nunjucks');
+
 // routes
 const auth = require('./routes/auth');
 const tweets = require('./routes/tweets');
@@ -52,3 +54,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(3000);
+
+// DEBUG=twitterc:* npm start
