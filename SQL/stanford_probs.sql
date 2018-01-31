@@ -93,7 +93,7 @@ order by spread desc, title;
 
 select Max(final) - Min(final) 
 from (select 'combine' as combine, avg(ascore) as final
-      from (select avg(stars) as ascore, (year < 1980) as pre 
+      from (select avg(stars) as ascore, (CASE WHEN (year < 1980) THEN 1  ELSE 0 END) as pre 
             from Rating join Movie on Rating.mID = Movie.mID
             group by Rating.mID) M
       group by pre) G
