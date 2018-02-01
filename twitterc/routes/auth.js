@@ -30,16 +30,18 @@ router.get('/register', (req, res) => {
 
 /* POST to register - write new user and set session */
 router.post('/register', (req, res) => {
-  const queryText = 'INSERT INTO users(fname, lname, handle) VALUES($1, $2, $3)';
+  const queryText = 'INSERT INTO users(fname, lname, handle) VALUES($1, $2, $3) returning uid';
   const queryVals = [req.body.fname, req.body.lname, req.body.user];
   const client = new Client();
   client.connect();
-  client.query(queryText, queryVals, (err) => {
+  client.query(queryText, queryVals, (err, dbRes) => {
     if (err) throw err;
+    console.log('the db return is: ', dbRes.rows[0].uID);
+    req.session.sessionUser = dbRes.rows[0].uID;
+    // hi
     client.end();
+    res.redirect('/');
   });
-  req.session.sessionUser = 666;
-  res.redirect('/');
 });
 
 module.exports = router;
