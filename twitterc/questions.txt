@@ -2,3 +2,4 @@
 // auth.js - see console.log: query returns anon object & remains anon when assigned to session var?
 // TODO/Question: tweets.js /user route: forwarding err to main app.js handler?
 // placement of client.end() calls (e.g. tweet.js /user route)
+// git style version control for dbs? e.g. changing column type for DB on laptop vs other comp
