@@ -97,10 +97,13 @@
                             </p>
                         </div>
                         {% else %}
-                        <div class="innerbox align-middle text-center">
-                            <p>No tweets!</p>
-                        </div>
+                            {% if not err %}
+                            <div class="innerbox align-middle text-center">
+                                <p>No tweets!</p>
+                            </div>
+                            {% endif %}
                         {% endfor %}
+                        {% block err %}{% endblock %}
                     </div>
                 </div>
             </div>

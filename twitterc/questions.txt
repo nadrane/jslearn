@@ -3,3 +3,6 @@
 // TODO/Question: tweets.js /user route: forwarding err to main app.js handler?
 // placement of client.end() calls (e.g. tweet.js /user route)
 // git style version control for dbs? e.g. changing column type for DB on laptop vs other comp
+// err handling when DB server isn't running - catch sends it to my app err handler, want to walk through chain of error stuff
+
+// to-do: visiting /tweets/user?id=424a gives an unhandled SQL err

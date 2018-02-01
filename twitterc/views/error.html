@@ -1,13 +1,8 @@
+{% extends "tweetlayout.html" %}
 
-{% extends "layout.html" %}
-
-{% block title %}
-Error {{ err.status }}
-{% endblock %}
-
-{% block tweets %}
+{% block err %}
 <div class="innerbox align-middle text-center">
-    <h1>Error</h1>
-    <h4>{{ err.status }} - {{ err.message }}</h4>
+    <h1>Error {{ err.status }}</h1>
+    <h4>{{ err.message }}</h4>
 </div>
 {% endblock %}

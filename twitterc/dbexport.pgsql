@@ -35,21 +35,21 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: tweets; Type: TABLE; Schema: public; Owner: machajew
+-- Name: tweets; Type: TABLE; Schema: public; Owner: dmack
 --
 
 CREATE TABLE tweets (
     tid integer NOT NULL,
-    datetime integer,
+    datetime bigint,
     text character varying,
     uid integer
 );
 
 
-ALTER TABLE tweets OWNER TO machajew;
+ALTER TABLE tweets OWNER TO dmack;
 
 --
--- Name: tweets_tid_seq; Type: SEQUENCE; Schema: public; Owner: machajew
+-- Name: tweets_tid_seq; Type: SEQUENCE; Schema: public; Owner: dmack
 --
 
 CREATE SEQUENCE tweets_tid_seq
@@ -61,17 +61,17 @@ CREATE SEQUENCE tweets_tid_seq
     CACHE 1;
 
 
-ALTER TABLE tweets_tid_seq OWNER TO machajew;
+ALTER TABLE tweets_tid_seq OWNER TO dmack;
 
 --
--- Name: tweets_tid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: machajew
+-- Name: tweets_tid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: dmack
 --
 
 ALTER SEQUENCE tweets_tid_seq OWNED BY tweets.tid;
 
 
 --
--- Name: users; Type: TABLE; Schema: public; Owner: machajew
+-- Name: users; Type: TABLE; Schema: public; Owner: dmack
 --
 
 CREATE TABLE users (
@@ -82,10 +82,10 @@ CREATE TABLE users (
 );
 
 
-ALTER TABLE users OWNER TO machajew;
+ALTER TABLE users OWNER TO dmack;
 
 --
--- Name: users_uid_seq; Type: SEQUENCE; Schema: public; Owner: machajew
+-- Name: users_uid_seq; Type: SEQUENCE; Schema: public; Owner: dmack
 --
 
 CREATE SEQUENCE users_uid_seq
@@ -97,68 +97,74 @@ CREATE SEQUENCE users_uid_seq
     CACHE 1;
 
 
-ALTER TABLE users_uid_seq OWNER TO machajew;
+ALTER TABLE users_uid_seq OWNER TO dmack;
 
 --
--- Name: users_uid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: machajew
+-- Name: users_uid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: dmack
 --
 
 ALTER SEQUENCE users_uid_seq OWNED BY users.uid;
 
 
 --
--- Name: tweets tid; Type: DEFAULT; Schema: public; Owner: machajew
+-- Name: tweets tid; Type: DEFAULT; Schema: public; Owner: dmack
 --
 
 ALTER TABLE ONLY tweets ALTER COLUMN tid SET DEFAULT nextval('tweets_tid_seq'::regclass);
 
 
 --
--- Name: users uid; Type: DEFAULT; Schema: public; Owner: machajew
+-- Name: users uid; Type: DEFAULT; Schema: public; Owner: dmack
 --
 
 ALTER TABLE ONLY users ALTER COLUMN uid SET DEFAULT nextval('users_uid_seq'::regclass);
 
 
 --
--- Data for Name: tweets; Type: TABLE DATA; Schema: public; Owner: machajew
+-- Data for Name: tweets; Type: TABLE DATA; Schema: public; Owner: dmack
 --
 
 COPY tweets (tid, datetime, text, uid) FROM stdin;
-3	33000	im first	9
-4	33000	im first	9
+6	1517514973589	This is first's first	39
+7	1517514987173	This is first's second!	39
+8	1517515010805	This is second's first!	40
+9	1517515042677	This is second's second and fourth overall	40
+10	1517515139773	David is trying\r\n\r\nto tweet with two lines	41
+11	1517515148638	David tweets again!	41
+12	1517528790928	hi im new	42
+13	1517528821576	srthdrhtdrt	42
 \.
 
 
 --
--- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: machajew
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: dmack
 --
 
 COPY users (uid, fname, lname, handle) FROM stdin;
-1	hey	there	feaeawef
-2	double	a	aa
-3	b	b	b
-4	c	c	c
-5	d	d	d
+39	First	Man	first
+40	Second	Man	second
+41	David	Mack	david
+42	new	person	new
+43	ok	fine	hey
 \.
 
 
 --
--- Name: tweets_tid_seq; Type: SEQUENCE SET; Schema: public; Owner: machajew
+-- Name: tweets_tid_seq; Type: SEQUENCE SET; Schema: public; Owner: dmack
 --
 
-SELECT pg_catalog.setval('tweets_tid_seq', 4, true);
-
-
---
--- Name: users_uid_seq; Type: SEQUENCE SET; Schema: public; Owner: machajew
---
-
-SELECT pg_catalog.setval('users_uid_seq', 5, true);
+SELECT pg_catalog.setval('tweets_tid_seq', 13, true);
 
 
 --
--- Name: tweets tweets_pkey; Type: CONSTRAINT; Schema: public; Owner: machajew
+-- Name: users_uid_seq; Type: SEQUENCE SET; Schema: public; Owner: dmack
+--
+
+SELECT pg_catalog.setval('users_uid_seq', 43, true);
+
+
+--
+-- Name: tweets tweets_pkey; Type: CONSTRAINT; Schema: public; Owner: dmack
 --
 
 ALTER TABLE ONLY tweets
@@ -166,7 +172,7 @@ ALTER TABLE ONLY tweets
 
 
 --
--- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: machajew
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: dmack
 --
 
 ALTER TABLE ONLY users
