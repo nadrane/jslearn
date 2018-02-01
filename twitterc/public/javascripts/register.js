@@ -23,13 +23,14 @@ button.addEventListener('click', (event) => {
   if (!isAlphaNumeric(currentInput)) {
     warn.innerText = 'Invalid username';
     event.preventDefault();
-  } else {
-    const usermatch = users.find(user => user.handle === currentInput);
-    if (usermatch) {
-      warn.innerText = 'Username taken';
-      event.preventDefault();
-    }
   }
+  // else {
+  //   const usermatch = users.find(user => user.handle === currentInput);
+  //   if (usermatch) {
+  //     warn.innerText = 'Username taken';
+  //     event.preventDefault();
+  //   }
+  // }
 });
 
 userInput.addEventListener('input', () => {

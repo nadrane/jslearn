@@ -1,5 +1,5 @@
 const helpers = {
-  // add 'ago' property for array of objects with dateTime
+  // add 'ago' property for array of objects with datetime
   timeAgo: function timeAgo(arr) {
     const currentTime = Date.now();
     const months = ['January', 'Feburary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -9,10 +9,10 @@ const helpers = {
     const minsPerHour = 60;
     return arr.map((obj) => {
       let ago;
-      const mins = Math.round(((currentTime - obj.dateTime) / 1000) / 60);
+      const mins = Math.round(((currentTime - obj.datetime) / 1000) / 60);
       // over 4 weeks
       if (mins >= minsPerMonth) {
-        const date = new Date(obj.dateTime);
+        const date = new Date(obj.datetime);
         ago = `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
       } else if (mins > minsPerWeek) {
         ago = `${Math.round(mins / minsPerWeek)}w ago`;

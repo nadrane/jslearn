@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Twitterc - {% block title %}{% endblock %}</title>
+        <title>Twitterc - {% if user %}{{ user.handle }}{% else %}Welcome!{% endif %}</title>
         <!-- Latest compiled and minified Boostrap CSS + dependencies -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -20,7 +20,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link mx-1" href="/tweets/user?id={{ session.id }}">My Tweets</a>
+                        <a class="nav-link mx-1" href="/tweets/user?id={{ session.uid }}">My Tweets</a>
                     </li>
                     <li class="nav-item">
                             <a class="nav-link mx-1" href="/auth/logout">Logout</a>
@@ -65,7 +65,7 @@
                             <h3>@{{session.handle}}</h3>
                             <button type="button" class="btn btn-primary my-2" data-toggle="modal" data-target="#exampleModal">Tweet</button>
                             <hr>
-                            <p><a class="panel-link" href="/tweets/user?id={{ session.id }}">My tweets</a></p>
+                            <p><a class="panel-link" href="/tweets/user?id={{ session.uid }}">My tweets</a></p>
                             <p><a class="panel-link" href="/">All tweets</a></p>
                         {% else %}
                             <p><a href="/auth/login">Login</a></p>
@@ -80,13 +80,27 @@
                     <div id="user-prof">
                         <div class="text-center">
                             <img src="https://d38ru1hah4xv9w.cloudfront.net/assets/user-icon-76fcc00a285be58d0623baa5e4bc13ec0b2e55c846f4f3d1cbbdb6904290c1b6.jpg">
-                            <h4 class="my-2"><a href="/tweets/user?id={{ user.id }}">@{{ user.handle }}</a></h4>
+                            <h4 class="my-2"><a href="/tweets/user?id={{ user.uid }}">@{{ user.handle }}</a></h4>
                             <p>{{ user.fname }} {{ user.lname }}</p>
                         </div>
                     </div>
                     {% endif %}
                     <div class="box-top">
-                        {% block tweets %}{% endblock %}
+                        {% for tweet in tweets %}
+                        <div class="innerbox align-middle">
+                            <p class="handle">
+                                <strong><a class="name-link" href="/tweets/user?id={{ tweet.uid }}">{{ tweet.fname }} {{ tweet.lname }}</a> </strong>
+                                <span class="text-muted">@{{ tweet.handle }} · {{ tweet.ago }}</span>
+                            </p>
+                            <p>
+                            {{ tweet.text | striptags(true) | escape | nl2br }}
+                            </p>
+                        </div>
+                        {% else %}
+                        <div class="innerbox align-middle text-center">
+                            <p>No tweets!</p>
+                        </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>

@@ -28,7 +28,7 @@
                             <input type="input" class="form-control" id="user" name="user" placeholder="username" autocomplete="off">
                             <small id="access-warn"></small>
                         </div>
-                        {% if register %}
+                    {% if register %}
                         <div class="form-group">
                             <label for="fname" class="mt-2"><strong>First Name</strong></label>
                             <input type="input" class="form-control" id="fname" name="fname" placeholder="First Name">
@@ -37,8 +37,7 @@
                             <label for="lname" class="mt-2"><strong>Last Name</strong></label>
                             <input type="input" class="form-control" id="lname" name="lname" placeholder="Last Name">
                         </div>
-                        {% endif %}
-                        <input type="hidden" value="null" name="user_id" id="user_id" />
+                    {% endif %}
                         <button id="access-btn" type="submit" class="btn btn-primary mb-2">Submit</button>
                     </form>
                 </div>
@@ -46,6 +45,5 @@
         </div>
     </body>
     <!-- App js -->
-    <script>var users = {{ users | dump | safe }};</script>
     <script src="/javascripts/{% if register %}register{% else %}login{% endif %}.js"></script>
 </html>

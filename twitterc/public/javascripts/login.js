@@ -1,17 +1,38 @@
+// helper - stackoverflow.com/a/25352300/6372580
+function isAlphaNumeric(str) {
+  const len = str.length;
+  let code;
+
+  for (let i = 0; i < len; i += 1) {
+    code = str.charCodeAt(i);
+    if (!(code > 47 && code < 58) && // numeric (0-9)
+        !(code > 64 && code < 91) && // upper alpha (A-Z)
+        !(code > 96 && code < 123)) { // lower alpha (a-z)
+      return false;
+    }
+  }
+  return true;
+}
+
 const button = document.getElementById('access-btn');
 const warn = document.getElementById('access-warn');
 const userInput = document.getElementById('user');
 
-// validate user exists
 button.addEventListener('click', (event) => {
-  const usermatch = users.find(user => user.handle === userInput.value);
-  if (!usermatch) {
-    warn.innerText = "User doesn't exist";
+  const currentInput = userInput.value;
+  if (!isAlphaNumeric(currentInput)) {
+    warn.innerText = 'Invalid username';
     event.preventDefault();
-  } else {
-    // pass matched user id to server
-    document.getElementById('user_id').value = usermatch.id;
   }
+  // validate user exists
+  // const usermatch = users.find(user => user.handle === userInput.value);
+  // if (!usermatch) {
+  //   warn.innerText = "User doesn't exist";
+  //   event.preventDefault();
+  // } else {
+  //   // pass matched user id to server
+  //   document.getElementById('user_id').value = usermatch.id;
+  // }
 });
 
 userInput.addEventListener('input', () => {
