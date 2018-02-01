@@ -1,6 +1,6 @@
 const express = require('express');
-const fs = require('fs');
 const users = require('../users.json');
+const { Client } = require('pg');
 
 const router = express.Router();
 
@@ -30,19 +30,16 @@ router.get('/register', (req, res) => {
 
 /* POST to register - write new user and set session */
 router.post('/register', (req, res) => {
-  const newId = users.length;
-  const newUser = {
-    id: newId,
-    fname: req.body.fname,
-    lname: req.body.lname,
-    handle: req.body.user,
-  };
-  users.push(newUser);
-  fs.writeFile('users.json', JSON.stringify(users), (err) => {
+  const queryText = 'INSERT INTO users(fname, lname, handle) VALUES($1, $2, $3)';
+  const queryVals = [req.body.fname, req.body.lname, req.body.user];
+  const client = new Client();
+  client.connect();
+  client.query(queryText, queryVals, (err) => {
     if (err) throw err;
-    req.session.sessionUser = newUser;
-    res.redirect('/');
+    client.end();
   });
+  req.session.sessionUser = 666;
+  res.redirect('/');
 });
 
 module.exports = router;
