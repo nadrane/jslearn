@@ -48,8 +48,6 @@ router.post('/register', (req, res) => {
   client.query(queryText, queryVals, (err, dbRes) => {
     if (err) throw err;
     [req.session.sessionUser] = dbRes.rows;
-    // console.log('the new session user is: ', req.session.sessionUser);
-    // console.log('the new session id is: ', req.session.sessionUser.uid);
     res.redirect('/');
     client.end();
   });

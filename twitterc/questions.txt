@@ -1,11 +1,18 @@
-// Several spots on front-end where I have links as, e.g. href="/tweets/user?id={{ users[tweet.u_id].id }}"> 
-    --- When I changed my routing at one point, I had to go through and update every link. Smarter way a la flask??
-// auth.js - see console.log: query returns anon object & remains anon when assigned to session var?
-// **placement of client.end() calls (e.g. tweet.js /user route)
+xxxx// Several spots on front-end where I have links as, e.g. href="/tweets/user?id={{ users[tweet.u_id].id }}"> 
+xxxx    --- When I changed my routing at one point, I had to go through and update every link. Smarter way a la flask??
+xxx// auth.js - see console.log: query returns anon object & remains anon when assigned to session var?
+xxxxx// **placement of client.end() calls (e.g. tweet.js /user route)
 // git style version control for dbs? e.g. changing column type for DB on laptop vs other comp
 // tweets.js /user route: forwarding err to main app.js handler?
 // err handling when DB server isn't running - see .catch statement at end of get root
     -- couldn't recreate with regular try/catch block (tweets.js GET user route)
-// postgres config - setting passwords, env variables, etc.
+xxxx// postgres config - setting passwords, env variables, etc.
+
+
+
+
+
+
+
 
 // to-do: visiting /tweets/user?id=424a gives an unhandled SQL err
