@@ -6,5 +6,6 @@
 // tweets.js /user route: forwarding err to main app.js handler?
 // err handling when DB server isn't running - see .catch statement at end of get root
     -- couldn't recreate with regular try/catch block (tweets.js GET user route)
+// postgres config - setting passwords, env variables, etc.
 
 // to-do: visiting /tweets/user?id=424a gives an unhandled SQL err
