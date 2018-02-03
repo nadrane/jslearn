@@ -1,9 +1,8 @@
 const express = require('express');
-const { Client } = require('pg');
+const { Client, connectionString } = require('../db/index');
 
 // router and db config
 const router = express.Router();
-const connectionString = 'postgresql://machajew:twitterc@localhost:5432/twitterc';
 
 /* GET login */
 router.get('/login', (req, res) => {
@@ -12,20 +11,19 @@ router.get('/login', (req, res) => {
 
 /* POST to login - set user session */
 router.post('/login', (req, res, next) => {
-  const queryText = 'SELECT DISTINCT * FROM users WHERE handle = $1';
-  const queryVals = [req.body.user];
   const client = new Client({ connectionString });
   client.connect();
-  client.query(queryText, queryVals, (err, dbRes) => {
-    if (err) return next(err);
-    if (dbRes.rows.length === 0) {
-      res.redirect('/auth/login');
-    } else {
-      [req.session.sessionUser] = dbRes.rows;
-      res.redirect('/');
-    }
-    client.end();
-  });
+  client.query('SELECT DISTINCT * FROM users WHERE handle = $1', [req.body.user])
+    .then((dbRes) => {
+      if (res.rows.length === 0) {
+        res.redirect('/auth/login');
+      } else {
+        [req.session.sessionUser] = dbRes.rows;
+        res.redirect('/');
+      }
+      client.end();
+    })
+    .catch(e => next(e));
 });
 
 /* GET logout */

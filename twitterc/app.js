@@ -6,6 +6,10 @@ const logger = require('morgan');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const nunjucks = require('nunjucks');
+const { buildDB } = require('./db/index');
+
+// build dev database
+buildDB();
 
 // routes
 const auth = require('./routes/auth');

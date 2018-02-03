@@ -1,10 +1,9 @@
 const express = require('express');
 const helpers = require('../helpers.js');
-const { Client } = require('pg');
+const { Client, connectionString } = require('../db/index');
 
 // router and db config
 const router = express.Router();
-const connectionString = 'postgresql://machajew:twitterc@localhost:5432/twitterc';
 
 /* GET tweets root (all-tweets view) */
 router.get('/', (req, res, next) => {
