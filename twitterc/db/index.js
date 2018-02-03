@@ -1,7 +1,6 @@
 const { Client } = require('pg');
+const connection = Client.connect();
 
-const connection  = Client.connect()
+connection.query("TRUN");
 
-connection.query("TRUN")
-
-module.exports = connection
+module.exports = connection;
