@@ -18,8 +18,9 @@ const dbConfig = {
     client.query('TRUNCATE tweets, users;')
       .then(res => client.query(`INSERT INTO tweets (datetime, text, uid) VALUES ${tweetsData};`))
       .then(res => client.query(`INSERT INTO users (uid, fname, lname, handle) VALUES ${usersData};`))
-      .then(res => client.end())
-      .catch(e => console.log(e));
+      .catch(e => console.log(e))
+      .then(res => client.end());
   },
 };
+
 module.exports = dbConfig;
