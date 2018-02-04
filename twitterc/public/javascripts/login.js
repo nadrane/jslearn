@@ -24,15 +24,6 @@ button.addEventListener('click', (event) => {
     warn.innerText = 'Invalid username';
     event.preventDefault();
   }
-  // validate user exists
-  // const usermatch = users.find(user => user.handle === userInput.value);
-  // if (!usermatch) {
-  //   warn.innerText = "User doesn't exist";
-  //   event.preventDefault();
-  // } else {
-  //   // pass matched user id to server
-  //   document.getElementById('user_id').value = usermatch.id;
-  // }
 });
 
 userInput.addEventListener('input', () => {
