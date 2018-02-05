@@ -9,10 +9,9 @@ const router = express.Router();
 router.get('/', (req, res, next) => {
   const client = new Client({ connectionString });
   client.connect();
-  client
-    .query(`SELECT * FROM tweets 
-            JOIN users ON tweets.uid = users.uid 
-            ORDER BY datetime desc;`)
+  client.query(`SELECT * FROM tweets 
+                JOIN users ON tweets.uid = users.uid 
+                ORDER BY datetime desc;`)
     .then((dbRes) => {
       let tweets;
       if (dbRes.rows.length > 0) {
@@ -32,12 +31,11 @@ router.get('/', (req, res, next) => {
 router.post('/', (req, res, next) => {
   const client = new Client({ connectionString });
   client.connect();
-  client
-    .query(
-      `INSERT INTO tweets(datetime, text, uid) 
-        VALUES($1, $2, $3)`,
-      [Date.now(), req.body.tweetbox, req.session.sessionUser.uid],
-    )
+  client.query(
+    `INSERT INTO tweets(datetime, text, uid) 
+      VALUES($1, $2, $3)`,
+    [Date.now(), req.body.tweetbox, req.session.sessionUser.uid],
+  )
     .then(() => res.redirect('/'))
     .catch(e => next(e))
     .then(() => client.end());
@@ -50,8 +48,10 @@ router.get('/user', (req, res, next) => {
   let tweets;
   const client = new Client({ connectionString });
   client.connect();
-  client
-    .query('SELECT DISTINCT * FROM users WHERE uid = $1;', [req.query.id])
+  client.query(
+    'SELECT DISTINCT * FROM users WHERE uid = $1;',
+    [req.query.id],
+  )
     .then((dbRes) => {
       if (dbRes.rows.length === 0) {
         const uErr = new Error("Sorry! That user doesn't exist.");

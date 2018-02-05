@@ -13,12 +13,11 @@ router.get('/login', (req, res) => {
 router.post('/login', (req, res, next) => {
   const client = new Client({ connectionString });
   client.connect();
-  client
-    .query(
-      `SELECT DISTINCT * 
-        FROM users WHERE handle = $1`,
-      [req.body.user],
-    )
+  client.query(
+    `SELECT DISTINCT * 
+      FROM users WHERE handle = $1`,
+    [req.body.user],
+  )
     .then((dbRes) => {
       if (dbRes.rows.length === 0) {
         res.redirect('/auth/login');
@@ -48,12 +47,11 @@ router.get('/register', (req, res) => {
 router.post('/register', (req, res, next) => {
   const client = new Client({ connectionString });
   client.connect();
-  client
-    .query(
-      `INSERT INTO users(fname, lname, handle)
-        VALUES($1, $2, $3) RETURNING *;`,
-      [req.body.fname, req.body.lname, req.body.user],
-    )
+  client.query(
+    `INSERT INTO users(fname, lname, handle)
+      VALUES($1, $2, $3) RETURNING *;`,
+    [req.body.fname, req.body.lname, req.body.user],
+  )
     .then((dbRes) => {
       [req.session.sessionUser] = dbRes.rows;
       res.redirect('/');
