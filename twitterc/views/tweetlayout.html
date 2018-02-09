@@ -3,10 +3,10 @@
     <head>
         <title>Twitterc - {% if user %}{{ user.handle }}{% else %}Welcome!{% endif %}</title>
         <!-- Latest compiled and minified Boostrap CSS + dependencies -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+        <script src="/javascripts/jquery-3.2.1.slim.min.js"></script>
+        <script src="/javascripts/popper.min.js"></script>
+        <script src="/javascripts/bootstrap.min.js"></script>
         <!-- App stylesheets -->
         <link rel="stylesheet" href="/stylesheets/style.css">
     </head>
@@ -61,7 +61,7 @@
                             <div class="mb-2">
                                 <small class="text-muted">Welcome back, {{session.fname}} {{session.lname}}!</small>
                             </div>
-                            <img src="https://www.childrensmn.org/assets/img/m1041_int_mar_social-footer-icons_40x40_twitter.png">
+                            <img src="/images/twittercon.png">
                             <h3>@{{session.handle}}</h3>
                             <button type="button" class="btn btn-primary my-2" data-toggle="modal" data-target="#exampleModal">Tweet</button>
                             <hr>
@@ -79,7 +79,7 @@
                     {% if user %}
                     <div id="user-prof">
                         <div class="text-center">
-                            <img src="https://d38ru1hah4xv9w.cloudfront.net/assets/user-icon-76fcc00a285be58d0623baa5e4bc13ec0b2e55c846f4f3d1cbbdb6904290c1b6.jpg">
+                            <img src="/images/profilecon.jpg">
                             <h4 class="my-2"><a href="/tweets/user?id={{ user.uid }}">@{{ user.handle }}</a></h4>
                             <p>{{ user.fname }} {{ user.lname }}</p>
                         </div>
