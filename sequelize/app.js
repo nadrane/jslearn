@@ -6,15 +6,15 @@ const logger = require('morgan');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const nunjucks = require('nunjucks');
-// const { buildDB } = require('./db/index');
+const { devData } = require('./db/index');
 
-// build dev database
-// buildDB();
+// build dev DB
+devData();
 
 // routes
+const movies = require('./routes/movies');
 
 const app = express();
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 nunjucks.configure('views', {
@@ -33,10 +33,7 @@ app.use(session({
   saveUninitialized: false,
 }));
 app.use(express.static(path.join(__dirname, 'public')));
-app.get('/', (req, res) => res.render('hi'));
-// app.get('/', (req, res) => { res.redirect('/tweets'); });
-// app.use('/tweets', tweets);
-// app.use('/auth', auth);
+app.use('/movies', movies);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

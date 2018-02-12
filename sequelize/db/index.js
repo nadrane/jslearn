@@ -1,25 +1,152 @@
-const { Client } = require('pg');
+const { addData } = require('../helpers.js');
+const Sequelize = require('sequelize');
 
-const connectionString = 'postgresql://machajew:twitterc@localhost:5432/twitterc';
-const usersData = "(1, 'First', 'Man', 'first'), (2, 'Second', 'Man', 'second'), (3, 'Third', 'Man', 'third'), (4, 'Fourth', 'Man', 'fourth')";
-const tweetsData = `(1517514973589, 'This is firsts first', 1), 
-                    (1517514987173, 'This is firsts second!', 1),
-                    (1517515010805, 'This is seconds first', 2),
-                    (1517515042677, 'This is seconds second', 2),
-                    (1517515139773, 'This is thirds first', 3),
-                    (1517515139773, 'This is fourth first', 4),
-                    (1517528821576, 'This is thirds second!!!!OK!!!', 3);`;
+// establish connection
+const connection = new Sequelize({
+  database: 'movietown',
+  username: null,
+  password: null,
+  dialect: 'postgres',
+  operatorsAliases: false,
+});
+
+// define models
+const Director = connection.define('directors', {
+  did: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+});
+const Reviewer = connection.define('reviewers', {
+  uid: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  username: {
+    type: Sequelize.STRING,
+    unique: true,
+    allowNull: false,
+  },
+});
+const Movie = connection.define('movies', {
+  mid: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  title: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  year: {
+    type: Sequelize.INTEGER,
+  },
+  did: {
+    type: Sequelize.INTEGER,
+    references: {
+      model: Director,
+      key: 'did',
+      deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE,
+    },
+  },
+});
+const Review = connection.define('reviews', {
+  rid: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  stars: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+  },
+  mid: {
+    type: Sequelize.INTEGER,
+    references: {
+      model: Movie,
+      key: 'mid',
+      deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE,
+    },
+  },
+  uid: {
+    type: Sequelize.INTEGER,
+    references: {
+      model: Reviewer,
+      key: 'uid',
+      deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE,
+    },
+  },
+});
+
 const dbConfig = {
-  Client,
-  connectionString,
-  buildDB: () => {
-    const client = new Client({ connectionString });
-    client.connect();
-    client.query('TRUNCATE tweets, users;')
-      .then(res => client.query(`INSERT INTO tweets (datetime, text, uid) VALUES ${tweetsData};`))
-      .then(res => client.query(`INSERT INTO users (uid, fname, lname, handle) VALUES ${usersData};`))
-      .catch(e => console.log(e))
-      .then(res => client.end());
+  connection,
+  models: {
+    Director,
+    Movie,
+    Reviewer,
+    Review,
+  },
+  // truncate tables and fill with scratch data
+  devData: () => {
+    if (connection) {
+      Director.sync({ force: true })
+        .then(() => Reviewer.sync({ force: true }))
+        .then(() => Movie.sync({ force: true }))
+        .then(() => Review.sync({ force: true }))
+        .then(() =>
+          addData(
+            {
+              Director,
+              Movie,
+              Reviewer,
+              Review,
+            },
+            [
+              {
+                director: 'Stanley Kubrick',
+                title: 'The Shining',
+                year: 1980,
+                username: 'kubrickhead123',
+                stars: 4,
+              },
+              {
+                director: 'Paul King',
+                title: 'Paddintgon 2',
+                year: 2018,
+                username: 'paddingfan',
+                stars: 5,
+              },
+              {
+                director: 'Brian De Palma',
+                title: 'The Exorcist',
+                year: 1973,
+                username: 'scarylady',
+                stars: 3,
+              },
+              {
+                director: 'Orson Welles',
+                title: 'Citizen Kane',
+                year: 1941,
+                username: 'mrclassic',
+                stars: 4,
+              },
+              {
+                director: 'Paul Thomas Anderson',
+                title: 'Magnolia',
+                year: 1999,
+                username: 'PTA4lyfe',
+                stars: 4,
+              },
+            ],
+          ))
+        .catch(err => console.log(err));
+    }
   },
 };
 
