@@ -12,6 +12,8 @@ const { devData } = require('./db/index');
 devData();
 
 // routes
+const auth = require('./routes/auth');
+const director = require('./routes/director');
 const movies = require('./routes/movies');
 
 const app = express();
@@ -34,7 +36,10 @@ app.use(session({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) => { res.redirect('/movies'); });
+app.use('/auth', auth);
 app.use('/movies', movies);
+app.use('/director', director);
+
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

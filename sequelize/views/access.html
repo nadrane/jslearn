@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}
+{% if register %}Register{% else %}Login{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="col-11 col-md-9 col-lg-4">
+  <div class="panel">
+    <h3 class="text-danger">
+    {% if register %}Register{% else %}Sign in{% endif %}
+    </h3>
+    <form action="{% if register %}/auth/register{% else %}/auth/login{% endif %}" method="post" class="mb-2">
+      <div class="form-group">
+          <label for="user" class="mt-2"><strong>User</strong></label>
+          <input type="input" class="form-control" id="user" name="user" placeholder="username" autocomplete="off">
+          <small id="access-warn"></small>
+      </div>
+      <button id="access-btn" type="submit" class="btn btn-primary mb-2">Submit</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

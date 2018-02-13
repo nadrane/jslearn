@@ -4,12 +4,57 @@
 {{ movie.title }}
 {% endblock %}
 
+{% block modalTitle %}
+Add review for <em>{{ movie.title }} ({{ movie.year }})</em>:
+{% endblock %}
+
+{% block modalBody %}
+<form action="/movies/film" method="post">
+    <div class="form-group">
+        <label for="user" class="mt-2"><strong>Rating ★:</strong></label>
+        <select class="form-control" id="rating">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="comment" class="mt-2"><strong>Review:</strong></label>
+        <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+    </div>
+    <div class="form-group text-right">
+        <button type="submit" class="btn btn-primary mr-auto movie-btn" action="submit">Submit</button>
+    </div>
+</form>
+{% endblock %}
+
+<form action="{% if register %}/auth/register{% else %}/auth/login{% endif %}" method="post" class="mb-2">
+    <div class="form-group">
+        <label for="user" class="mt-2"><strong>User</strong></label>
+        <input type="input" class="form-control" id="user" name="user" placeholder="username" autocomplete="off">
+        <small id="access-warn"></small>
+    </div>
+{% if register %}
+    <div class="form-group">
+        <label for="fname" class="mt-2"><strong>First Name</strong></label>
+        <input type="input" class="form-control" id="fname" name="fname" placeholder="First Name">
+    </div>
+    <div class="form-group">
+        <label for="lname" class="mt-2"><strong>Last Name</strong></label>
+        <input type="input" class="form-control" id="lname" name="lname" placeholder="Last Name">
+    </div>
+{% endif %}
+    <button id="access-btn" type="submit" class="btn btn-primary mb-2">Submit</button>
+</form>
+
 {% block content %}
 <div class="col-sm-8">
     <div class="panel">
         <h1>{{ movie.title }}</h1>
         <hr>
-        <h6 class="score">{{ avg }} ★</h6>
+        <div><strong>Avg. Score:</strong> {{ avg }} ★</div>
         <div><strong>Released:</strong> {{ movie.year }}</div>
         <div><strong>Director:</strong> <a href="/director?id={{ movie.director.did }}">{{ movie.director.name }}</a></div>
     </div>
@@ -18,7 +63,7 @@
     <thead class="thead-dark">
         <tr>
             <th scope="col">User</th>
-            <th scope="col">Rating</th>
+            <th scope="col">Rating (★★★★★)</th>
             <th scope="col">Review</th>
         </tr>
     </thead>
@@ -32,4 +77,5 @@
         {% endfor %}
     </tbody>
 </table>
+<button type="button" class="btn btn-lg movie-btn add-btn" data-toggle="modal" data-target="#movieModal">+ Add Review</button>
 {% endblock %}

@@ -19,6 +19,12 @@ router.get('/film', (req, res, next) => {
     include: [{
       model: models.Director,
     }],
+  }).then((dbRes) => {
+    if (!dbRes) {
+      const uErr = new Error("Sorry! That film doesn't exist.");
+      uErr.status = 404;
+      throw uErr;
+    } else return dbRes;
   });
 
   const reviewProm = models.Review.findAll({
@@ -31,14 +37,12 @@ router.get('/film', (req, res, next) => {
   const avgProm = models.Review.findAll({
     where: { movieMid: req.query.id },
     attributes: [[connection.fn('AVG', connection.col('reviews.stars')), 'avgValue']],
-  })
-    .then(p => p[0].dataValues.avgValue);
+  }).then(dbRes => dbRes[0].dataValues.avgValue);
 
   Promise.all([movieProm, reviewProm, avgProm])
     .then((dbRes) => {
       res.render('film', { movie: dbRes[0], reviews: dbRes[1], avg: roundedToFixed(dbRes[2], 1) });
-    })
-    .catch(err => next(err));
+    }).catch(err => next(err));
 });
 
 module.exports = router;

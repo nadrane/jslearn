@@ -26,6 +26,12 @@ nav {
   margin-bottom: 2em;
 }
 
-.score {
-  color: #343A40;
+.movie-btn {
+  color: white;
+  background-color: mediumaquamarine;
+  border-color: mediumaquamarine;
+}
+
+.add-btn {
+  margin-top: 10em;
 }
