@@ -22,6 +22,7 @@ const Director = connection.define('directors', {
     allowNull: false,
   },
 });
+
 const Reviewer = connection.define('reviewers', {
   uid: {
     type: Sequelize.INTEGER,
@@ -34,6 +35,7 @@ const Reviewer = connection.define('reviewers', {
     allowNull: false,
   },
 });
+
 const Movie = connection.define('movies', {
   mid: {
     type: Sequelize.INTEGER,
@@ -47,16 +49,10 @@ const Movie = connection.define('movies', {
   year: {
     type: Sequelize.INTEGER,
   },
-  // did: {
-  //   type: Sequelize.INTEGER,
-  //   references: {
-  //     model: Director,
-  //     key: 'did',
-  //     deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE,
-  //   },
-  // },
 });
 Movie.belongsTo(Director);
+Director.hasMany(Movie);
+
 const Review = connection.define('reviews', {
   rid: {
     type: Sequelize.INTEGER,
@@ -67,23 +63,15 @@ const Review = connection.define('reviews', {
     type: Sequelize.INTEGER,
     allowNull: false,
   },
-  mid: {
-    type: Sequelize.INTEGER,
-    references: {
-      model: Movie,
-      key: 'mid',
-      deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE,
-    },
-  },
-  uid: {
-    type: Sequelize.INTEGER,
-    references: {
-      model: Reviewer,
-      key: 'uid',
-      deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE,
-    },
+  comment: {
+    type: Sequelize.STRING,
+    allowNull: false,
   },
 });
+Review.belongsTo(Reviewer);
+Review.belongsTo(Movie);
+Reviewer.hasMany(Review);
+Movie.hasMany(Review);
 
 const dbConfig = {
   Sequelize,
@@ -116,6 +104,7 @@ const dbConfig = {
                 year: 1980,
                 username: 'kubrickhead123',
                 stars: 4,
+                comment: 'I thought it was honestly a really good movie',
               },
               {
                 director: 'Paul King',
@@ -123,6 +112,7 @@ const dbConfig = {
                 year: 2018,
                 username: 'paddingfan',
                 stars: 5,
+                comment: 'I thought it was honestly a really good movie',
               },
               {
                 director: 'Brian De Palma',
@@ -130,6 +120,7 @@ const dbConfig = {
                 year: 1973,
                 username: 'scarylady',
                 stars: 3,
+                comment: 'I thought it was honestly a really good movie',
               },
               {
                 director: 'Orson Welles',
@@ -137,6 +128,7 @@ const dbConfig = {
                 year: 1941,
                 username: 'mrclassic',
                 stars: 4,
+                comment: 'I thought it was honestly a really good movie',
               },
               {
                 director: 'Paul Thomas Anderson',
@@ -144,6 +136,7 @@ const dbConfig = {
                 year: 1999,
                 username: 'PTA4lyfe',
                 stars: 4,
+                comment: 'I thought it was honestly a really good movie',
               },
             ],
           ))

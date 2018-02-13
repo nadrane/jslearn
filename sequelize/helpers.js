@@ -18,11 +18,16 @@ const helpers = {
         // add review for this movie/user
         .then(res => models.Review.create({
           stars: data.stars,
-          mid: res[0].dataValues.mid,
-          uid: res[1].dataValues.uid,
+          comment: data.comment,
+          movieMid: res[0].dataValues.mid,
+          reviewerUid: res[1].dataValues.uid,
         }))
         .catch(err => console.log(err));
     });
+  },
+  roundedToFixed: (float, digits) => {
+    const rounder = 10 ** digits;
+    return (Math.round(float * rounder) / rounder).toFixed(digits);
   },
 };
 

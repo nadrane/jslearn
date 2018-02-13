@@ -1,5 +1,6 @@
+const { roundedToFixed } = require('../helpers');
 const express = require('express');
-const { models } = require('../db/index');
+const { connection, models } = require('../db/index');
 
 const router = express.Router();
 
@@ -13,13 +14,30 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/film', (req, res, next) => {
-  models.Movie.findOne({
+  const movieProm = models.Movie.findOne({
     where: { mid: req.query.id },
     include: [{
       model: models.Director,
     }],
+  });
+
+  const reviewProm = models.Review.findAll({
+    where: { movieMid: req.query.id },
+    include: [{
+      model: models.Reviewer,
+    }],
+  });
+
+  const avgProm = models.Review.findAll({
+    where: { movieMid: req.query.id },
+    attributes: [[connection.fn('AVG', connection.col('reviews.stars')), 'avgValue']],
   })
-    .then(movie => res.render('film', { movie }))
+    .then(p => p[0].dataValues.avgValue);
+
+  Promise.all([movieProm, reviewProm, avgProm])
+    .then((dbRes) => {
+      res.render('film', { movie: dbRes[0], reviews: dbRes[1], avg: roundedToFixed(dbRes[2], 1) });
+    })
     .catch(err => next(err));
 });
 

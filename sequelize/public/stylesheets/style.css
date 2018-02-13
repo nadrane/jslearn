@@ -4,7 +4,7 @@
   color: white;
 }
 
-.mint {
+.mint, #brand {
   color: mediumaquamarine;
 }
 
@@ -17,12 +17,13 @@ nav {
   text-align: center;
 }
 
-#movie-panel {
+.panel {
   border: 1px solid black;
   border-radius: 5px;
   padding: 2em;
   background-color: #E9ECEF;
   text-align: center;
+  margin-bottom: 2em;
 }
 
 .score {
