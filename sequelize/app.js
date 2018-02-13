@@ -33,6 +33,7 @@ app.use(session({
   saveUninitialized: false,
 }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.get('/', (req, res) => { res.redirect('/movies'); });
 app.use('/movies', movies);
 
 // catch 404 and forward to error handler

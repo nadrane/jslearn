@@ -9,7 +9,7 @@ const helpers = {
           const movieProm = models.Movie.create({
             title: data.title,
             year: data.year,
-            did: dirRes.dataValues.did,
+            directorDid: dirRes.dataValues.did,
           });
           // add user to review this movie
           const userProm = models.Reviewer.create({ username: data.username });

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Hello</title>
+        <title>{% block title %}{% endblock %} - Movietown!</title>
         <!-- Latest compiled and minified Boostrap CSS + dependencies -->
         <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
         <script src="/javascripts/jquery-3.2.1.slim.min.js"></script>
@@ -11,10 +11,16 @@
         <link rel="stylesheet" href="/stylesheets/style.css">
     </head>
     <body>
-      <p id="yep">hi</p>
+        <nav class="navbar navbar-expand-md sticky-top navbar-dark bg-dark">
+            <div class="container justify-content-center">
+                <a id="brand" class="navbar-brand" href="/">Movietown!</a>
+            </div>
+        </nav>
+        <div class="container">
+            <div class="row justify-content-center no-gutters">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
     </body>
-    <div class="row">
-        <div class="col-6">ok</div>
-        <div class="col-6">fine</div>
-    </div>
 </html>
+

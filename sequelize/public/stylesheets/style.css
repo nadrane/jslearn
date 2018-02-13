@@ -1,3 +1,30 @@
-#yep {
-  color: red;
+/* Global styles */
+
+.white {
+  color: white;
+}
+
+.mint {
+  color: mediumaquamarine;
+}
+
+body {
+  background-color: grey;
+}
+
+nav {
+  margin-bottom: 2em;
+  text-align: center;
+}
+
+#movie-panel {
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 2em;
+  background-color: #E9ECEF;
+  text-align: center;
+}
+
+.score {
+  color: #343A40;
 }

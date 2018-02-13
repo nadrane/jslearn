@@ -47,15 +47,16 @@ const Movie = connection.define('movies', {
   year: {
     type: Sequelize.INTEGER,
   },
-  did: {
-    type: Sequelize.INTEGER,
-    references: {
-      model: Director,
-      key: 'did',
-      deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE,
-    },
-  },
+  // did: {
+  //   type: Sequelize.INTEGER,
+  //   references: {
+  //     model: Director,
+  //     key: 'did',
+  //     deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE,
+  //   },
+  // },
 });
+Movie.belongsTo(Director);
 const Review = connection.define('reviews', {
   rid: {
     type: Sequelize.INTEGER,
@@ -85,6 +86,7 @@ const Review = connection.define('reviews', {
 });
 
 const dbConfig = {
+  Sequelize,
   connection,
   models: {
     Director,
