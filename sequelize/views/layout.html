@@ -10,7 +10,6 @@
         <!-- App stylesheets -->
         <link rel="stylesheet" href="/stylesheets/style.css">
     </head>
-
     <div class="modal fade" id="movieModal" tabindex="-1" role="dialog" aria-labelledby="movieModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -26,12 +25,25 @@
             </div>
         </div>
     </div>
-
     <body>
         <nav class="navbar navbar-expand-md sticky-top navbar-dark bg-dark">
-            <div class="container justify-content-center">
+            <div class="container">
                 <a id="brand" class="navbar-brand" href="/">Movietown!</a>
             </div>
+            <ul class="navbar-nav mr-auto">
+                {% if session %}
+                <li class="nav-item">
+                    <a class="nav-link mx-1" href="/users?id={{ session.uid }}">{{ session.username }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mx-1" href="/auth/logout">Logout</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link mx-1" href="/auth/login">Login</a>
+                </li>
+                {% endif %}
+            </ul>
         </nav>
         <div class="container">
             <div class="row justify-content-center no-gutters">
@@ -40,4 +52,3 @@
         </div>
     </body>
 </html>
-

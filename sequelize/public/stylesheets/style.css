@@ -8,6 +8,10 @@
   color: mediumaquamarine;
 }
 
+.hide {
+  display: none;
+}
+
 body {
   background-color: grey;
 }
@@ -33,5 +37,5 @@ nav {
 }
 
 .add-btn {
-  margin-top: 10em;
+  margin: 5em 0;
 }

@@ -1,4 +1,5 @@
 const express = require('express');
+const { models } = require('../db/index');
 
 // router and db config
 const router = express.Router();
@@ -9,7 +10,22 @@ router.get('/login', (req, res) => {
 });
 
 /* POST to login - set user session */
-
+router.post('/login', (req, res, next) => {
+  // query DB for user
+  models.Reviewer.findOne({
+    where: { username: req.body.user },
+  }).then((dbRes) => {
+    if (!dbRes) {
+      return res.redirect('/auth/login');
+    }
+    const sessionInfo = {
+      uid: dbRes.uid,
+      username: dbRes.username,
+    };
+    req.session.sessionInfo = sessionInfo;
+    return res.redirect('/');
+  }).catch(e => next(e));
+});
 
 /* GET logout */
 router.get('/logout', (req, res, next) => {
