@@ -41,6 +41,19 @@ router.get('/register', (req, res) => {
 });
 
 /* POST to register - write new user and set session */
-
+router.post('/register', (req, res, next) => {
+  if (!req.body.user) {
+    return res.redirect('/auth/register');
+  }
+  return models.Reviewer.create({ username: req.body.user })
+    .then((dbRes) => {
+      const sessionInfo = {
+        uid: dbRes.uid,
+        username: dbRes.username,
+      };
+      req.session.sessionInfo = sessionInfo;
+      return res.redirect('/');
+    }).catch(err => next(err));
+});
 
 module.exports = router;

@@ -6,15 +6,16 @@ const logger = require('morgan');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const nunjucks = require('nunjucks');
-const { devData } = require('./db/index');
+// const { devData } = require('./db/index');
 
 // build dev DB
-devData();
+// devData();
 
 // routes
 const auth = require('./routes/auth');
 const director = require('./routes/director');
 const movies = require('./routes/movies');
+const reviewer = require('./routes/reviewer');
 
 const app = express();
 // view engine setup
@@ -39,7 +40,7 @@ app.get('/', (req, res) => { res.redirect('/movies'); });
 app.use('/auth', auth);
 app.use('/movies', movies);
 app.use('/director', director);
-
+app.use('/reviewer', reviewer);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

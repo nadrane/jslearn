@@ -7,7 +7,7 @@
 {% block content %}
 <div class="col-11 col-md-9 col-lg-4">
   <div class="panel">
-    <h3 class="text-danger">
+    <h3 class="mint">
     {% if register %}Register{% else %}Sign in{% endif %}
     </h3>
     <form action="{% if register %}/auth/register{% else %}/auth/login{% endif %}" method="post" class="mb-2">

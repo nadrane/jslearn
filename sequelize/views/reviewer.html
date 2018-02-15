@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block title %}
+{{ reviewer.username }}
+{% endblock %}
+
+{% block content %}
+<div class="col-sm-8">
+    <div class="panel">
+        <h1>{{ reviewer.username }}</h1>
+        <hr>
+        <div><strong>{{ reviewer.username }}</strong> has posted <strong>{{ count }}</strong> review(s) tracked on Movietown.</div>
+    </div>
+</div>
+<table class="table table-light">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Movie</th>
+            <th scope="col">Rating (★★★★★)</th>
+            <th scope="col">Review</th>
+            <th scope="col">Posted</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for review in reviewer.reviews %}
+        <tr>
+            <td><a href="/movies/film?id={{ review.movie.mid }}">{{ review.movie.title }}</a></td>
+            <td>{{ review.stars }}</td>
+            <td>{{ review.comment }}</td>
+            <td>{{ review.timestamp }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

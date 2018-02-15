@@ -4,7 +4,64 @@
 Movies
 {% endblock %}
 
+{% block modalTitle %}
+Add a new film:
+{% endblock %}
+
+{% block modalBody %}
+<form action="/movies" method="post">
+    <div class="form-group">
+        <label for="title" class="mt-2"><strong>Film title:</strong></label>
+        <input type="input" class="form-control" id="title" name="title" placeholder="e.g. Gone with the Wind" autocomplete="off">
+    </div>
+    <div class="form-group">
+        <label for="year" class="mt-2"><strong>Year of release:</strong></label>
+        <input type="input" class="form-control" id="year" name="year" placeholder="e.g. 1940" autocomplete="off">
+    </div>
+    <div class="form-group">
+        <label for="director" class="mt-2"><strong>Director:</strong></label>
+        <select class="form-control" id="director" name="did">
+            <option selected disabled>Select director</option>
+            {% for director in directors %}
+            <option value="{{ director.did }}">{{ director.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group text-right">
+        <button type="submit" class="btn btn-primary mr-auto movie-btn" action="submit">Submit</button>
+    </div>
+</form>
+{% endblock %}
+
+{% block modalTitle2 %}
+Add a new director:
+{% endblock %}
+
+{% block modalBody2 %}
+<form action="/director" method="post">
+    <div class="form-group">
+        <label for="title" class="mt-2"><strong>Director Name:</strong></label>
+        <input type="input" class="form-control" id="dirname" name="dirname" placeholder="e.g. Robert Altman" autocomplete="off">
+    </div>
+    <div class="form-group text-right">
+        <button type="submit" class="btn btn-primary mr-auto movie-btn" action="submit">Submit</button>
+    </div>
+</form>
+{% endblock %}
+
 {% block content %}
+<div class="col-sm-8">
+    <div class="panel">
+        <h1>Thank you for watching movies.</h1>
+        {% if session %}
+        <button type="button" class="btn movie-btn add-btn" data-toggle="modal" data-target="#modal2">+ Add Director</button>
+        <button type="button" class="btn movie-btn add-btn" data-toggle="modal" data-target="#modal1">+ Add Film</button>
+        {% else %}
+        <h6 class="mint">Sign in to add a movie, director, or review.</h6>
+        {% endif %}
+    </div>
+</div>
+
 <table class="table table-dark">
     <thead class="thead-light">
         <tr>

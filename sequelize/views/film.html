@@ -11,9 +11,7 @@ Add review for <em>{{ movie.title }} ({{ movie.year }})</em>:
 {% block modalBody %}
 <form action="/movies/film" method="post">
     <div class="form-group hide">
-        <div class="form-group">
-            <input type="input" class="form-control" id="mid" name="mid" value="{{ movie.mid }}" placeholder="First Name">
-        </div>
+        <input type="input" class="form-control" id="mid" name="mid" value="{{ movie.mid }}" placeholder="First Name">
     </div>
     <div class="form-group">
         <label for="user" class="mt-2"><strong>Rating ★:</strong></label>
@@ -34,24 +32,6 @@ Add review for <em>{{ movie.title }} ({{ movie.year }})</em>:
     </div>
 </form>
 {% endblock %}
-<form action="{% if register %}/auth/register{% else %}/auth/login{% endif %}" method="post" class="mb-2">
-    <div class="form-group">
-        <label for="user" class="mt-2"><strong>User</strong></label>
-        <input type="input" class="form-control" id="user" name="user" placeholder="username" autocomplete="off">
-        <small id="access-warn"></small>
-    </div>
-{% if register %}
-    <div class="form-group">
-        <label for="fname" class="mt-2"><strong>First Name</strong></label>
-        <input type="input" class="form-control" id="fname" name="fname" placeholder="First Name">
-    </div>
-    <div class="form-group">
-        <label for="lname" class="mt-2"><strong>Last Name</strong></label>
-        <input type="input" class="form-control" id="lname" name="lname" placeholder="Last Name">
-    </div>
-{% endif %}
-    <button id="access-btn" type="submit" class="btn btn-primary mb-2">Submit</button>
-</form>
 
 {% block content %}
 <div class="col-sm-8">
@@ -61,6 +41,9 @@ Add review for <em>{{ movie.title }} ({{ movie.year }})</em>:
         <div><strong>Avg. Score:</strong> {{ avg }} ★</div>
         <div><strong>Released:</strong> {{ movie.year }}</div>
         <div><strong>Director:</strong> <a href="/director?id={{ movie.director.did }}">{{ movie.director.name }}</a></div>
+        {% if session %}
+        <button type="button" class="btn movie-btn add-btn" data-toggle="modal" data-target="#modal1">+ Add Review</button>
+        {% endif %}
     </div>
 </div>
 <table class="table table-light">
@@ -69,19 +52,18 @@ Add review for <em>{{ movie.title }} ({{ movie.year }})</em>:
             <th scope="col">User</th>
             <th scope="col">Rating (★★★★★)</th>
             <th scope="col">Review</th>
+            <th scope="col">Posted</th>
         </tr>
     </thead>
     <tbody>
         {% for review in reviews %}
         <tr>
-            <td><a href="/users?id={{ review.reviewer.uid }}">{{ review.reviewer.username }}</a></td>
+            <td><a href="/reviewer?id={{ review.reviewer.uid }}">{{ review.reviewer.username }}</a></td>
             <td>{{ review.stars }}</td>
             <td>{{ review.comment }}</td>
+            <td>{{ review.timestamp }}</td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
-{% if session %}
-<button type="button" class="btn btn-lg movie-btn add-btn" data-toggle="modal" data-target="#movieModal">+ Add Review</button>
-{% endif %}
 {% endblock %}
