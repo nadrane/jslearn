@@ -25,7 +25,7 @@
         {% for review in reviewer.reviews %}
         <tr>
             <td><a href="/movies/film?id={{ review.movie.mid }}">{{ review.movie.title }}</a></td>
-            <td>{{ review.stars }}</td>
+            <td>{% for i in range(0, review.stars) %}★{% endfor %}</td>
             <td>{{ review.comment }}</td>
             <td>{{ review.timestamp }}</td>
         </tr>

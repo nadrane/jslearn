@@ -59,7 +59,7 @@ Add review for <em>{{ movie.title }} ({{ movie.year }})</em>:
         {% for review in reviews %}
         <tr>
             <td><a href="/reviewer?id={{ review.reviewer.uid }}">{{ review.reviewer.username }}</a></td>
-            <td>{{ review.stars }}</td>
+            <td>{% for i in range(0, review.stars) %}★{% endfor %}</td>
             <td>{{ review.comment }}</td>
             <td>{{ review.timestamp }}</td>
         </tr>
@@ -67,3 +67,4 @@ Add review for <em>{{ movie.title }} ({{ movie.year }})</em>:
     </tbody>
 </table>
 {% endblock %}
+

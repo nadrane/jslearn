@@ -115,7 +115,7 @@ const dbConfig = {
                 comment: 'I thought it was honestly a really good movie',
               },
               {
-                director: 'Brian De Palma',
+                director: 'William Friedkin',
                 title: 'The Exorcist',
                 year: 1973,
                 username: 'scarylady',
