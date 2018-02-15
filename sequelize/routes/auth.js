@@ -11,20 +11,20 @@ router.get('/login', (req, res) => {
 
 /* POST to login - set user session */
 router.post('/login', (req, res, next) => {
-  // query DB for user
   models.Reviewer.findOne({
     where: { username: req.body.user },
-  }).then((dbRes) => {
-    if (!dbRes) {
-      return res.redirect('/auth/login');
-    }
-    const sessionInfo = {
-      uid: dbRes.uid,
-      username: dbRes.username,
-    };
-    req.session.sessionInfo = sessionInfo;
-    return res.redirect('/');
-  }).catch(e => next(e));
+  })
+    .then((dbRes) => {
+      if (!dbRes) {
+        return res.redirect('/auth/login');
+      }
+      req.session.sessionInfo = {
+        uid: dbRes.uid,
+        username: dbRes.username,
+      };
+      return res.redirect('/');
+    })
+    .catch(err => next(err));
 });
 
 /* GET logout */
@@ -47,13 +47,13 @@ router.post('/register', (req, res, next) => {
   }
   return models.Reviewer.create({ username: req.body.user })
     .then((dbRes) => {
-      const sessionInfo = {
+      req.session.sessionInfo = {
         uid: dbRes.uid,
         username: dbRes.username,
       };
-      req.session.sessionInfo = sessionInfo;
       return res.redirect('/');
-    }).catch(err => next(err));
+    })
+    .catch(err => next(err));
 });
 
 module.exports = router;

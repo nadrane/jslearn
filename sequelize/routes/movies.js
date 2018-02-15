@@ -8,13 +8,15 @@ router.get('/', (req, res, next) => {
   Promise.all([
     models.Movie.findAll({ include: [{ model: models.Director }], order: [['year', 'ASC']] }),
     models.Director.findAll({ order: [['did', 'ASC']] }),
-  ]).then((dbRes) => {
-    res.render('movies', {
-      movies: dbRes[0],
-      directors: dbRes[1],
-      session: req.session.sessionInfo,
-    });
-  }).catch(err => next(err));
+  ])
+    .then((dbRes) => {
+      res.render('movies', {
+        movies: dbRes[0],
+        directors: dbRes[1],
+        session: req.session.sessionInfo,
+      });
+    })
+    .catch(err => next(err));
 });
 
 /*
@@ -25,20 +27,19 @@ router.post('/', (req, res, next) => {
     title: req.body.title,
     year: req.body.year,
     directorDid: req.body.did,
-  }).then(() => res.redirect('/'))
+  })
+    .then(() => res.redirect('/'))
     .catch(err => next(err));
 });
 
 /*
-* GET /movies/film - profile view
+* GET /movies/film - profile view - clean this up
 */
 router.get('/film', (req, res, next) => {
   // retrieve movie info if exists
   const movieProm = models.Movie.findOne({
     where: { mid: req.query.id },
-    include: [{
-      model: models.Director,
-    }],
+    include: [{ model: models.Director }],
   }).then((dbRes) => {
     if (!dbRes) {
       const uErr = new Error("Sorry! That film doesn't exist.");
@@ -50,9 +51,7 @@ router.get('/film', (req, res, next) => {
   // retrieve all reviews for movie, add front-end timestamp
   const reviewProm = models.Review.findAll({
     where: { movieMid: req.query.id },
-    include: [{
-      model: models.Reviewer,
-    }],
+    include: [{ model: models.Reviewer }],
     order: [['createdAt', 'DESC']],
   }).then(reviews => reviews.map(timestamp));
 
@@ -71,7 +70,8 @@ router.get('/film', (req, res, next) => {
         avg: roundedToFixed(dbRes[2], 1),
         session: req.session.sessionInfo,
       });
-    }).catch(err => next(err));
+    })
+    .catch(err => next(err));
 });
 
 /*

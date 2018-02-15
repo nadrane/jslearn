@@ -9,22 +9,22 @@ const router = express.Router();
 router.get('/', (req, res, next) => {
   models.Director.findOne({
     where: { did: req.query.id },
-    include: [{
-      model: models.Movie,
-    }],
+    include: [{ model: models.Movie }],
     order: [[models.Movie, 'year', 'ASC']],
-  }).then((director) => {
-    if (!director) {
-      const uErr = new Error("Sorry! That director doesn't exist.");
-      uErr.status = 404;
-      throw uErr;
-    }
-    res.render('director', {
-      director,
-      count: director.movies.length,
-      session: req.session.sessionInfo,
-    });
-  }).catch(err => next(err));
+  })
+    .then((director) => {
+      if (!director) {
+        const uErr = new Error("Sorry! That director doesn't exist.");
+        uErr.status = 404;
+        throw uErr;
+      }
+      res.render('director', {
+        director,
+        count: director.movies.length,
+        session: req.session.sessionInfo,
+      });
+    })
+    .catch(err => next(err));
 });
 
 /*

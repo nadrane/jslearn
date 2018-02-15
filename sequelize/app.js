@@ -18,6 +18,7 @@ const movies = require('./routes/movies');
 const reviewer = require('./routes/reviewer');
 
 const app = express();
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 nunjucks.configure('views', {
