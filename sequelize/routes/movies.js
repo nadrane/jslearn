@@ -43,84 +43,37 @@ router.get('/film', (req, res, next) => {
       { model: models.Director },
       { model: models.Review, include: [{ model: models.Reviewer }] },
     ],
-  }).then((dbRes) => {
-    if (!dbRes) {
-      const uErr = new Error("Sorry! That film doesn't exist.");
-      uErr.status = 404;
-      throw uErr;
-    } else return res.send(dbRes);
-  });
+    order: [[models.Review, 'createdAt', 'DESC']],
+  })
+    .then((dbRes) => {
+      if (!dbRes) {
+        const uErr = new Error("Sorry! That film doesn't exist.");
+        uErr.status = 404;
+        throw uErr;
+      } else {
+        dbRes.reviews.map(timestamp);
+        return dbRes;
+      }
+    });
+
+  // retrieve avg score for this movie
+  const avgProm = models.Review.findAll({
+    where: { movieMid: req.query.id },
+    attributes: [[connection.fn('AVG', connection.col('reviews.stars')), 'avgValue']],
+  }).then(dbRes => dbRes[0].dataValues.avgValue);
+
+  // resolve once all info available
+  Promise.all([movieProm, avgProm])
+    .then((dbRes) => {
+      res.render('film', {
+        movie: dbRes[0],
+        reviews: dbRes[0].reviews,
+        avg: roundedToFixed(dbRes[1], 1),
+        session: req.session.sessionInfo,
+      });
+    })
+    .catch(err => next(err));
 });
-
-// need to set timestamp and order by
-
-//   // retrieve all reviews for movie, add front-end timestamp
-//   const reviewProm = models.Review.findAll({
-//     where: { movieMid: req.query.id },
-//     include: [{ model: models.Reviewer }],
-//     order: [['createdAt', 'DESC']],
-//   }).then(reviews => reviews.map(timestamp));
-
-//   // retrieve avg score for this movie
-//   const avgProm = models.Review.findAll({
-//     where: { movieMid: req.query.id },
-//     attributes: [[connection.fn('AVG', connection.col('reviews.stars')), 'avgValue']],
-//   }).then(dbRes => dbRes[0].dataValues.avgValue);
-
-//   // resolve once all info available
-//   Promise.all([movieProm, reviewProm, avgProm])
-//     .then((dbRes) => {
-//       res.render('film', {
-//         movie: dbRes[0],
-//         reviews: dbRes[1],
-//         avg: roundedToFixed(dbRes[2], 1),
-//         session: req.session.sessionInfo,
-//       });
-//     })
-//     .catch(err => next(err));
-// });
-
-
-/// ***** saved old version below:
-
-// router.get('/film', (req, res, next) => {
-//   // retrieve movie info if exists
-//   const movieProm = models.Movie.findOne({
-//     where: { mid: req.query.id },
-//     include: [{ model: models.Director }],
-//   }).then((dbRes) => {
-//     if (!dbRes) {
-//       const uErr = new Error("Sorry! That film doesn't exist.");
-//       uErr.status = 404;
-//       throw uErr;
-//     } else return dbRes;
-//   });
-
-//   // retrieve all reviews for movie, add front-end timestamp
-//   const reviewProm = models.Review.findAll({
-//     where: { movieMid: req.query.id },
-//     include: [{ model: models.Reviewer }],
-//     order: [['createdAt', 'DESC']],
-//   }).then(reviews => reviews.map(timestamp));
-
-//   // retrieve avg score for this movie
-//   const avgProm = models.Review.findAll({
-//     where: { movieMid: req.query.id },
-//     attributes: [[connection.fn('AVG', connection.col('reviews.stars')), 'avgValue']],
-//   }).then(dbRes => dbRes[0].dataValues.avgValue);
-
-//   // resolve once all info available
-//   Promise.all([movieProm, reviewProm, avgProm])
-//     .then((dbRes) => {
-//       res.render('film', {
-//         movie: dbRes[0],
-//         reviews: dbRes[1],
-//         avg: roundedToFixed(dbRes[2], 1),
-//         session: req.session.sessionInfo,
-//       });
-//     })
-//     .catch(err => next(err));
-// });
 
 /*
 * POST /movies/film - add review
