@@ -1,148 +1,93 @@
-const { addData } = require('../helpers.js');
-const Sequelize = require('sequelize');
+// import connection and models
+const connection = require('./connect');
+const Director = require('./models/directors');
+const Movie = require('./models/movies');
+const User = require('./models/users');
+const Review = require('./models/reviews');
 
-// establish connection
-const connection = new Sequelize({
-  database: 'movietown',
-  username: null,
-  password: null,
-  dialect: 'postgres',
-  operatorsAliases: false,
-});
-
-// define models
-const Director = connection.define('directors', {
-  did: {
-    type: Sequelize.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-  },
-  name: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-});
-
-const Reviewer = connection.define('reviewers', {
-  uid: {
-    type: Sequelize.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-  },
-  username: {
-    type: Sequelize.STRING,
-    unique: true,
-    allowNull: false,
-  },
-});
-
-const Movie = connection.define('movies', {
-  mid: {
-    type: Sequelize.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-  },
-  title: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-  year: {
-    type: Sequelize.INTEGER,
-  },
-});
+// define model associations
 Movie.belongsTo(Director);
 Director.hasMany(Movie);
-
-const Review = connection.define('reviews', {
-  rid: {
-    type: Sequelize.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-  },
-  stars: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-  },
-  comment: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-});
-Review.belongsTo(Reviewer);
+Review.belongsTo(User);
+User.hasMany(Review);
 Review.belongsTo(Movie);
-Reviewer.hasMany(Review);
 Movie.hasMany(Review);
 
-const dbConfig = {
-  Sequelize,
-  connection,
-  models: {
-    Director,
-    Movie,
-    Reviewer,
-    Review,
-  },
-  // truncate tables and fill with scratch data
-  devData: () => {
-    if (connection) {
-      Director.sync({ force: true })
-        .then(() => Reviewer.sync({ force: true }))
-        .then(() => Movie.sync({ force: true }))
-        .then(() => Review.sync({ force: true }))
-        .then(() =>
-          addData(
-            {
-              Director,
-              Movie,
-              Reviewer,
-              Review,
-            },
-            [
-              {
-                director: 'Stanley Kubrick',
-                title: 'The Shining',
-                year: 1980,
-                username: 'kubrickhead123',
-                stars: 4,
-                comment: 'I thought it was honestly a really good movie',
-              },
-              {
-                director: 'Paul King',
-                title: 'Paddintgon 2',
-                year: 2018,
-                username: 'paddingfan',
-                stars: 5,
-                comment: 'I thought it was honestly a really good movie',
-              },
-              {
-                director: 'William Friedkin',
-                title: 'The Exorcist',
-                year: 1973,
-                username: 'scarylady',
-                stars: 3,
-                comment: 'I thought it was honestly a really good movie',
-              },
-              {
-                director: 'Orson Welles',
-                title: 'Citizen Kane',
-                year: 1941,
-                username: 'mrclassic',
-                stars: 4,
-                comment: 'I thought it was honestly a really good movie',
-              },
-              {
-                director: 'Paul Thomas Anderson',
-                title: 'Magnolia',
-                year: 1999,
-                username: 'PTA4lyfe',
-                stars: 4,
-                comment: 'I thought it was honestly a really good movie',
-              },
-            ],
-          ))
-        .catch(err => console.log(err));
-    }
-  },
-};
+// truncate tables and fill with scratch data
+function seedDB() {
+  if (connection) {
+    const seedData = [
+      {
+        director: 'Stanley Kubrickzzzzzzz',
+        movie: 'The Shiningzzzzzzz',
+        year: 1980,
+        username: 'kubrickhead123zzzzzzz',
+        stars: 4,
+        comment: 'I thought it was honestly a really good moviezzzzzzz',
+      },
+      {
+        director: 'Paul Kingzzzzzzz',
+        movie: 'Paddintgon 2zzzzzzz',
+        year: 2018,
+        username: 'paddingfanzzzzzzz',
+        stars: 5,
+        comment: 'I thought it was honestly a really good moviezzzzzzz',
+      },
+      {
+        director: 'William Friedkinzzzzzzz',
+        movie: 'The Exorcistzzzzzzz',
+        year: 1973,
+        username: 'scaryladyzzzzzzz',
+        stars: 3,
+        comment: 'I thought it was honestly a really good moviezzzzzzz',
+      },
+      {
+        director: 'Orson Welleszzzzzzz',
+        movie: 'Citizen Kanezzzzzzz',
+        year: 1941,
+        username: 'mrclassiczzzzzzz',
+        stars: 4,
+        comment: 'I thought it was honestly a really good moviezzzzzzz',
+      },
+      {
+        director: 'Paul Thomas Andersonzzzzzzz',
+        movie: 'Magnoliazzzzzzz',
+        year: 1999,
+        username: 'PTA4lyfezzzzzzz',
+        stars: 4,
+        comment: 'I thought it was honestly a really good moviezzzzzzz',
+      },
+    ];
+    Director.sync({ force: true })
+      .then(() => User.sync({ force: true }))
+      .then(() => Movie.sync({ force: true }))
+      .then(() => Review.sync({ force: true }))
+      .then(() => {
+        seedData.forEach((obj) => {
+          Director.create({ name: obj.director })
+            .then(director =>
+              Promise.all([
+                director.createMovie({ title: obj.movie, year: obj.year }),
+                User.create({ username: obj.username }),
+              ]))
+            .then(([movie, user]) => {
+              Review.create({
+                stars: obj.stars,
+                comment: obj.comment,
+                movieId: movie.id,
+                userId: user.id,
+              });
+            });
+        });
+      })
+      .catch(err => console.log(err));
+  }
+}
+seedDB();
 
-module.exports = dbConfig;
+module.exports = {
+  Director,
+  Movie,
+  User,
+  Review,
+};

@@ -9,10 +9,10 @@ router.get('/', (req, res, next) => {
     models.Movie.findAll({ include: [{ model: models.Director }], order: [['year', 'ASC']] }),
     models.Director.findAll({ order: [['did', 'ASC']] }),
   ])
-    .then((dbRes) => {
+    .then(([movies, directors]) => {
       res.render('movies', {
-        movies: dbRes[0],
-        directors: dbRes[1],
+        movies,
+        directors,
         session: req.session.sessionInfo,
       });
     })
@@ -57,18 +57,18 @@ router.get('/film', (req, res, next) => {
     });
 
   // retrieve avg score for this movie
-  const avgProm = models.Review.findAll({
+  const avgProm = models.Review.findOne({
     where: { movieMid: req.query.id },
     attributes: [[connection.fn('AVG', connection.col('reviews.stars')), 'avgValue']],
-  }).then(dbRes => dbRes[0].dataValues.avgValue);
+  }).then(dbRes => dbRes.dataValues.avgValue);
 
   // resolve once all info available
   Promise.all([movieProm, avgProm])
-    .then((dbRes) => {
+    .then(([movie, avg]) => {
       res.render('film', {
-        movie: dbRes[0],
-        reviews: dbRes[0].reviews,
-        avg: roundedToFixed(dbRes[1], 1),
+        movie,
+        reviews: movie.reviews,
+        avg: roundedToFixed(avg, 1),
         session: req.session.sessionInfo,
       });
     })
