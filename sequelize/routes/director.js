@@ -1,5 +1,5 @@
 const express = require('express');
-const { models } = require('../db/index');
+const { Director, Movie } = require('../db/index');
 
 const router = express.Router();
 
@@ -7,10 +7,10 @@ const router = express.Router();
 * GET /director - director profile view
 */
 router.get('/', (req, res, next) => {
-  models.Director.findOne({
-    where: { did: req.query.id },
-    include: [{ model: models.Movie }],
-    order: [[models.Movie, 'year', 'ASC']],
+  Director.findOne({
+    where: { id: req.query.id },
+    include: [{ model: Movie }],
+    order: [[Movie, 'year', 'ASC']],
   })
     .then((director) => {
       if (!director) {
@@ -24,7 +24,7 @@ router.get('/', (req, res, next) => {
         session: req.session.sessionInfo,
       });
     })
-    .catch(err => next(err));
+    .catch(next);
 });
 
 /*
@@ -34,9 +34,9 @@ router.post('/', (req, res, next) => {
   if (!req.body.dirname) {
     return res.redirect('/');
   }
-  return models.Director.create({ name: req.body.dirname })
+  return Director.create({ name: req.body.dirname })
     .then(() => res.redirect('/'))
-    .catch(err => next(err));
+    .catch(next);
 });
 
 module.exports = router;

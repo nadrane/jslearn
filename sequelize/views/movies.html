@@ -23,7 +23,7 @@ Add a new film:
         <select class="form-control" id="director" name="did">
             <option selected disabled>Select director</option>
             {% for director in directors %}
-            <option value="{{ director.did }}">{{ director.name }}</option>
+            <option value="{{ director.id }}">{{ director.name }}</option>
             {% endfor %}
         </select>
     </div>
@@ -73,8 +73,8 @@ Add a new director:
     <tbody>
         {% for movie in movies %}
         <tr>
-            <th scope="row"><h6><a class="mint" href="/movies/film?id={{ movie.mid }}">{{ movie.title }}</a></h6></th>
-            <td><a class="white" href="/director?id={{ movie.director.did }}">{{ movie.director.name }}</a></td>
+            <th scope="row"><h6><a class="mint" href="/movies/film?id={{ movie.id }}">{{ movie.title }}</a></h6></th>
+            <td><a class="white" href="/director?id={{ movie.director.id }}">{{ movie.director.name }}</a></td>
             <td>{{ movie.year }}</td>
         </tr>
         {% endfor %}

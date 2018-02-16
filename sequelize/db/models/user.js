@@ -1,11 +1,12 @@
 const Sequelize = require('sequelize');
 const connection = require('../connect');
 
-const Director = connection.define('directors', {
-  name: {
+const User = connection.define('user', {
+  username: {
     type: Sequelize.STRING,
+    unique: true,
     allowNull: false,
   },
 });
 
-module.exports = Director;
+module.exports = User;

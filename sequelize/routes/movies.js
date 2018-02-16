@@ -1,13 +1,19 @@
-const { roundedToFixed, timestamp } = require('../helpers');
+const { roundedToFixed } = require('../helpers');
 const express = require('express');
-const { connection, models } = require('../db/index');
+const connection = require('../db/connect.js');
+const {
+  Director,
+  Movie,
+  User,
+  Review,
+} = require('../db/index');
 
 const router = express.Router();
 
 router.get('/', (req, res, next) => {
   Promise.all([
-    models.Movie.findAll({ include: [{ model: models.Director }], order: [['year', 'ASC']] }),
-    models.Director.findAll({ order: [['did', 'ASC']] }),
+    Movie.findAll({ include: [{ model: Director }], order: [['year', 'ASC']] }),
+    Director.findAll({ order: [['id', 'ASC']] }),
   ])
     .then(([movies, directors]) => {
       res.render('movies', {
@@ -16,20 +22,20 @@ router.get('/', (req, res, next) => {
         session: req.session.sessionInfo,
       });
     })
-    .catch(err => next(err));
+    .catch(next);
 });
 
 /*
 * POST /movies - add film
 */
 router.post('/', (req, res, next) => {
-  models.Movie.create({
+  Movie.create({
     title: req.body.title,
     year: req.body.year,
-    directorDid: req.body.did,
+    directorId: req.body.did,
   })
     .then(() => res.redirect('/'))
-    .catch(err => next(err));
+    .catch(next);
 });
 
 /*
@@ -37,29 +43,27 @@ router.post('/', (req, res, next) => {
 */
 router.get('/film', (req, res, next) => {
   // retrieve movie info if exists
-  const movieProm = models.Movie.findOne({
-    where: { mid: req.query.id },
+  const movieProm = Movie.findOne({
+    where: { id: req.query.id },
     include: [
-      { model: models.Director },
-      { model: models.Review, include: [{ model: models.Reviewer }] },
+      { model: Director },
+      { model: Review, include: [{ model: User }] },
     ],
-    order: [[models.Review, 'createdAt', 'DESC']],
+    order: [[Review, 'createdAt', 'DESC']],
   })
     .then((dbRes) => {
       if (!dbRes) {
         const uErr = new Error("Sorry! That film doesn't exist.");
         uErr.status = 404;
         throw uErr;
-      } else {
-        dbRes.reviews.map(timestamp);
-        return dbRes;
       }
+      return dbRes;
     });
 
   // retrieve avg score for this movie
-  const avgProm = models.Review.findOne({
-    where: { movieMid: req.query.id },
-    attributes: [[connection.fn('AVG', connection.col('reviews.stars')), 'avgValue']],
+  const avgProm = Review.findOne({
+    where: { movieId: req.query.id },
+    attributes: [[connection.fn('AVG', connection.col('review.stars')), 'avgValue']],
   }).then(dbRes => dbRes.dataValues.avgValue);
 
   // resolve once all info available
@@ -79,13 +83,13 @@ router.get('/film', (req, res, next) => {
 * POST /movies/film - add review
 */
 router.post('/film', (req, res, next) => {
-  models.Review.create({
+  Review.create({
     stars: req.body.stars,
     comment: req.body.comment,
-    movieMid: req.body.mid,
-    reviewerUid: req.session.sessionInfo.uid,
+    movieId: req.body.mid,
+    userId: req.session.sessionInfo.uid,
   }).then(() => res.redirect(`/movies/film?id=${req.body.mid}`))
-    .catch(err => next(err));
+    .catch(next);
 });
 
 module.exports = router;

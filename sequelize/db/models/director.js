@@ -1,14 +1,11 @@
 const Sequelize = require('sequelize');
 const connection = require('../connect');
 
-const Movie = connection.define('movies', {
-  title: {
+const Director = connection.define('director', {
+  name: {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  year: {
-    type: Sequelize.INTEGER,
-  },
 });
 
-module.exports = Movie;
+module.exports = Director;

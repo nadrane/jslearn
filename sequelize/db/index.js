@@ -1,9 +1,9 @@
 // import connection and models
 const connection = require('./connect');
-const Director = require('./models/directors');
-const Movie = require('./models/movies');
-const User = require('./models/users');
-const Review = require('./models/reviews');
+const Director = require('./models/director');
+const Movie = require('./models/movie');
+const User = require('./models/user');
+const Review = require('./models/review');
 
 // define model associations
 Movie.belongsTo(Director);
@@ -18,44 +18,44 @@ function seedDB() {
   if (connection) {
     const seedData = [
       {
-        director: 'Stanley Kubrickzzzzzzz',
-        movie: 'The Shiningzzzzzzz',
+        director: 'Stanley Kubrick',
+        movie: 'The Shining',
         year: 1980,
-        username: 'kubrickhead123zzzzzzz',
-        stars: 4,
-        comment: 'I thought it was honestly a really good moviezzzzzzz',
-      },
-      {
-        director: 'Paul Kingzzzzzzz',
-        movie: 'Paddintgon 2zzzzzzz',
-        year: 2018,
-        username: 'paddingfanzzzzzzz',
+        username: 'kubrickhead1234',
         stars: 5,
-        comment: 'I thought it was honestly a really good moviezzzzzzz',
+        comment: 'Well, I thought it was honestly a really good movie',
       },
       {
-        director: 'William Friedkinzzzzzzz',
-        movie: 'The Exorcistzzzzzzz',
+        director: 'Paul King',
+        movie: 'Paddintgon 2',
+        year: 2018,
+        username: 'paddingfan4',
+        stars: 5,
+        comment: 'I thought it was honestly a really good movie!',
+      },
+      {
+        director: 'William Friedkin',
+        movie: 'The Exorcist',
         year: 1973,
-        username: 'scaryladyzzzzzzz',
-        stars: 3,
-        comment: 'I thought it was honestly a really good moviezzzzzzz',
+        username: 'scarylady9',
+        stars: 5,
+        comment: 'I thought it was honestly a really good movie to be honest',
       },
       {
-        director: 'Orson Welleszzzzzzz',
-        movie: 'Citizen Kanezzzzzzz',
+        director: 'Orson Welles',
+        movie: 'Citizen Kane',
         year: 1941,
-        username: 'mrclassiczzzzzzz',
-        stars: 4,
-        comment: 'I thought it was honestly a really good moviezzzzzzz',
+        username: 'mrclassic',
+        stars: 5,
+        comment: 'I truly thought it was honestly a really good movie',
       },
       {
-        director: 'Paul Thomas Andersonzzzzzzz',
-        movie: 'Magnoliazzzzzzz',
+        director: 'Paul Thomas Anderson',
+        movie: 'Magnolia',
         year: 1999,
-        username: 'PTA4lyfezzzzzzz',
-        stars: 4,
-        comment: 'I thought it was honestly a really good moviezzzzzzz',
+        username: 'PTA4lyfe',
+        stars: 5,
+        comment: 'I thought it was honestly a really good movie!',
       },
     ];
     Director.sync({ force: true })
@@ -83,11 +83,11 @@ function seedDB() {
       .catch(console.log);
   }
 }
-seedDB();
 
 module.exports = {
   Director,
   Movie,
   User,
   Review,
+  seedDB,
 };

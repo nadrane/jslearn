@@ -1,7 +1,6 @@
 const express = require('express');
-const { models } = require('../db/index');
+const { User } = require('../db/index');
 
-// router and db config
 const router = express.Router();
 
 /* GET login */
@@ -11,7 +10,7 @@ router.get('/login', (req, res) => {
 
 /* POST to login - set user session */
 router.post('/login', (req, res, next) => {
-  models.Reviewer.findOne({
+  User.findOne({
     where: { username: req.body.user },
   })
     .then((dbRes) => {
@@ -19,12 +18,12 @@ router.post('/login', (req, res, next) => {
         return res.redirect('/auth/login');
       }
       req.session.sessionInfo = {
-        uid: dbRes.uid,
+        uid: dbRes.id,
         username: dbRes.username,
       };
       return res.redirect('/');
     })
-    .catch(err => next(err));
+    .catch(next);
 });
 
 /* GET logout */
@@ -45,15 +44,15 @@ router.post('/register', (req, res, next) => {
   if (!req.body.user) {
     return res.redirect('/auth/register');
   }
-  return models.Reviewer.create(req.body)
+  return User.create(req.body)
     .then((dbRes) => {
       req.session.sessionInfo = {
-        uid: dbRes.uid,
+        uid: dbRes.id,
         username: dbRes.username,
       };
       return res.redirect('/');
     })
-    .catch(err => next(err));
+    .catch(next);
 });
 
 module.exports = router;

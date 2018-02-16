@@ -1,12 +1,14 @@
 const Sequelize = require('sequelize');
 const connection = require('../connect');
 
-const User = connection.define('users', {
-  username: {
+const Movie = connection.define('movie', {
+  title: {
     type: Sequelize.STRING,
-    unique: true,
     allowNull: false,
+  },
+  year: {
+    type: Sequelize.INTEGER,
   },
 });
 
-module.exports = User;
+module.exports = Movie;

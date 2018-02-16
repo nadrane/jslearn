@@ -27,7 +27,7 @@
     <tbody>
         {% for movie in director.movies %}
         <tr>
-            <th scope="row"><h6><a class="mint" href="/movies/film?id={{ movie.mid }}">{{ movie.title }}</a></h6></th>
+            <th scope="row"><h6><a class="mint" href="/movies/film?id={{ movie.id }}">{{ movie.title }}</a></h6></th>
             <td>{{ movie.year }}</td>
         </tr>
         {% endfor %}

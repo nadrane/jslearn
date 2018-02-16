@@ -1,15 +1,15 @@
 {% extends "layout.html" %}
 
 {% block title %}
-{{ reviewer.username }}
+{{ user.username }}
 {% endblock %}
 
 {% block content %}
 <div class="col-sm-8">
     <div class="panel">
-        <h1>{{ reviewer.username }}</h1>
+        <h1>{{ user.username }}</h1>
         <hr>
-        <div><strong>{{ reviewer.username }}</strong> has posted <strong>{{ count }}</strong> review(s) tracked on Movietown.</div>
+        <div><strong>{{ user.username }}</strong> has posted <strong>{{ count }}</strong> review(s) tracked on Movietown.</div>
     </div>
 </div>
 <table class="table table-light">
@@ -22,12 +22,12 @@
         </tr>
     </thead>
     <tbody>
-        {% for review in reviewer.reviews %}
+        {% for review in user.reviews %}
         <tr>
-            <td><a href="/movies/film?id={{ review.movie.mid }}">{{ review.movie.title }}</a></td>
+            <td><a href="/movies/film?id={{ review.movie.id }}">{{ review.movie.title }}</a></td>
             <td>{% for i in range(0, review.stars) %}★{% endfor %}</td>
             <td>{{ review.comment }}</td>
-            <td>{{ review.timestamp }}</td>
+            <td>{{ review.ago }}</td>
         </tr>
         {% endfor %}
     </tbody>
