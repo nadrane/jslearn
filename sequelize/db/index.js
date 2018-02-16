@@ -80,7 +80,7 @@ function seedDB() {
             });
         });
       })
-      .catch(err => console.log(err));
+      .catch(console.log);
   }
 }
 seedDB();
