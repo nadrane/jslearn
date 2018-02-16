@@ -44,7 +44,7 @@ router.post('/register', (req, res, next) => {
   if (!req.body.user) {
     return res.redirect('/auth/register');
   }
-  return User.create(req.body)
+  return User.create({ username: req.body.user })
     .then((dbRes) => {
       req.session.sessionInfo = {
         uid: dbRes.id,

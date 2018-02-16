@@ -1,9 +1,3 @@
-const months = ['January', 'Feburary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-const minsPerMonth = 40320;
-const minsPerWeek = 10080;
-const minsPerDay = 1440;
-const minsPerHour = 60;
-
 const Sequelize = require('sequelize');
 const connection = require('../connect');
 
@@ -19,10 +13,14 @@ const Review = connection.define('review', {
 }, {
   getterMethods: {
     ago() {
+      const months = ['January', 'Feburary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      const minsPerMonth = 40320;
+      const minsPerWeek = 10080;
+      const minsPerDay = 1440;
+      const minsPerHour = 60;
       let ago;
       const currentTime = Date.now();
       const mins = Math.round(((currentTime - this.getDataValue('createdAt')) / 1000) / 60);
-      // over 4 weeks
       if (mins >= minsPerMonth) {
         const date = new Date(this.getDataValue('createdAt'));
         ago = `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;

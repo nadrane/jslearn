@@ -21,7 +21,7 @@ function seedDB() {
         director: 'Stanley Kubrick',
         movie: 'The Shining',
         year: 1980,
-        username: 'kubrickhead1234',
+        username: 'kubrickhead123',
         stars: 5,
         comment: 'Well, I thought it was honestly a really good movie',
       },
@@ -29,7 +29,7 @@ function seedDB() {
         director: 'Paul King',
         movie: 'Paddintgon 2',
         year: 2018,
-        username: 'paddingfan4',
+        username: 'paddingfan',
         stars: 5,
         comment: 'I thought it was honestly a really good movie!',
       },
@@ -37,7 +37,7 @@ function seedDB() {
         director: 'William Friedkin',
         movie: 'The Exorcist',
         year: 1973,
-        username: 'scarylady9',
+        username: 'scarylady',
         stars: 5,
         comment: 'I thought it was honestly a really good movie to be honest',
       },
@@ -58,10 +58,7 @@ function seedDB() {
         comment: 'I thought it was honestly a really good movie!',
       },
     ];
-    Director.sync({ force: true })
-      .then(() => User.sync({ force: true }))
-      .then(() => Movie.sync({ force: true }))
-      .then(() => Review.sync({ force: true }))
+    connection.sync({ force: true })
       .then(() => {
         seedData.forEach((obj) => {
           Director.create({ name: obj.director })
