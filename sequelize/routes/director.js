@@ -7,24 +7,21 @@ const router = express.Router();
 * GET /director - director profile view
 */
 router.get('/', (req, res, next) => {
-  Director.findOne({
-    where: { id: req.query.id },
+  Director.findById(req.query.id, {
     include: [{ model: Movie }],
     order: [[Movie, 'year', 'ASC']],
-  })
-    .then((director) => {
-      if (!director) {
-        const uErr = new Error("Sorry! That director doesn't exist.");
-        uErr.status = 404;
-        throw uErr;
-      }
-      res.render('director', {
-        director,
-        count: director.movies.length,
-        session: req.session.sessionInfo,
-      });
-    })
-    .catch(next);
+  }).then((director) => {
+    if (!director) {
+      const uErr = new Error("Sorry! That director doesn't exist.");
+      uErr.status = 404;
+      throw uErr;
+    }
+    res.render('director', {
+      director,
+      count: director.movies.length,
+      session: req.session.sessionInfo,
+    });
+  }).catch(next);
 });
 
 /*

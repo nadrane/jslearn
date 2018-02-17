@@ -13,13 +13,13 @@ router.post('/login', (req, res, next) => {
   User.findOne({
     where: { username: req.body.user },
   })
-    .then((dbRes) => {
-      if (!dbRes) {
+    .then((user) => {
+      if (!user) {
         return res.redirect('/auth/login');
       }
       req.session.sessionInfo = {
-        uid: dbRes.id,
-        username: dbRes.username,
+        uid: user.id,
+        username: user.username,
       };
       return res.redirect('/');
     })
@@ -45,10 +45,10 @@ router.post('/register', (req, res, next) => {
     return res.redirect('/auth/register');
   }
   return User.create({ username: req.body.user })
-    .then((dbRes) => {
+    .then((user) => {
       req.session.sessionInfo = {
-        uid: dbRes.id,
-        username: dbRes.username,
+        uid: user.id,
+        username: user.username,
       };
       return res.redirect('/');
     })

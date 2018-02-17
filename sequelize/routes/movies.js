@@ -92,4 +92,16 @@ router.post('/film', (req, res, next) => {
     .catch(next);
 });
 
+// scratch
+router.get('/d', (req, res, next) => {
+  Promise.all([
+    Review.sum('stars', { where: { movieId: 6 } }),
+    Review.count({ where: { movieId: 6 } }),
+  ])
+    .then(([gross, count]) => {
+      res.setHeader('Content-Type', 'application/json');
+      res.send(JSON.stringify({ gross, count }, null, 3));
+    }).catch(next);
+});
+
 module.exports = router;
