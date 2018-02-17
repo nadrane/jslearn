@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.get('/', (req, res, next) => {
   Promise.all([
-    Movie.findAll({ include: [{ model: Director }], order: [['year', 'ASC']] }),
+    Movie.findAll({ include: [Director], order: [['year', 'ASC']] }),
     Director.findAll({ order: [['id', 'ASC']] }),
   ])
     .then(([movies, directors]) => {
@@ -47,7 +47,7 @@ router.get('/film', (req, res, next) => {
     where: { id: req.query.id },
     include: [
       { model: Director },
-      { model: Review, include: [{ model: User }] },
+      { model: Review, include: [User] },
     ],
     order: [[Review, 'createdAt', 'DESC']],
   })
@@ -98,9 +98,18 @@ router.get('/d', (req, res, next) => {
     Review.sum('stars', { where: { movieId: 6 } }),
     Review.count({ where: { movieId: 6 } }),
   ])
-    .then(([gross, count]) => {
+    .then(([sum, count]) => {
       res.setHeader('Content-Type', 'application/json');
-      res.send(JSON.stringify({ gross, count }, null, 3));
+      res.send(JSON.stringify({ sum, count }, null, 3));
+    }).catch(next);
+});
+
+// scratch
+router.get('/e', (req, res, next) => {
+  Review.findAll({ include: [{ all: true }] })
+    .then((dbres) => {
+      res.setHeader('Content-Type', 'application/json');
+      res.send(JSON.stringify(dbres, null, 3));
     }).catch(next);
 });
 

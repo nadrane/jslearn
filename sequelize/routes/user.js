@@ -9,7 +9,7 @@ const router = express.Router();
 router.get('/', (req, res, next) => {
   User.findOne({
     where: { id: req.query.id },
-    include: [{ model: Review, include: [{ model: Movie }] }],
+    include: [{ model: Review, include: [Movie] }],
     order: [[Review, 'createdAt', 'DESC']],
   })
     .then((user) => {

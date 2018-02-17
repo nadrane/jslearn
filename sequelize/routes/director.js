@@ -8,7 +8,7 @@ const router = express.Router();
 */
 router.get('/', (req, res, next) => {
   Director.findById(req.query.id, {
-    include: [{ model: Movie }],
+    include: [Movie],
     order: [[Movie, 'year', 'ASC']],
   }).then((director) => {
     if (!director) {
