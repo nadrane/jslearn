@@ -11,19 +11,17 @@ router.get('/login', (req, res) => {
 /* POST to login - set user session */
 router.post('/login', (req, res, next) => {
   User.findOne({
-    where: { username: req.body.user },
-  })
-    .then((user) => {
-      if (!user) {
-        return res.redirect('/auth/login');
-      }
-      req.session.sessionInfo = {
-        uid: user.id,
-        username: user.username,
-      };
-      return res.redirect('/');
-    })
-    .catch(next);
+    where: { username: req.body.username },
+  }).then((user) => {
+    if (!user) {
+      return res.redirect('/auth/login');
+    }
+    req.session.sessionInfo = {
+      uid: user.id,
+      username: user.username,
+    };
+    return res.redirect('/');
+  }).catch(next);
 });
 
 /* GET logout */
@@ -41,10 +39,10 @@ router.get('/register', (req, res) => {
 
 /* POST to register - write new user and set session */
 router.post('/register', (req, res, next) => {
-  if (!req.body.user) {
+  if (!req.body.username) {
     return res.redirect('/auth/register');
   }
-  return User.create({ username: req.body.user })
+  return User.create(req.body, { fields: ['username'] })
     .then((user) => {
       req.session.sessionInfo = {
         uid: user.id,

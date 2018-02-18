@@ -12,8 +12,8 @@
     </h3>
     <form action="{% if register %}/auth/register{% else %}/auth/login{% endif %}" method="post" class="mb-2">
       <div class="form-group">
-          <label for="user" class="mt-2"><strong>User</strong></label>
-          <input type="input" class="form-control" id="user" name="user" placeholder="username" autocomplete="off">
+          <label for="username" class="mt-2"><strong>User</strong></label>
+          <input type="input" class="form-control" id="username" name="username" placeholder="username" autocomplete="off">
           <small id="access-warn"></small>
       </div>
       <button id="access-btn" type="submit" class="btn btn-primary mb-2">Submit</button>

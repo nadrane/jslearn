@@ -20,7 +20,7 @@ Add a new film:
     </div>
     <div class="form-group">
         <label for="director" class="mt-2"><strong>Director:</strong></label>
-        <select class="form-control" id="director" name="did">
+        <select class="form-control" id="director" name="directorId">
             <option selected disabled>Select director</option>
             {% for director in directors %}
             <option value="{{ director.id }}">{{ director.name }}</option>
@@ -40,8 +40,8 @@ Add a new director:
 {% block modalBody2 %}
 <form action="/director" method="post">
     <div class="form-group">
-        <label for="title" class="mt-2"><strong>Director Name:</strong></label>
-        <input type="input" class="form-control" id="dirname" name="dirname" placeholder="e.g. Robert Altman" autocomplete="off">
+        <label for="name" class="mt-2"><strong>Director Name:</strong></label>
+        <input type="input" class="form-control" id="name" name="name" placeholder="e.g. Robert Altman" autocomplete="off">
     </div>
     <div class="form-group text-right">
         <button type="submit" class="btn btn-primary mr-auto movie-btn" action="submit">Submit</button>

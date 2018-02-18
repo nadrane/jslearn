@@ -1,10 +1,9 @@
 const { roundedToFixed } = require('../helpers');
+const connection = require('../db/connect');
 const express = require('express');
-const connection = require('../db/connect.js');
 const {
   Director,
   Movie,
-  User,
   Review,
 } = require('../db/index');
 
@@ -29,11 +28,7 @@ router.get('/', (req, res, next) => {
 * POST /movies - add film
 */
 router.post('/', (req, res, next) => {
-  Movie.create({
-    title: req.body.title,
-    year: req.body.year,
-    directorId: req.body.did,
-  })
+  Movie.create(req.body, { fields: ['title', 'year', 'directorId'] })
     .then(() => res.redirect('/'))
     .catch(next);
 });
@@ -42,13 +37,9 @@ router.post('/', (req, res, next) => {
 * GET /movies/film - profile view - clean this up
 */
 router.get('/film', (req, res, next) => {
-  // retrieve movie info if exists
-  const movieProm = Movie.findOne({
-    where: { id: req.query.id },
-    include: [
-      { model: Director },
-      { model: Review, include: [User] },
-    ],
+  // retrieve movie and all reviews
+  const movieProm = Movie.findById(req.query.id, {
+    include: [{ all: true, nested: true }],
     order: [[Review, 'createdAt', 'DESC']],
   })
     .then((dbRes) => {
@@ -63,20 +54,19 @@ router.get('/film', (req, res, next) => {
   // retrieve avg score for this movie
   const avgProm = Review.findOne({
     where: { movieId: req.query.id },
-    attributes: [[connection.fn('AVG', connection.col('review.stars')), 'avgValue']],
-  }).then(dbRes => dbRes.dataValues.avgValue);
+    attributes: [[connection.fn('AVG', connection.col('stars')), 'avgStars']],
+  });
 
   // resolve once all info available
   Promise.all([movieProm, avgProm])
     .then(([movie, avg]) => {
       res.render('film', {
         movie,
-        reviews: movie.reviews,
-        avg: roundedToFixed(avg, 1),
+        avg: roundedToFixed(avg.get('avgStars'), 1),
         session: req.session.sessionInfo,
       });
     })
-    .catch(err => next(err));
+    .catch(next);
 });
 
 /*
@@ -86,27 +76,17 @@ router.post('/film', (req, res, next) => {
   Review.create({
     stars: req.body.stars,
     comment: req.body.comment,
-    movieId: req.body.mid,
+    movieId: req.body.movieId,
     userId: req.session.sessionInfo.uid,
-  }).then(() => res.redirect(`/movies/film?id=${req.body.mid}`))
+  }).then(() => res.redirect(`/movies/film?id=${req.body.movieId}`))
     .catch(next);
 });
 
 // scratch
 router.get('/d', (req, res, next) => {
-  Promise.all([
-    Review.sum('stars', { where: { movieId: 6 } }),
-    Review.count({ where: { movieId: 6 } }),
-  ])
-    .then(([sum, count]) => {
-      res.setHeader('Content-Type', 'application/json');
-      res.send(JSON.stringify({ sum, count }, null, 3));
-    }).catch(next);
-});
-
-// scratch
-router.get('/e', (req, res, next) => {
-  Review.findAll({ include: [{ all: true }] })
+  Movie.create({ title: 'Barry Lundon', year: 1977, directorId: 1 })
+    .then(() => Director.findById(1, { include: [Movie] }))
+  // Review.findOne({ attributes: [[connection.fn('AVG', connection.col('stars')), 'avgStars']] })
     .then((dbres) => {
       res.setHeader('Content-Type', 'application/json');
       res.send(JSON.stringify(dbres, null, 3));
