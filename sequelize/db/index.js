@@ -6,11 +6,11 @@ const User = require('./models/user');
 const Review = require('./models/review');
 
 // define model associations
-Movie.belongsTo(Director);
+Movie.Director = Movie.belongsTo(Director);
 Director.hasMany(Movie);
-Review.belongsTo(User);
+Review.User = Review.belongsTo(User);
 User.hasMany(Review);
-Review.belongsTo(Movie);
+Review.Movie = Review.belongsTo(Movie);
 Movie.hasMany(Review);
 
 // truncate tables and fill with scratch data
@@ -58,26 +58,20 @@ function seedDB() {
         comment: 'I thought it was honestly a really good movie!',
       },
     ];
-    connection.sync({ force: true })
-      .then(() => {
-        seedData.forEach((obj) => {
-          Director.create({ name: obj.director })
-            .then(director =>
-              Promise.all([
-                director.createMovie({ title: obj.movie, year: obj.year }),
-                User.create({ username: obj.username }),
-              ]))
-            .then(([movie, user]) => {
-              Review.create({
-                stars: obj.stars,
-                comment: obj.comment,
-                movieId: movie.id,
-                userId: user.id,
-              });
-            });
+    connection.sync({ force: true }).then(() => {
+      seedData.forEach((obj) => {
+        Review.create({
+          stars: obj.stars,
+          comment: obj.comment,
+          user: { username: obj.username },
+          movie: { title: obj.movie, year: obj.year, director: { name: obj.director } },
+        }, {
+          include: [
+            { association: Review.User },
+            { association: Review.Movie, include: [Movie.Director] }],
         });
-      })
-      .catch(console.log);
+      });
+    }).catch(console.log);
   }
 }
 
@@ -88,3 +82,19 @@ module.exports = {
   Review,
   seedDB,
 };
+
+// Old seedDB function
+// Director.create({ name: obj.director })
+//   .then(director =>
+//     Promise.all([
+//       director.createMovie({ title: obj.movie, year: obj.year }),
+//       User.create({ username: obj.username }),
+//     ]))
+//   .then(([movie, user]) => {
+//     Review.create({
+//       stars: obj.stars,
+//       comment: obj.comment,
+//       movieId: movie.id,
+//       userId: user.id,
+//     });
+//   });

@@ -84,13 +84,16 @@ router.post('/film', (req, res, next) => {
 
 // scratch
 router.get('/d', (req, res, next) => {
-  Movie.create({ title: 'Barry Lundon', year: 1977, directorId: 1 })
-    .then(() => Director.findById(1, { include: [Movie] }))
+  Promise.all([Movie.findById(1), Director.findById(1)])
+    .then(([movie, director]) => {
+      movie.setDirector(director);
+    })
   // Review.findOne({ attributes: [[connection.fn('AVG', connection.col('stars')), 'avgStars']] })
     .then((dbres) => {
       res.setHeader('Content-Type', 'application/json');
       res.send(JSON.stringify(dbres, null, 3));
-    }).catch(next);
+    })
+    .catch(next);
 });
 
 module.exports = router;
