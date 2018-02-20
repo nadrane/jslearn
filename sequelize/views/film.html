@@ -9,10 +9,7 @@ Add review for <em>{{ movie.title }} ({{ movie.year }})</em>:
 {% endblock %}
 
 {% block modalBody %}
-<form action="/movies/film" method="post">
-    <div class="form-group hide">
-        <input type="input" class="form-control" id="movieId" name="movieId" value="{{ movie.id }}" placeholder="First Name">
-    </div>
+<form action="/movies/film/{{ movie.id }}" method="post">
     <div class="form-group">
         <label for="user" class="mt-2"><strong>Rating ★:</strong></label>
         <select class="form-control" id="stars" name="stars">
@@ -40,7 +37,7 @@ Add review for <em>{{ movie.title }} ({{ movie.year }})</em>:
         <hr>
         <div><strong>Avg. Score:</strong> {{ avg }} ★</div>
         <div><strong>Released:</strong> {{ movie.year }}</div>
-        <div><strong>Director:</strong> <a href="/director?id={{ movie.director.id }}">{{ movie.director.name }}</a></div>
+        <div><strong>Director:</strong> <a href="/director/{{ movie.director.id }}">{{ movie.director.name }}</a></div>
         {% if session %}
         <button type="button" class="btn movie-btn add-btn" data-toggle="modal" data-target="#modal1">+ Add Review</button>
         {% endif %}
@@ -58,7 +55,7 @@ Add review for <em>{{ movie.title }} ({{ movie.year }})</em>:
     <tbody>
         {% for review in movie.reviews %}
         <tr>
-            <td><a href="/user?id={{ review.user.id }}">{{ review.user.username }}</a></td>
+            <td><a href="/user/{{ review.user.id }}">{{ review.user.username }}</a></td>
             <td>{% for i in range(0, review.stars) %}★{% endfor %}</td>
             <td>{{ review.comment }}</td>
             <td>{{ review.ago }}</td>

@@ -24,7 +24,7 @@
     <tbody>
         {% for review in user.reviews %}
         <tr>
-            <td><a href="/movies/film?id={{ review.movie.id }}">{{ review.movie.title }}</a></td>
+            <td><a href="/movies/film/{{ review.movie.id }}">{{ review.movie.title }}</a></td>
             <td>{% for i in range(0, review.stars) %}★{% endfor %}</td>
             <td>{{ review.comment }}</td>
             <td>{{ review.ago }}</td>

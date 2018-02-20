@@ -73,8 +73,8 @@ Add a new director:
     <tbody>
         {% for movie in movies %}
         <tr>
-            <th scope="row"><h6><a class="mint" href="/movies/film?id={{ movie.id }}">{{ movie.title }}</a></h6></th>
-            <td><a class="white" href="/director?id={{ movie.director.id }}">{{ movie.director.name }}</a></td>
+            <th scope="row"><h6><a class="mint" href="/movies/film/{{ movie.id }}">{{ movie.title }}</a></h6></th>
+            <td><a class="white" href="/director/{{ movie.director.id }}">{{ movie.director.name }}</a></td>
             <td>{{ movie.year }}</td>
         </tr>
         {% endfor %}

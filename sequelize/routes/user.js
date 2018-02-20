@@ -6,8 +6,8 @@ const router = express.Router();
 /*
 * GET /user - user profile view
 */
-router.get('/', (req, res, next) => {
-  User.findById(req.query.id, {
+router.get('/:id', (req, res, next) => {
+  User.findById(req.params.id, {
     include: [{ model: Review, include: [Movie] }],
     order: [[Review, 'createdAt', 'DESC']],
   }).then((user) => {

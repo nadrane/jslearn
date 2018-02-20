@@ -34,11 +34,11 @@ router.post('/', (req, res, next) => {
 });
 
 /*
-* GET /movies/film - profile view - clean this up
+* GET /movies/film - profile view
 */
-router.get('/film', (req, res, next) => {
+router.get('/film/:id', (req, res, next) => {
   // retrieve movie and all reviews
-  const movieProm = Movie.findById(req.query.id, {
+  const movieProm = Movie.findById(req.params.id, {
     include: [{ all: true, nested: true }],
     order: [[Review, 'createdAt', 'DESC']],
   })
@@ -53,7 +53,7 @@ router.get('/film', (req, res, next) => {
 
   // retrieve avg score for this movie
   const avgProm = Review.findOne({
-    where: { movieId: req.query.id },
+    where: { movieId: req.params.id },
     attributes: [[connection.fn('AVG', connection.col('stars')), 'avgStars']],
   });
 
@@ -70,29 +70,15 @@ router.get('/film', (req, res, next) => {
 });
 
 /*
-* POST /movies/film - add review
+* POST /movies/film/:id - add review
 */
-router.post('/film', (req, res, next) => {
+router.post('/film/:id', (req, res, next) => {
   Review.create({
     stars: req.body.stars,
     comment: req.body.comment,
-    movieId: req.body.movieId,
+    movieId: req.params.id,
     userId: req.session.sessionInfo.uid,
-  }).then(() => res.redirect(`/movies/film?id=${req.body.movieId}`))
-    .catch(next);
-});
-
-// scratch
-router.get('/d', (req, res, next) => {
-  Promise.all([Movie.findById(1), Director.findById(1)])
-    .then(([movie, director]) => {
-      movie.setDirector(director);
-    })
-  // Review.findOne({ attributes: [[connection.fn('AVG', connection.col('stars')), 'avgStars']] })
-    .then((dbres) => {
-      res.setHeader('Content-Type', 'application/json');
-      res.send(JSON.stringify(dbres, null, 3));
-    })
+  }).then(() => res.redirect(`/movies/film/${req.params.id}`))
     .catch(next);
 });
 

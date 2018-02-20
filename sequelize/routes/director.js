@@ -6,8 +6,8 @@ const router = express.Router();
 /*
 * GET /director - director profile view
 */
-router.get('/', (req, res, next) => {
-  Director.findById(req.query.id, { include: [Movie], order: [[Movie, 'year', 'ASC']] })
+router.get('/:id', (req, res, next) => {
+  Director.findById(req.params.id, { include: [Movie], order: [[Movie, 'year', 'ASC']] })
     .then((director) => {
       if (!director) {
         const uErr = new Error("Sorry! That director doesn't exist.");
