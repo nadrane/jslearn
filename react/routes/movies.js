@@ -15,11 +15,12 @@ router.get('/', (req, res, next) => {
     Director.findAll({ order: [['id', 'ASC']] }),
   ])
     .then(([movies, directors]) => {
-      res.render('movies', {
+      res.setHeader('Content-Type', 'application/json');
+      res.send(JSON.stringify({
         movies,
         directors,
         session: req.session.sessionInfo,
-      });
+      }, null, 3));
     })
     .catch(next);
 });
@@ -60,11 +61,12 @@ router.get('/film/:id', (req, res, next) => {
   // resolve once all info available
   Promise.all([movieProm, avgProm])
     .then(([movie, avg]) => {
-      res.render('film', {
+      res.setHeader('Content-Type', 'application/json');
+      res.send(JSON.stringify({
         movie,
         avg: roundedToFixed(avg.get('avgStars'), 1),
         session: req.session.sessionInfo,
-      });
+      }, null, 3));
     })
     .catch(next);
 });

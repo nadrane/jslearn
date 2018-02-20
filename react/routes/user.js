@@ -16,11 +16,12 @@ router.get('/:id', (req, res, next) => {
       uErr.status = 404;
       throw uErr;
     }
-    res.render('user', {
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify({
       user,
       count: user.reviews.length,
       session: req.session.sessionInfo,
-    });
+    }, null, 3));
   }).catch(next);
 });
 
