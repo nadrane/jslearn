@@ -18,7 +18,7 @@ router.get('/:id', (req, res, next) => {
       res.send(JSON.stringify({
         director,
         count: director.movies.length,
-        session: req.session.sessionInfo,
+        // session: req.session.sessionInfo,
       }, null, 3));
     }).catch(next);
 });
