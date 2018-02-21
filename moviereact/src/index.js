@@ -2,33 +2,57 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-function Square(props) {
+function Panel() {
   return (
-    <button className="square">{props.value}</button>
+      <div className="panel">
+          <h1>Thank you for watching movies.</h1>
+          <button
+            type="button"
+            className="btn movie-btn add-btn mx-1"
+            data-toggle="modal"
+            data-target="#modal2">
+            + Add Director
+          </button>
+          <button
+            type="button"
+            className="btn movie-btn add-btn mx-1"
+            data-toggle="modal"
+            data-target="#modal1">
+            + Add Film</button>
+          <h6 className="mint my-2">Sign in to add a movie, director, or review.</h6>
+      </div>
   );
 }
 
-function OuterBox() {
-  function renderSquare(i) {
-    return (
-      <Square
-         value={i}
-       />
-    );
-  }
-
+function Table() {
   return (
-    <div className="outerBox">
-      {renderSquare(7)}
-      {renderSquare(4)}
-      {renderSquare('foo')}
-    </div>
+    <table className="table table-dark">
+        <thead className="thead-light">
+            <tr>
+                <th scope="col">Movie</th>
+                <th scope="col">Director</th>
+                <th scope="col">Year</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row"><h6><a className="mint" href="/movies/film/movie.id">Movie.title</a></h6></th>
+                <td><a className="white" href="/director/movie.director.id">Movie.director.name</a></td>
+                <td>movie.year</td>
+            </tr>
+        </tbody>
+    </table>
   );
 }
 
 ReactDOM.render(
-  <OuterBox />,
-  document.getElementById('root'),
+  <Panel />,
+  document.getElementById('panelRoot'),
+);
+
+ReactDOM.render(
+  <Table />,
+  document.getElementById('tableRoot'),
 );
 
 // class Board extends React.Component {
