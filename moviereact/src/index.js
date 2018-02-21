@@ -19,8 +19,8 @@ function OuterBox() {
 
   return (
     <div className="outerBox">
-      {renderSquare(1)}
-      {renderSquare(2)}
+      {renderSquare(7)}
+      {renderSquare(4)}
       {renderSquare('foo')}
     </div>
   );

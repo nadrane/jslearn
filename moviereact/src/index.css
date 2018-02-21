@@ -1,17 +1,5 @@
-html, body, .container-fluid, row {
-  height: 100%;
-}
-
-.outerBox {
-  margin: 5em;
-  padding: 2em;
-  background-color: lightblue;
-  border: 1px solid black;
-  height: 75vh;
-}
-
 /* Global styles */
-/* body {
+body {
   background-color: grey;
 }
 
@@ -53,4 +41,4 @@ nav {
 
 .add-btn {
   margin-top: 1em;
-} */
+}
