@@ -8,12 +8,20 @@ function MovieRow(props) {
   return (
     <tr>
       <td>
-        <h6><a className="mint" href={`/movies/film/${props.data.id}`}>{props.data.title}</a></h6>
+        <h6>
+          <a className="mint" href={`/movies/film/${props.row.id}`}>
+            {props.row.title}
+          </a>
+        </h6>
       </td>
       <td>
-        <a className="white" href={`/director/${props.data.director.id}`}>{props.data.director.name}</a>
+        <a className="white" href={`/director/${props.row.director.id}`}>
+          {props.row.director.name}
+        </a>
       </td>
-      <td>{props.data.year}</td>
+      <td>
+        {props.row.year}
+      </td>
     </tr>
   );
 }
@@ -21,10 +29,20 @@ function MovieRow(props) {
 function ReviewRow(props) {
   return (
     <tr>
-      <td><a className="mint" href={`/movies/film/${props.data.movie.id}`}>{props.data.movie.title}</a></td>
-      <td>{'★'.repeat(props.data.stars)}</td>
-      <td>{props.data.comment}</td>
-      <td>{props.data.ago}</td>
+      <td>
+        <a className="mint" href={`/movies/film/${props.row.movie.id}`}>
+          {props.row.movie.title}
+        </a>
+      </td>
+      <td>
+        {'★'.repeat(props.row.stars)}
+      </td>
+      <td>
+        {props.row.comment}
+      </td>
+      <td>
+        {props.row.ago}
+      </td>
     </tr>
   );
 }
@@ -32,8 +50,16 @@ function ReviewRow(props) {
 function DirectorRow(props) {
   return (
     <tr>
-      <td><h6><a className="mint" href={`/movies/film/${props.data.id}`}>{props.data.title}</a></h6></td>
-      <td>{props.data.year}</td>
+      <td>
+        <h6>
+          <a className="mint" href={`/movies/film/${props.row.id}`}>
+            {props.row.title}
+          </a>
+        </h6>
+      </td>
+      <td>
+        {props.row.year}
+      </td>
     </tr>
   );
 }
@@ -43,13 +69,13 @@ class Table extends React.Component {
     super(props);
     this.state = {
       tableData: props.tableData,
-      tableType: props.tableType,
     };
   }
+
   render() {
     let headers;
-    const type = this.state.tableType;
     let RowClass;
+    const type = this.props.tableType;
 
     if (type === 'movie') {
       headers = ['Movie', 'Director', 'Year'];
@@ -61,7 +87,8 @@ class Table extends React.Component {
       headers = ['Movie', 'Released'];
       RowClass = DirectorRow;
     }
-    const rows = this.state.tableData.map(obj => <RowClass data={obj} key={obj.id} />);
+    const rows = this.state.tableData.map(row => <RowClass row={row} key={row.id} />);
+
     return (
       <table className="table table-dark">
           <thead className="thead-light">
@@ -101,13 +128,13 @@ function Panel() {
 }
 
 DirectorRow.propTypes = {
-  data: PropTypes.object.isRequired,
+  row: PropTypes.object.isRequired,
 };
 MovieRow.propTypes = {
-  data: PropTypes.object.isRequired,
+  row: PropTypes.object.isRequired,
 };
 ReviewRow.propTypes = {
-  data: PropTypes.object.isRequired,
+  row: PropTypes.object.isRequired,
 };
 
 Table.propTypes = {
@@ -147,7 +174,7 @@ axios.get('http://localhost:8080/movies')
 //   })
 //   .catch(e => console.log(e));
 
-// axios.get('http://localhost:8080/director/5')
+// axios.get('http://localhost:8080/director/6')
 //   .then((resp) => {
 //     ReactDOM.render(
 //       <Panel />,
