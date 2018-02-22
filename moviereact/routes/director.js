@@ -15,6 +15,7 @@ router.get('/:id', (req, res, next) => {
         throw uErr;
       }
       res.setHeader('Content-Type', 'application/json');
+      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
       res.send(JSON.stringify({
         director,
         count: director.movies.length,
