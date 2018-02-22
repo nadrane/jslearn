@@ -1,6 +1,56 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import axios from 'axios';
 import './index.css';
+
+function MovieRow(props) {
+  return (
+    <tr>
+      <th scope="row">
+        <h6><a className="mint" href={`/movies/film/${props.movie.id}`}>{props.movie.title}</a></h6>
+      </th>
+      <td>
+        <a className="white" href={`/director/${props.movie.director.id}`}>{props.movie.director.name}</a>
+      </td>
+      <td>{props.movie.year}</td>
+    </tr>
+  );
+}
+
+class Table extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      tableData: props.tableData,
+      tableType: props.tableType,
+    };
+  }
+  render() {
+    let headers;
+    let rows;
+    if (this.state.tableType === 'movies') {
+      headers = ['Movie', 'Director', 'Year'];
+      rows = this.state.tableData.map(movie => <MovieRow movie={movie} key={movie.id} />);
+    } else if (this.state.type === 'reviews') {
+      headers = ['User', 'Stars', 'Review'];
+      // get userRows
+    }
+
+    return (
+      <table className="table table-dark">
+          <thead className="thead-light">
+              <tr>
+                  {headers.map((header, i) => <th key={i} scope="col">{header}</th>)}
+              </tr>
+          </thead>
+          <tbody>
+            {rows}
+          </tbody>
+      </table>
+    );
+  }
+}
 
 function Panel() {
   return (
@@ -18,114 +68,34 @@ function Panel() {
             className="btn movie-btn add-btn mx-1"
             data-toggle="modal"
             data-target="#modal1">
-            + Add Film</button>
+            + Add Film
+          </button>
           <h6 className="mint my-2">Sign in to add a movie, director, or review.</h6>
       </div>
   );
 }
 
-function Table() {
-  return (
-    <table className="table table-dark">
-        <thead className="thead-light">
-            <tr>
-                <th scope="col">Movie</th>
-                <th scope="col">Director</th>
-                <th scope="col">Year</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th scope="row"><h6><a className="mint" href="/movies/film/movie.id">Movie.title</a></h6></th>
-                <td><a className="white" href="/director/movie.director.id">Movie.director.name</a></td>
-                <td>movie.year</td>
-            </tr>
-        </tbody>
-    </table>
-  );
-}
+MovieRow.propTypes = {
+  movie: PropTypes.object.isRequired,
+};
 
-ReactDOM.render(
-  <Panel />,
-  document.getElementById('panelRoot'),
-);
+Table.propTypes = {
+  tableData: PropTypes.array.isRequired,
+  tableType: PropTypes.string.isRequired,
+};
 
-ReactDOM.render(
-  <Table />,
-  document.getElementById('tableRoot'),
-);
-
-// class Board extends React.Component {
-//   renderSquare(i) {
-//     return (
-//       <Square
-//         value={i}
-//       />
-//     );
-//   }
-
-//   render() {
-//     return (
-//       <div>
-//         <div className="board-row">
-//           {this.renderSquare(0)}
-//           {this.renderSquare(1)}
-//           {this.renderSquare(2)}
-//         </div>
-//         <div className="board-row">
-//           {this.renderSquare(3)}
-//           {this.renderSquare(4)}
-//           {this.renderSquare(5)}
-//         </div>
-//         <div className="board-row">
-//           {this.renderSquare(6)}
-//           {this.renderSquare(7)}
-//           {this.renderSquare(8)}
-//         </div>
-//       </div>
-//     );
-//   }
-// }
-
-// class Game extends React.Component {
-// constructor(props) {
-//   super(props);
-//   this.state = {
-//     history: [{
-//       squares: Array(9).fill(null),
-//     }],
-//     stepNumber: 0,
-//     xIsNext: true,
-//   };
-// }
-
-// handleClick(i) {
-//   const history = this.state.history.slice(0, this.state.stepNumber + 1);
-//   const current = history[this.state.stepNumber];
-//   const squares = current.squares.slice();
-//   if (squares[i] || calculateWinner(squares)) {
-//     return;
-//   }
-//   squares[i] = this.state.xIsNext ? 'X' : 'O';
-//   this.setState({
-//     history: history.concat([{
-//       squares: squares,
-//     }]),
-//     stepNumber: history.length,
-//     xIsNext: !this.state.xIsNext,
-//   });
-// }
-
-// jumpTo(step) {
-//   this.setState({
-//     stepNumber: step,
-//     xIsNext: (step % 2) === 0,
-//   });
-// }
-
-// ========================================
-
-// ReactDOM.render(
-//   <Board />,
-//   document.getElementById('root'),
-// );
+axios.get('http://localhost:8080/movies')
+  .then((resp) => {
+    ReactDOM.render(
+      <Panel />,
+      document.getElementById('panelRoot'),
+    );
+    ReactDOM.render(
+      <Table
+        tableData={resp.data.movies}
+        tableType={'movies'}
+      />,
+      document.getElementById('tableRoot'),
+    );
+  })
+  .catch(e => console.log(e));

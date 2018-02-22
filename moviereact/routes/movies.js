@@ -16,11 +16,11 @@ router.get('/', (req, res, next) => {
   ])
     .then(([movies, directors]) => {
       res.setHeader('Content-Type', 'application/json');
+      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
       res.send(JSON.stringify({
         movies,
         directors,
-        session: req.session.sessionInfo,
-      }, null, 3));
+      }));
     })
     .catch(next);
 });
