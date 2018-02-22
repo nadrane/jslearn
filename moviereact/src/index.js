@@ -19,9 +19,7 @@ function MovieRow(props) {
           {props.row.director.name}
         </a>
       </td>
-      <td>
-        {props.row.year}
-      </td>
+      <td>{props.row.year}</td>
     </tr>
   );
 }
@@ -34,15 +32,9 @@ function ReviewRow(props) {
           {props.row.movie.title}
         </a>
       </td>
-      <td>
-        {'★'.repeat(props.row.stars)}
-      </td>
-      <td>
-        {props.row.comment}
-      </td>
-      <td>
-        {props.row.ago}
-      </td>
+      <td>{'★'.repeat(props.row.stars)}</td>
+      <td>{props.row.comment}</td>
+      <td>{props.row.ago}</td>
     </tr>
   );
 }
@@ -57,9 +49,7 @@ function DirectorRow(props) {
           </a>
         </h6>
       </td>
-      <td>
-        {props.row.year}
-      </td>
+      <td>{props.row.year}</td>
     </tr>
   );
 }
@@ -75,30 +65,36 @@ class Table extends React.Component {
   render() {
     let headers;
     let RowClass;
-    const type = this.props.tableType;
+    const { tableType } = this.props;
+    const { tableData } = this.state;
 
-    if (type === 'movie') {
+    if (tableType === 'movie') {
       headers = ['Movie', 'Director', 'Year'];
       RowClass = MovieRow;
-    } else if (type === 'review') {
+    } else if (tableType === 'review') {
       headers = ['Movie', 'Rating', 'Review (★★★★★)', 'Posted'];
       RowClass = ReviewRow;
-    } else if (type === 'director') {
+    } else if (tableType === 'director') {
       headers = ['Movie', 'Released'];
       RowClass = DirectorRow;
     }
-    const rows = this.state.tableData.map(row => <RowClass row={row} key={row.id} />);
 
     return (
       <table className="table table-dark">
-          <thead className="thead-light">
-              <tr>
-                  {headers.map((header, i) => <th key={i} scope="col">{header}</th>)}
-              </tr>
-          </thead>
-          <tbody>
-            {rows}
-          </tbody>
+        <thead className="thead-light">
+          <tr>
+            {headers.map((header, i) => (
+              <th key={i} scope="col">
+                {header}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {tableData ? (
+            tableData.map(row => (<RowClass row={row} key={row.id} />))
+          ) : (<tr><td>Loading...</td></tr>)}
+        </tbody>
       </table>
     );
   }
