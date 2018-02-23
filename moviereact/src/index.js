@@ -16,7 +16,7 @@ function MoviesRow(props) {
     <tr>
       <td>
         <h6>
-          <Link to={`/movie/${props.id}`}>
+          <Link className="white" to={`/movies/film/${props.id}`}>
             {props.row.title}
           </Link>
         </h6>
@@ -65,7 +65,7 @@ function ReviewsRow(props) {
   return (
     <tr>
       <td>
-        <a className="mint" href={`/movies/film/${props.row.user.id}`}>
+        <a className="mint" href={`/user/${props.row.user.id}`}>
           {props.row.user.username}
         </a>
       </td>
