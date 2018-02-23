@@ -1,25 +1,22 @@
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
-import { fetchRoot, allMovies, userReviews, director, movieReviews } from './config';
+import config from './config';
 import './index.css';
 
 const BSRow = props => (
     <div className="row justify-content-center" {...props} />
 );
 
-function BSCol(props) {
-  return (
+const BSCol = props => (
     <div className={props.colClass}>
       {props.value}
     </div>
-  );
-}
+);
 
-function MoviesRow(props) {
-  return (
+const MoviesRow = props => (
     <tr>
       <td>
         <h6>
@@ -35,11 +32,9 @@ function MoviesRow(props) {
       </td>
       <td>{props.row.year}</td>
     </tr>
-  );
-}
+);
 
-function UserRow(props) {
-  return (
+const UserRow = props => (
     <tr>
       <td>
         <a className="mint" href={`/movies/film/${props.row.movie.id}`}>
@@ -50,11 +45,9 @@ function UserRow(props) {
       <td>{props.row.comment}</td>
       <td>{props.row.ago}</td>
     </tr>
-  );
-}
+);
 
-function DirectorRow(props) {
-  return (
+const DirectorRow = props => (
     <tr>
       <td>
         <h6>
@@ -65,11 +58,9 @@ function DirectorRow(props) {
       </td>
       <td>{props.row.year}</td>
     </tr>
-  );
-}
+);
 
-function ReviewsRow(props) {
-  return (
+const ReviewsRow = props => (
     <tr>
       <td>
         <a className="mint" href={`/user/${props.row.user.id}`}>
@@ -80,124 +71,9 @@ function ReviewsRow(props) {
       <td>{props.row.comment}</td>
       <td>{props.row.ago}</td>
     </tr>
-  );
-}
+);
 
-class Table extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      rows: null,
-    };
-  }
-
-  componentDidMount() {
-    const { fetchPath, fetchFormat } = this.props.config;
-    let fetchUrl = `${fetchRoot}/${fetchPath}`;
-    if (this.props.matchId) {
-      fetchUrl = `${fetchUrl}/${this.props.matchId}`;
-    }
-    axios.get(fetchUrl)
-      .then(fetchFormat)
-      .then((rows) => {
-        this.setState({
-          rows,
-        });
-      }).catch(e => console.log(e));
-  }
-
-  render() {
-    let headers;
-    let RowClass;
-    const { type } = this.props.config;
-    const { rows } = this.state;
-
-    if (type === 'allMovies') {
-      headers = ['Movie', 'Director', 'Year'];
-      RowClass = MoviesRow;
-    } else if (type === 'userReviews') {
-      headers = ['Movie', 'Rating (★★★★★)', 'Review', 'Posted'];
-      RowClass = UserRow;
-    } else if (type === 'director') {
-      headers = ['Movie', 'Released'];
-      RowClass = DirectorRow;
-    } else if (type === 'movieReviews') {
-      headers = ['User', 'Rating (★★★★★)', 'Review', 'Posted'];
-      RowClass = ReviewsRow;
-    }
-
-    return (
-      <BSRow>
-        <BSCol
-          colClass="col-sm-12 col-lg-8"
-          value={(
-            <table className="table table-dark">
-              <thead className="thead-light">
-                <tr>
-                  {headers.map((header, i) => (
-                    <th key={i} scope="col">
-                      {header}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {rows ? (
-                  rows.map(row => (<RowClass row={row} key={row.id} id={row.id} />))
-                ) : (<tr><td colSpan={headers.length} align="center">Loading...</td></tr>)}
-              </tbody>
-            </table>
-          )}
-        />
-      </BSRow>
-    );
-  }
-}
-
-// class Main extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       hi: null,
-//     };
-//   }
-
-//   // componentDidMount() {
-//   //   const { fetchPath, fetchFormat } = this.props.config;
-//   //   let fetchUrl = `${fetchRoot}/${fetchPath}`;
-//   //   if (this.props.matchId) {
-//   //     fetchUrl = `${fetchUrl}/${this.props.matchId}`;
-//   //   }
-//   //   axios.get(fetchUrl)
-//   //     .then(fetchFormat)
-//   //     .then((rows) => {
-//   //       this.setState({
-//   //         rows,
-//   //       });
-//   //     }).catch(e => console.log(e));
-//   // }
-
-//   render() {
-//     return (
-//       <div>
-//         <Panel
-//           h1='ok!'
-//           b1='fuck '
-//           b2='yrd'
-//           h6='geee'
-//           h7={this.state.hi}
-//         />
-//         <Table
-//           config={movieReviews}
-//           matchId={match.params.id}
-//         />
-//       </div>
-//     );
-//   }
-// }
-
-function Panel(props) {
-  return (
+const Panel = props => (
     <BSRow>
       <BSCol
         colClass="col-sm-12 col-lg-4"
@@ -223,10 +99,96 @@ function Panel(props) {
         )}
       />
     </BSRow>
+);
+
+const Table = (props) => {
+  let headers;
+  let RowClass;
+  const { type, rows } = props;
+
+  if (type === 'allMovies') {
+    headers = ['Movie', 'Director', 'Year'];
+    RowClass = MoviesRow;
+  } else if (type === 'userReviews') {
+    headers = ['Movie', 'Rating (★★★★★)', 'Review', 'Posted'];
+    RowClass = UserRow;
+  } else if (type === 'director') {
+    headers = ['Movie', 'Released'];
+    RowClass = DirectorRow;
+  } else if (type === 'movieReviews') {
+    headers = ['User', 'Rating (★★★★★)', 'Review', 'Posted'];
+    RowClass = ReviewsRow;
+  }
+
+  return (
+    <BSRow>
+      <BSCol
+        colClass="col-sm-12 col-lg-8"
+        value={(
+          <table className="table table-dark">
+            <thead className="thead-light">
+              <tr>
+                {headers.map((header, i) => (
+                  <th key={i} scope="col">
+                    {header}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {rows ? (
+                rows.map(row => (<RowClass row={row} key={row.id} id={row.id} />))
+              ) : (<tr><td colSpan={headers.length} align="center">Loading...</td></tr>)}
+            </tbody>
+          </table>
+        )}
+      />
+    </BSRow>
   );
+};
+
+class Main extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      rows: null,
+    };
+  }
+
+  componentDidMount() {
+    const { fetchPath, fetchFormat } = this.props;
+    let fetchUrl = `${config.fetchRoot}/${fetchPath}`;
+    if (this.props.matchId) {
+      fetchUrl = `${fetchUrl}/${this.props.matchId}`;
+    }
+    axios.get(fetchUrl)
+      .then(fetchFormat)
+      .then((rows) => {
+        this.setState({
+          rows,
+        });
+      }).catch(e => console.log(e));
+  }
+
+  render() {
+    return (
+      <div>
+        <Panel
+          h1='ok!'
+          b1='fuck '
+          b2='yrd'
+          h6='geee'
+          h7={this.state.hi}
+        />
+        <Table
+          type={this.props.type}
+          rows={this.state.rows}
+        />
+      </div>
+    );
+  }
 }
 
-// class App extends React.Component {
 function App() {
   return (
     <Router>
@@ -234,55 +196,31 @@ function App() {
         <Route exact path='/' render={() => (
           <Redirect to='/movies'/>
         )}/>
-        <Route exact path='/movies/film/:id' render={({ match }) => (
-          <div>
-            <Panel
-              h1='ok!'
-              b1='fuck '
-              b2='yrd'
-              h6='geee'
-            />
-            <Table
-              config={movieReviews}
-              matchId={match.params.id}
-            />
-          </div>
-        )}/>
         <Route exact path='/movies' render={() => (
-          <div>
-            <Panel />
-            <Table
-              config={allMovies}
-            />
-          </div>
+          <Main
+            {...config.allMovies}
+          />
+        )}/>
+        <Route exact path='/movies/film/:id' render={({ match }) => (
+          <Main
+            {...config.movieReviews}
+            matchId={match.params.id}
+          />
         )}/>
         <Route exact path='/user/:id' render={({ match }) => (
-          <div>
-            <Panel />
-            <Table
-              config={userReviews}
-              matchId={match.params.id}
-            />
-          </div>
+          <Main
+            {...config.userReviews}
+            matchId={match.params.id}
+          />
         )}/>
         <Route exact path='/director/:id' render={({ match }) => (
-          <div>
-            <Panel />
-            <Table
-              config={director}
-              matchId={match.params.id}
-            />
-          </div>
+          <Main
+            {...config.director}
+            matchId={match.params.id}
+          />
         )}/>
         <Route render={() => (
-          <BSRow>
-            <BSCol
-              colClass='col-sm-12 col-lg-4 hi'
-              value={(
-                <div>im in here now in da colll</div>
-              )}
-            />
-          </BSRow>
+          <Panel h1='404!' />
         )}/>
       </Switch>
     </Router>
@@ -308,9 +246,23 @@ ReviewsRow.propTypes = {
   row: PropTypes.object.isRequired,
 };
 
+Panel.propTypes = {
+  h1: PropTypes.string,
+  b1: PropTypes.string,
+  b2: PropTypes.string,
+  h6: PropTypes.string,
+};
+
 Table.propTypes = {
-  config: PropTypes.object,
+  type: PropTypes.string,
+  rows: PropTypes.array,
+};
+
+Main.propTypes = {
   matchId: PropTypes.string,
+  type: PropTypes.string,
+  fetchPath: PropTypes.string,
+  fetchFormat: PropTypes.func,
 };
 
 ReactDOM.render(
