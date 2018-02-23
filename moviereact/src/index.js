@@ -62,10 +62,29 @@ function DirectorRow(props) {
 }
 
 class Table extends React.Component {
+  constructor(props) {
+    super(props);
+    // ive read that its bad to set state from props, or that you dont need constructor call??
+    this.state = {
+      rows: null,
+    };
+  }
+
+  componentDidMount() {
+    axios.get(this.props.fetchUrl)
+      .then(this.props.fetchFormat)
+      .then((rows) => {
+        this.setState({
+          rows,
+        });
+      }).catch(e => console.log(e));
+  }
+
   render() {
     let headers;
     let RowClass;
-    const { rows, type } = this.props;
+    const { type } = this.props;
+    const { rows } = this.state;
 
     if (type === 'movie') {
       headers = ['Movie', 'Director', 'Year'];
@@ -130,46 +149,29 @@ function Panel() {
   );
 }
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      tableRows: null,
-      tableType: 'movie',
-      fetchUrl: 'http://localhost:8080/movies',
-      fetchFormat: resp => resp.data.movies,
-    };
-  }
-
-  componentDidMount() {
-    this.fetch(this.state.fetchUrl);
-  }
-
-  fetch(url) {
-    axios.get(url)
-      .then(this.state.fetchFormat)
-      .then((tableRows) => {
-        this.setState({
-          tableRows,
-        });
-      }).catch(e => console.log(e));
-  }
-
-  render() {
-    return (
-      <Router>
-        <div>
-          <Panel />
-          <Route path='/movie' render={() => (
-            <Table
-              rows={this.state.tableRows}
-              type={this.state.tableType}
-            />
-          )}/>
-        </div>
-      </Router>
-    );
-  }
+// class App extends React.Component {
+function App() {
+  return (
+    <Router>
+      <div>
+        <Panel />
+        <Route path='/movie' render={() => (
+          <Table
+            type={'movie'}
+            fetchUrl={'http://localhost:8080/movies'}
+            fetchFormat={resp => resp.data.movies}
+          />
+        )}/>
+        <Route path='/user' render={() => (
+          <Table
+            type={'review'}
+            fetchUrl={'http://localhost:8080/user/4'}
+            fetchFormat={resp => resp.data.user.reviews}
+          />
+        )}/>
+      </div>
+    </Router>
+  );
 }
 
 DirectorRow.propTypes = {
@@ -186,6 +188,8 @@ ReviewRow.propTypes = {
 Table.propTypes = {
   type: PropTypes.string.isRequired,
   rows: PropTypes.array,
+  fetchUrl: PropTypes.string,
+  fetchFormat: PropTypes.func,
 };
 
 ReactDOM.render(
