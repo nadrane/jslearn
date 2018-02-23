@@ -2,23 +2,30 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
+import { fetchRoot, allMovies, userReviews, director, movieReviews } from './config';
 import './index.css';
 
-// const hi = ({ match }) => (
-//   <div>
-//     {match.params.id}
-//   </div>
-// );
+const BSRow = props => (
+    <div className="row justify-content-center" {...props} />
+);
+
+function BSCol(props) {
+  return (
+    <div className={props.colClass}>
+      {props.value}
+    </div>
+  );
+}
 
 function MoviesRow(props) {
   return (
     <tr>
       <td>
         <h6>
-          <Link className="white" to={`/movies/film/${props.id}`}>
+          <a href={`/movies/film/${props.id}`}>
             {props.row.title}
-          </Link>
+          </a>
         </h6>
       </td>
       <td>
@@ -79,15 +86,19 @@ function ReviewsRow(props) {
 class Table extends React.Component {
   constructor(props) {
     super(props);
-    // ive read that its bad to set state from props, or that you dont need constructor call??
     this.state = {
       rows: null,
     };
   }
 
   componentDidMount() {
-    axios.get(this.props.fetchUrl)
-      .then(this.props.fetchFormat)
+    const { fetchPath, fetchFormat } = this.props.config;
+    let fetchUrl = `${fetchRoot}/${fetchPath}`;
+    if (this.props.matchId) {
+      fetchUrl = `${fetchUrl}/${this.props.matchId}`;
+    }
+    axios.get(fetchUrl)
+      .then(fetchFormat)
       .then((rows) => {
         this.setState({
           rows,
@@ -98,72 +109,120 @@ class Table extends React.Component {
   render() {
     let headers;
     let RowClass;
-    const { type } = this.props;
+    const { type } = this.props.config;
     const { rows } = this.state;
 
-    if (type === 'movies') {
+    if (type === 'allMovies') {
       headers = ['Movie', 'Director', 'Year'];
       RowClass = MoviesRow;
-    } else if (type === 'user') {
+    } else if (type === 'userReviews') {
       headers = ['Movie', 'Rating (★★★★★)', 'Review', 'Posted'];
       RowClass = UserRow;
     } else if (type === 'director') {
       headers = ['Movie', 'Released'];
       RowClass = DirectorRow;
-    } else if (type === 'reviews') {
+    } else if (type === 'movieReviews') {
       headers = ['User', 'Rating (★★★★★)', 'Review', 'Posted'];
       RowClass = ReviewsRow;
     }
 
     return (
-      <div className="row justify-content-center">
-        <div className="col-sm-12 col-lg-8">
-          <table className="table table-dark">
-            <thead className="thead-light">
-              <tr>
-                {headers.map((header, i) => (
-                  <th key={i} scope="col">
-                    {header}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {rows ? (
-                rows.map(row => (<RowClass row={row} key={row.id} id={row.id} />))
-              ) : (<tr><td colSpan={headers.length} align="center">Loading...</td></tr>)}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <BSRow>
+        <BSCol
+          colClass="col-sm-12 col-lg-8"
+          value={(
+            <table className="table table-dark">
+              <thead className="thead-light">
+                <tr>
+                  {headers.map((header, i) => (
+                    <th key={i} scope="col">
+                      {header}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {rows ? (
+                  rows.map(row => (<RowClass row={row} key={row.id} id={row.id} />))
+                ) : (<tr><td colSpan={headers.length} align="center">Loading...</td></tr>)}
+              </tbody>
+            </table>
+          )}
+        />
+      </BSRow>
     );
   }
 }
 
-function Panel() {
+// class Main extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       hi: null,
+//     };
+//   }
+
+//   // componentDidMount() {
+//   //   const { fetchPath, fetchFormat } = this.props.config;
+//   //   let fetchUrl = `${fetchRoot}/${fetchPath}`;
+//   //   if (this.props.matchId) {
+//   //     fetchUrl = `${fetchUrl}/${this.props.matchId}`;
+//   //   }
+//   //   axios.get(fetchUrl)
+//   //     .then(fetchFormat)
+//   //     .then((rows) => {
+//   //       this.setState({
+//   //         rows,
+//   //       });
+//   //     }).catch(e => console.log(e));
+//   // }
+
+//   render() {
+//     return (
+//       <div>
+//         <Panel
+//           h1='ok!'
+//           b1='fuck '
+//           b2='yrd'
+//           h6='geee'
+//           h7={this.state.hi}
+//         />
+//         <Table
+//           config={movieReviews}
+//           matchId={match.params.id}
+//         />
+//       </div>
+//     );
+//   }
+// }
+
+function Panel(props) {
   return (
-    <div className="row justify-content-center">
-      <div className="col-sm-12 col-lg-4">
+    <BSRow>
+      <BSCol
+        colClass="col-sm-12 col-lg-4"
+        value={(
           <div className="panel">
-            <h1>Thank you for watching movies.</h1>
+            <h1>{props.h1}</h1>
             <button
               type="button"
               className="btn movie-btn add-btn mx-1"
               data-toggle="modal"
               data-target="#modal2">
-              + Add Director
+              {props.b1}
             </button>
             <button
               type="button"
               className="btn movie-btn add-btn mx-1"
               data-toggle="modal"
               data-target="#modal1">
-              + Add Film
+              {props.b2}
             </button>
-            <h6 className="mint my-2">Sign in to add a movie, director, or review.</h6>
+            <h6 className="mint my-2">{props.h6}</h6>
           </div>
-      </div>
-    </div>
+        )}
+      />
+    </BSRow>
   );
 }
 
@@ -171,40 +230,69 @@ function Panel() {
 function App() {
   return (
     <Router>
-      <div>
-        <Panel />
-        <Route exact={true} path='/movies' render={() => (
-          <Table
-            type={'movies'}
-            fetchUrl={'http://localhost:8080/movies'}
-            fetchFormat={resp => resp.data.movies}
-          />
+      <Switch>
+        <Route exact path='/' render={() => (
+          <Redirect to='/movies'/>
         )}/>
-        <Route path='/user/:id' render={({ match }) => (
-          <Table
-            type={'user'}
-            fetchUrl={`http://localhost:8080/user/${match.params.id}`}
-            fetchFormat={resp => resp.data.user.reviews}
-          />
+        <Route exact path='/movies/film/:id' render={({ match }) => (
+          <div>
+            <Panel
+              h1='ok!'
+              b1='fuck '
+              b2='yrd'
+              h6='geee'
+            />
+            <Table
+              config={movieReviews}
+              matchId={match.params.id}
+            />
+          </div>
         )}/>
-        <Route path='/director/:id' render={({ match }) => (
-          <Table
-            type={'director'}
-            fetchUrl={`http://localhost:8080/director/${match.params.id}`}
-            fetchFormat={resp => resp.data.director.movies}
-          />
+        <Route exact path='/movies' render={() => (
+          <div>
+            <Panel />
+            <Table
+              config={allMovies}
+            />
+          </div>
         )}/>
-        <Route path='/movies/film/:id' render={({ match }) => (
-          <Table
-            type={'reviews'}
-            fetchUrl={`http://localhost:8080/movies/film/${match.params.id}`}
-            fetchFormat={resp => resp.data.movie.reviews}
-          />
+        <Route exact path='/user/:id' render={({ match }) => (
+          <div>
+            <Panel />
+            <Table
+              config={userReviews}
+              matchId={match.params.id}
+            />
+          </div>
         )}/>
-      </div>
+        <Route exact path='/director/:id' render={({ match }) => (
+          <div>
+            <Panel />
+            <Table
+              config={director}
+              matchId={match.params.id}
+            />
+          </div>
+        )}/>
+        <Route render={() => (
+          <BSRow>
+            <BSCol
+              colClass='col-sm-12 col-lg-4 hi'
+              value={(
+                <div>im in here now in da colll</div>
+              )}
+            />
+          </BSRow>
+        )}/>
+      </Switch>
     </Router>
   );
 }
+
+BSCol.propTypes = {
+  colClass: PropTypes.string.isRequired,
+  value: PropTypes.object,
+};
 
 DirectorRow.propTypes = {
   row: PropTypes.object.isRequired,
@@ -220,79 +308,12 @@ ReviewsRow.propTypes = {
   row: PropTypes.object.isRequired,
 };
 
-
 Table.propTypes = {
-  type: PropTypes.string.isRequired,
-  rows: PropTypes.array,
-  fetchUrl: PropTypes.string,
-  fetchFormat: PropTypes.func,
+  config: PropTypes.object,
+  matchId: PropTypes.string,
 };
 
 ReactDOM.render(
   <App/>,
   document.getElementById('root'),
 );
-
-// ReactDOM.render(
-//   <Table
-//     tableType={'review'}
-//     url={'http://localhost:8080/user/2'}
-//   />,
-//   document.getElementById('tableRoot'),
-// );
-
-// ReactDOM.render(
-//   <Table
-//     tableType={'director'}
-//     url={'http://localhost:8080/director/6'}
-//   />,
-//   document.getElementById('tableRoot'),
-// );
-
-// axios.get('http://localhost:8080/movies')
-//   .then((resp) => {
-//     ReactDOM.render(
-//       <Panel />,
-//       document.getElementById('panelRoot'),
-//     );
-//     ReactDOM.render(
-//       <Table
-//         rows={resp.data.movies}
-//         tableType={'movie'}
-//       />,
-//       document.getElementById('tableRoot'),
-//     );
-//   })
-//   .catch(e => console.log(e));
-
-// axios.get('http://localhost:8080/user/2')
-//   .then((resp) => {
-//     ReactDOM.render(
-//       <Panel />,
-//       document.getElementById('panelRoot'),
-//     );
-//     ReactDOM.render(
-//       <Table
-//         tableData={resp.data.user.reviews}
-//         tableType={'review'}
-//       />,
-//       document.getElementById('tableRoot'),
-//     );
-//   })
-//   .catch(e => console.log(e));
-
-// axios.get('http://localhost:8080/director/6')
-//   .then((resp) => {
-//     ReactDOM.render(
-//       <Panel />,
-//       document.getElementById('panelRoot'),
-//     );
-//     ReactDOM.render(
-//       <Table
-//         tableData={resp.data.director.movies}
-//         tableType={'director'}
-//       />,
-//       document.getElementById('tableRoot'),
-//     );
-//   })
-//   .catch(e => console.log(e));

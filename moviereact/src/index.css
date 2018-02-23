@@ -3,6 +3,11 @@ body {
   background-color: grey;
 }
 
+.hi {
+  background-color: white;
+  text-align: center;
+}
+
 nav {
   margin-bottom: 2em;
   text-align: center;
