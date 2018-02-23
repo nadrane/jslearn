@@ -11,7 +11,7 @@ import './index.css';
 //   </div>
 // );
 
-function MovieRow(props) {
+function MoviesRow(props) {
   return (
     <tr>
       <td>
@@ -31,7 +31,7 @@ function MovieRow(props) {
   );
 }
 
-function ReviewRow(props) {
+function UserRow(props) {
   return (
     <tr>
       <td>
@@ -61,6 +61,21 @@ function DirectorRow(props) {
   );
 }
 
+function ReviewsRow(props) {
+  return (
+    <tr>
+      <td>
+        <a className="mint" href={`/movies/film/${props.row.user.id}`}>
+          {props.row.user.username}
+        </a>
+      </td>
+      <td>{'★'.repeat(props.row.stars)}</td>
+      <td>{props.row.comment}</td>
+      <td>{props.row.ago}</td>
+    </tr>
+  );
+}
+
 class Table extends React.Component {
   constructor(props) {
     super(props);
@@ -86,15 +101,18 @@ class Table extends React.Component {
     const { type } = this.props;
     const { rows } = this.state;
 
-    if (type === 'movie') {
+    if (type === 'movies') {
       headers = ['Movie', 'Director', 'Year'];
-      RowClass = MovieRow;
-    } else if (type === 'review') {
-      headers = ['Movie', 'Rating', 'Review (★★★★★)', 'Posted'];
-      RowClass = ReviewRow;
+      RowClass = MoviesRow;
+    } else if (type === 'user') {
+      headers = ['Movie', 'Rating (★★★★★)', 'Review', 'Posted'];
+      RowClass = UserRow;
     } else if (type === 'director') {
       headers = ['Movie', 'Released'];
       RowClass = DirectorRow;
+    } else if (type === 'reviews') {
+      headers = ['User', 'Rating (★★★★★)', 'Review', 'Posted'];
+      RowClass = ReviewsRow;
     }
 
     return (
@@ -155,18 +173,32 @@ function App() {
     <Router>
       <div>
         <Panel />
-        <Route path='/movie' render={() => (
+        <Route exact={true} path='/movies' render={() => (
           <Table
-            type={'movie'}
+            type={'movies'}
             fetchUrl={'http://localhost:8080/movies'}
             fetchFormat={resp => resp.data.movies}
           />
         )}/>
-        <Route path='/user' render={() => (
+        <Route path='/user/:id' render={({ match }) => (
           <Table
-            type={'review'}
-            fetchUrl={'http://localhost:8080/user/4'}
+            type={'user'}
+            fetchUrl={`http://localhost:8080/user/${match.params.id}`}
             fetchFormat={resp => resp.data.user.reviews}
+          />
+        )}/>
+        <Route path='/director/:id' render={({ match }) => (
+          <Table
+            type={'director'}
+            fetchUrl={`http://localhost:8080/director/${match.params.id}`}
+            fetchFormat={resp => resp.data.director.movies}
+          />
+        )}/>
+        <Route path='/movies/film/:id' render={({ match }) => (
+          <Table
+            type={'reviews'}
+            fetchUrl={`http://localhost:8080/movies/film/${match.params.id}`}
+            fetchFormat={resp => resp.data.movie.reviews}
           />
         )}/>
       </div>
@@ -177,13 +209,17 @@ function App() {
 DirectorRow.propTypes = {
   row: PropTypes.object.isRequired,
 };
-MovieRow.propTypes = {
+MoviesRow.propTypes = {
   row: PropTypes.object.isRequired,
   id: PropTypes.number,
 };
-ReviewRow.propTypes = {
+UserRow.propTypes = {
   row: PropTypes.object.isRequired,
 };
+ReviewsRow.propTypes = {
+  row: PropTypes.object.isRequired,
+};
+
 
 Table.propTypes = {
   type: PropTypes.string.isRequired,

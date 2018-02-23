@@ -62,10 +62,10 @@ router.get('/film/:id', (req, res, next) => {
   Promise.all([movieProm, avgProm])
     .then(([movie, avg]) => {
       res.setHeader('Content-Type', 'application/json');
+      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
       res.send(JSON.stringify({
         movie,
         avg: roundedToFixed(avg.get('avgStars'), 1),
-        session: req.session.sessionInfo,
       }, null, 3));
     })
     .catch(next);
