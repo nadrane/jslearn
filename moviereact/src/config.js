@@ -3,22 +3,22 @@ const config = {
   allMovies: {
     type: 'allMovies',
     fetchPath: 'movies',
-    fetchFormat: resp => resp.data.movies,
+    rowFormat: data => data.movies,
   },
   userReviews: {
     type: 'userReviews',
     fetchPath: 'user',
-    fetchFormat: resp => resp.data.user.reviews,
+    rowFormat: data => data.user.reviews,
   },
   director: {
     type: 'director',
     fetchPath: 'director',
-    fetchFormat: resp => resp.data.director.movies,
+    rowFormat: data => data.director.movies,
   },
   movieReviews: {
     type: 'movieReviews',
     fetchPath: 'movies/film',
-    fetchFormat: resp => resp.data.movie.reviews,
+    rowFormat: data => data.movie.reviews,
   },
 };
 
