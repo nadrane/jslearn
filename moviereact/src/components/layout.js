@@ -24,12 +24,12 @@ const NavMenu = props => (
       </Link>
     </li>
     <li>
-      <button
-        className="mint my-2 my-sm-0 btn-link"
-        href="/auth/logout"
+      <a
+        className="mint my-2 my-sm-0"
+        href="/"
         onClick={props.onLogout}>
         Logout
-      </button>
+      </a>
     </li>
   </ul>
   ) : (

@@ -20,6 +20,7 @@ const PanelInfo = (props) => {
     </div>
   );
 };
+
 PanelInfo.propTypes = {
   text: PropTypes.object,
   stats: PropTypes.array,
@@ -53,7 +54,6 @@ const Panel = (props) => {
       panelHeader = panelData.user.username;
       panelInfo = (
         <PanelInfo
-          session={session}
           text={(
             <span>
               <strong>{panelData.user.username} </strong>
@@ -61,13 +61,13 @@ const Panel = (props) => {
               <strong> {panelData.count} </strong>review(s) on Movietown.
             </span>
           )}
+          session={session}
         />
       );
     } else if (type === 'director') {
       panelHeader = panelData.director.name;
       panelInfo = (
         <PanelInfo
-          session={session}
           text={(
             <span>
               <strong>{panelData.director.name} </strong>
@@ -75,13 +75,13 @@ const Panel = (props) => {
               <strong> {panelData.count} </strong> film(s) on Movietown.
             </span>
           )}
+          session={session}
         />
       );
     } else if (type === 'movieReviews') {
       panelHeader = panelData.movie.title;
       panelInfo = (
         <PanelInfo
-          session={session}
           stats={[
             ['Avg. Score', `${panelData.avg} ★`],
             ['Released', panelData.movie.year],
@@ -94,6 +94,7 @@ const Panel = (props) => {
               ),
             ],
           ]}
+          session={session}
           user={(
             <ModalButtons buttons={[['+ Add Review', 'addReview']]} />
           )}

@@ -21,7 +21,8 @@ class App extends React.Component {
     this.handleLogout = this.handleLogout.bind(this);
   }
 
-  handleLogout() {
+  handleLogout(e) {
+    e.preventDefault();
     this.setState({ session: null });
   }
 
