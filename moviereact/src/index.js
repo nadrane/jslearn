@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
+// import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -19,19 +20,25 @@ class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      type: 'allMovies',
       panelData: null,
       rows: null,
     };
+    this.handleMovieLink = this.handleMovieLink.bind(this);
   }
 
   componentDidMount() {
+    this.fetch();
+  }
+
+  fetch(id) {
     let rows;
     let panelData;
-    const { fetchPath, rowFormat } = this.props;
+    const { fetchPath, rowFormat } = config[this.state.type];
     let fetchUrl = `${config.fetchRoot}/${fetchPath}`;
 
-    if (this.props.matchId) {
-      fetchUrl = `${fetchUrl}/${this.props.matchId}`;
+    if (id) {
+      fetchUrl = `${fetchUrl}/${id}`;
     }
 
     axios.get(fetchUrl)
@@ -45,9 +52,19 @@ class Main extends React.Component {
       }).catch(e => console.log(e));
   }
 
+  handleMovieLink(e) {
+    e.preventDefault();
+    const { id } = e.target;
+    this.setState({
+      type: 'movieReviews',
+      panelData: null,
+      rows: null,
+    }, () => this.fetch(id));
+  }
+
   render() {
-    const { type, session } = this.props;
-    const { panelData, rows } = this.state;
+    const { session } = this.props;
+    const { panelData, rows, type } = this.state;
     if (panelData && rows) {
       return (
         <div>
@@ -60,6 +77,7 @@ class Main extends React.Component {
             <Table
               rows={rows}
               type={type}
+              handleMovieLink={this.handleMovieLink}
             />
           </div>
         </div>
@@ -92,33 +110,32 @@ class App extends React.Component {
           <AddReviewModal />
           <AddDirectorModal />
           <AddMovieModal />
-          <Switch>
+          <Main
+            session={this.state.session}
+          />
+          {/* <Switch>
             <Route exact path='/' render={() => (
               <Redirect to='/movies'/>
             )}/>
             <Route exact path='/movies' render={() => (
               <Main
-                {...config.allMovies}
                 session={this.state.session}
               />
             )}/>
             <Route exact path='/movies/film/:id' render={({ match }) => (
               <Main
-                {...config.movieReviews}
                 matchId={match.params.id}
                 session={this.state.session}
               />
             )}/>
             <Route exact path='/user/:id' render={({ match }) => (
               <Main
-                {...config.userReviews}
                 matchId={match.params.id}
                 session={this.state.session}
               />
             )}/>
             <Route exact path='/director/:id' render={({ match }) => (
               <Main
-                {...config.director}
                 matchId={match.params.id}
                 session={this.state.session}
               />
@@ -126,7 +143,7 @@ class App extends React.Component {
             <Route render={() => (
               <Panel msg='404!' />
             )}/>
-          </Switch>
+          </Switch> */}
         </div>
       </Router>
     );

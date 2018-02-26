@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { BSRow, BSCol } from './layout';
@@ -7,9 +7,9 @@ const MoviesRow = props => (
   <tr>
     <td>
       <h6>
-        <Link to={`/movies/film/${props.id}`}>
+        <a onClick={props.handleMovieLink} href="/" id={props.id}>
           {props.row.title}
-        </Link>
+        </a>
       </h6>
     </td>
     <td>
@@ -94,7 +94,13 @@ const Table = (props) => {
             </thead>
             <tbody>
               {rows ? (
-                rows.map(row => (<RowClass row={row} key={row.id} id={row.id} />))
+                rows.map(row => (
+                  <RowClass
+                    handleMovieLink={props.handleMovieLink}
+                    row={row}
+                    key={row.id}
+                    id={row.id} />
+                  ))
               ) : (<tr><td colSpan={headers.length} align="center">Loading...</td></tr>)}
             </tbody>
           </table>
@@ -109,6 +115,7 @@ DirectorRow.propTypes = {
 MoviesRow.propTypes = {
   row: PropTypes.object.isRequired,
   id: PropTypes.number,
+  handleMovieLink: PropTypes.func,
 };
 UserRow.propTypes = {
   row: PropTypes.object.isRequired,
@@ -119,6 +126,7 @@ ReviewsRow.propTypes = {
 Table.propTypes = {
   type: PropTypes.string,
   rows: PropTypes.array,
+  handleMovieLink: PropTypes.func,
 };
 
 export { MoviesRow, UserRow, DirectorRow, ReviewsRow, Table };
