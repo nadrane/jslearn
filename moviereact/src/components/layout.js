@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -17,10 +18,10 @@ const NavMenu = props => (
   props.session ? (
   <ul className="navbar-nav mr-auto">
     <li>
-      <a className="white mr-5"
-        href={`/user/${props.session.id}`}>
+      <Link className="white mr-5"
+        to={`/user/${props.session.id}`}>
         {props.session.username}
-      </a>
+      </Link>
     </li>
     <li>
       <button
@@ -50,7 +51,7 @@ const NavMenu = props => (
 const NavBar = props => (
 <nav className="navbar navbar-expand-md sticky-top navbar-dark bg-dark">
   <div className="container">
-      <a id="brand" className="navbar-brand" href="/">Movietown!</a>
+      <Link id="brand" className="navbar-brand" to="/">Movietown!</Link>
   </div>
     <NavMenu session={props.session} onLogout={props.onLogout} />
 </nav>

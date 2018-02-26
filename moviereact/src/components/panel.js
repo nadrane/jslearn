@@ -1,8 +1,8 @@
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { BSRow, BSCol } from './layout';
 import { ModalButtons } from './modal';
-
 
 const PanelInfo = (props) => {
   let stats;
@@ -20,13 +20,20 @@ const PanelInfo = (props) => {
     </div>
   );
 };
+PanelInfo.propTypes = {
+  text: PropTypes.object,
+  stats: PropTypes.array,
+  session: PropTypes.object,
+  user: PropTypes.object,
+  guest: PropTypes.object,
+};
 
 const Panel = (props) => {
   let panelHeader = props.msg || '...';
   let panelInfo;
-  const { type, data, session } = props;
+  const { type, panelData, session } = props;
 
-  if (data) {
+  if (panelData) {
     if (type === 'allMovies') {
       panelHeader = 'All Movies';
       panelInfo = (
@@ -43,47 +50,47 @@ const Panel = (props) => {
         />
       );
     } else if (type === 'userReviews') {
-      panelHeader = data.user.username;
+      panelHeader = panelData.user.username;
       panelInfo = (
         <PanelInfo
           session={session}
           text={(
             <span>
-              <strong>{data.user.username} </strong>
+              <strong>{panelData.user.username} </strong>
               has posted
-              <strong> {data.count} </strong>review(s) on Movietown.
+              <strong> {panelData.count} </strong>review(s) on Movietown.
             </span>
           )}
         />
       );
     } else if (type === 'director') {
-      panelHeader = data.director.name;
+      panelHeader = panelData.director.name;
       panelInfo = (
         <PanelInfo
           session={session}
           text={(
             <span>
-              <strong>{data.director.name} </strong>
+              <strong>{panelData.director.name} </strong>
               has released
-              <strong> {data.count} </strong> film(s) on Movietown.
+              <strong> {panelData.count} </strong> film(s) on Movietown.
             </span>
           )}
         />
       );
     } else if (type === 'movieReviews') {
-      panelHeader = data.movie.title;
+      panelHeader = panelData.movie.title;
       panelInfo = (
         <PanelInfo
           session={session}
           stats={[
-            ['Avg. Score', `${data.avg} ★`],
-            ['Released', data.movie.year],
+            ['Avg. Score', `${panelData.avg} ★`],
+            ['Released', panelData.movie.year],
             [
               'Director',
               (
-                <a key={0} href={`/director/${data.movie.director.id}`}>
-                  {data.movie.director.name}
-                </a>
+                <Link key={0} to={`/director/${panelData.movie.director.id}`}>
+                  {panelData.movie.director.name}
+                </Link>
               ),
             ],
           ]}
@@ -107,16 +114,9 @@ const Panel = (props) => {
   );
 };
 
-PanelInfo.propTypes = {
-  text: PropTypes.object,
-  stats: PropTypes.array,
-  session: PropTypes.object,
-  user: PropTypes.object,
-  guest: PropTypes.object,
-};
 Panel.propTypes = {
   type: PropTypes.string,
-  data: PropTypes.object,
+  panelData: PropTypes.object,
   msg: PropTypes.string,
   session: PropTypes.object,
 };

@@ -1,4 +1,4 @@
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { BSRow, BSCol } from './layout';
@@ -7,15 +7,15 @@ const MoviesRow = props => (
   <tr>
     <td>
       <h6>
-        <a onClick={props.handleMovieLink} href="/" id={props.id}>
+        <Link to={`/movies/film/${props.id}`}>
           {props.row.title}
-        </a>
+        </Link>
       </h6>
     </td>
     <td>
-      <a className="white" href={`/director/${props.row.director.id}`}>
+      <Link to={`/director/${props.row.director.id}`} className="white">
         {props.row.director.name}
-      </a>
+      </Link>
     </td>
     <td>{props.row.year}</td>
   </tr>
@@ -24,9 +24,9 @@ const MoviesRow = props => (
 const UserRow = props => (
   <tr>
     <td>
-      <a className="mint" href={`/movies/film/${props.row.movie.id}`}>
+      <Link className="mint" to={`/movies/film/${props.row.movie.id}`}>
         {props.row.movie.title}
-      </a>
+      </Link>
     </td>
     <td>{'★'.repeat(props.row.stars)}</td>
     <td>{props.row.comment}</td>
@@ -38,9 +38,9 @@ const DirectorRow = props => (
   <tr>
     <td>
       <h6>
-        <a className="mint" href={`/movies/film/${props.row.id}`}>
+        <Link className="mint" to={`/movies/film/${props.row.id}`}>
           {props.row.title}
-        </a>
+        </Link>
       </h6>
     </td>
     <td>{props.row.year}</td>
@@ -50,9 +50,9 @@ const DirectorRow = props => (
 const ReviewsRow = props => (
   <tr>
     <td>
-      <a className="mint" href={`/user/${props.row.user.id}`}>
+      <Link className="mint" to={`/user/${props.row.user.id}`}>
         {props.row.user.username}
-      </a>
+      </Link>
     </td>
     <td>{'★'.repeat(props.row.stars)}</td>
     <td>{props.row.comment}</td>
@@ -96,7 +96,6 @@ const Table = (props) => {
               {rows ? (
                 rows.map(row => (
                   <RowClass
-                    handleMovieLink={props.handleMovieLink}
                     row={row}
                     key={row.id}
                     id={row.id} />
