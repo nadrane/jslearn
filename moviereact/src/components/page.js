@@ -3,6 +3,7 @@ import React from 'react';
 import axios from 'axios';
 import { Panel } from './panel';
 import { Table } from './table';
+import { AddDirectorModal, AddMovieModal, AddReviewModal } from './modal';
 import config from '../config';
 
 class Main extends React.Component {
@@ -36,7 +37,7 @@ class Main extends React.Component {
   }
 
   render() {
-    const { session, type } = this.props;
+    const { session, type, modals } = this.props;
     const { panelData, rows } = this.state;
     if (panelData) {
       return (
@@ -52,6 +53,7 @@ class Main extends React.Component {
               type={type}
             />
           </div>
+          {modals}
         </div>
       );
     } return null;
@@ -63,12 +65,19 @@ Main.propTypes = {
   fetchPath: PropTypes.string,
   rowFormat: PropTypes.func,
   session: PropTypes.object,
+  modals: PropTypes.object,
 };
 
 const AllMoviesPage = props => (
   <Main
     {...config.allMovies}
     session={props.session}
+    modals={
+      <div>
+        <AddDirectorModal />
+        <AddMovieModal />
+      </div>
+    }
   />
 );
 AllMoviesPage.propTypes = {
@@ -80,6 +89,7 @@ const MoviePage = props => (
     {...config.movieReviews}
     matchId={props.matchId}
     session={props.session}
+    modals={<AddReviewModal />}
   />
 );
 MoviePage.propTypes = {

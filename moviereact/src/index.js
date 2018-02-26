@@ -5,7 +5,6 @@ import './index.css';
 
 // components
 import { AllMoviesPage, MoviePage, UserPage, DirectorPage } from './components/page';
-import { AddReviewModal, AddDirectorModal, AddMovieModal } from './components/modal';
 import { NavBar } from './components/layout';
 import { Panel } from './components/panel';
 
@@ -31,9 +30,6 @@ class App extends React.Component {
       <Router>
         <div>
           <NavBar session={this.state.session} onLogout={this.handleLogout}/>
-          <AddReviewModal />
-          <AddDirectorModal />
-          <AddMovieModal />
           <Switch>
             <Route exact path='/' render={() => (
               <Redirect to='/movies'/>
