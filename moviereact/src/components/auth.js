@@ -5,26 +5,11 @@ import { BSRow, BSCol } from './layout';
 class Auth extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { username: '' };
     this.handleChange = this.handleChange.bind(this);
-    this.handleLogin = this.handleLogin.bind(this);
-    this.handleRegister = this.handleRegister.bind(this);
   }
 
   handleChange(e) {
-    this.setState({ username: e.target.value });
-  }
-
-  handleLogin(e) {
-    e.preventDefault();
-    console.log(e);
-    alert('login happened: ', this.state.username);
-  }
-
-  handleRegister(e) {
-    e.preventDefault();
-    console.log(e);
-    alert('REGISTER happened: ', this.state.username);
+    this.props.handleAuthNameChange(e.target.value);
   }
 
   render() {
@@ -34,7 +19,7 @@ class Auth extends React.Component {
           <div className="panel">
             <h3 className="mint">{this.props.register ? 'Register' : 'Sign in'}</h3>
             <form
-              onSubmit={this.props.register ? this.handleRegister : this.handleLogin}
+              onSubmit={this.props.register ? this.props.handleRegister : this.props.handleLogin}
               method="post"
               className="mb-2"
             >
@@ -49,7 +34,7 @@ class Auth extends React.Component {
                   name="username"
                   placeholder="username"
                   autoComplete="off"
-                  value={this.state.username}
+                  value={this.props.authName}
                   onChange={this.handleChange}
                 />
                 <small id="access-warn" />

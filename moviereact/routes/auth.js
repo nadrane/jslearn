@@ -10,17 +10,14 @@ router.get('/login', (req, res) => {
 
 /* POST to login - set user session */
 router.post('/login', (req, res, next) => {
+  console.log('logging in');
   User.findOne({
     where: { username: req.body.username },
   }).then((user) => {
     if (!user) {
-      return res.redirect('/auth/login');
+      return res.send({ err: 'bad!' });
     }
-    req.session.sessionInfo = {
-      uid: user.id,
-      username: user.username,
-    };
-    return res.redirect('/');
+    return res.json(user);
   }).catch(next);
 });
 
@@ -39,16 +36,12 @@ router.get('/register', (req, res) => {
 
 /* POST to register - write new user and set session */
 router.post('/register', (req, res, next) => {
-  if (!req.body.username) {
-    return res.redirect('/auth/register');
-  }
-  return User.create(req.body, { fields: ['username'] })
+  User.create(req.body, { fields: ['username'] })
     .then((user) => {
-      req.session.sessionInfo = {
-        uid: user.id,
-        username: user.username,
-      };
-      return res.redirect('/');
+      if (!user) {
+        return res.json({ err: 'bad!' });
+      }
+      return res.json(user);
     })
     .catch(next);
 });
