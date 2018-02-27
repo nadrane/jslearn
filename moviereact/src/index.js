@@ -5,6 +5,7 @@ import './index.css';
 
 // components
 import { AllMoviesPage, MoviePage, UserPage, DirectorPage } from './components/page';
+import Auth from './components/auth';
 import { NavBar } from './components/layout';
 import { Panel } from './components/panel';
 
@@ -56,6 +57,12 @@ class App extends React.Component {
                 matchId={match.params.id}
                 session={this.state.session}
               />
+            )}/>
+            <Route exact path='/auth/login' render={() => (
+              <Auth />
+            )}/>
+            <Route exact path='/auth/register' render={() => (
+              <Auth register={true} />
             )}/>
             <Route render={() => (
               <Panel msg='404!' />

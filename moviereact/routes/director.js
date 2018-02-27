@@ -7,19 +7,42 @@ const router = express.Router();
 * GET /director - director profile view
 */
 router.get('/:id', (req, res, next) => {
-  Director.findById(req.params.id, { include: [Movie], order: [[Movie, 'year', 'ASC']] })
-    .then((director) => {
-      if (!director) {
-        const uErr = new Error("Sorry! That director doesn't exist.");
-        uErr.status = 404;
-        throw uErr;
-      }
+  if (req.params.id) {
+    Director.findById(req.params.id, { include: [Movie], order: [[Movie, 'year', 'ASC']] })
+      .then((director) => {
+        if (!director) {
+          const uErr = new Error("Sorry! That director doesn't exist.");
+          uErr.status = 404;
+          throw uErr;
+        }
+        res.setHeader('Content-Type', 'application/json');
+        res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+        res.send(JSON.stringify({
+          director,
+          count: director.movies.length,
+        }, null, 3));
+      }).catch(next);
+  } else {
+    console.log('entered else');
+    Director.findAll({ order: [['id', 'ASC']] })
+      .then((directors) => {
+        res.setHeader('Content-Type', 'application/json');
+        res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+        res.send(JSON.stringify({
+          directors,
+        }, null, 3));
+      }).catch(next);
+  }
+});
+
+router.get('/', (req, res, next) => {
+  console.log('entered else');
+  Director.findAll({ order: [['id', 'ASC']] })
+    .then((directors) => {
       res.setHeader('Content-Type', 'application/json');
       res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
       res.send(JSON.stringify({
-        director,
-        count: director.movies.length,
-        // session: req.session.sessionInfo,
+        directors,
       }, null, 3));
     }).catch(next);
 });
