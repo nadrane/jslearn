@@ -84,4 +84,4 @@ ModalButtons.propTypes = {
   buttons: PropTypes.array,
 };
 
-export { AddReviewModal, AddDirectorModal, AddMovieModal };
+export { AddReviewModal, AddDirectorModal, AddMovieModal, ModalButtons };
