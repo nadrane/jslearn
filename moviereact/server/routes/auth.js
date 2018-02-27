@@ -13,12 +13,14 @@ router.post('/login', (req, res, next) => {
   console.log('logging in');
   User.findOne({
     where: { username: req.body.username },
-  }).then((user) => {
+  })
+  .then((user) => {
     if (!user) {
       return res.send({ err: 'bad!' });
     }
     return res.json(user);
-  }).catch(next);
+  })
+  .catch(next);
 });
 
 /* GET logout */
