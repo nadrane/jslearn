@@ -77,6 +77,7 @@ class App extends React.Component {
   }
 
   render() {
+    // right here*******
     if (this.state.redirect) {
       this.setState({ redirect: false });
       return (
