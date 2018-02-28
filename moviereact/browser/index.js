@@ -10,8 +10,8 @@ import AllMoviesPage from './components/AllMovies/AllMoviesPage';
 import DirectorPage from './components/Director/DirectorPage';
 import MovieReviewsPage from './components/MovieReviews/MovieReviewsPage';
 import UserReviewsPage from './components/UserReviews/UserReviewsPage';
-import { Panel } from './components/old-Panel';
-import AuthForm from './components/Auth/Auth';
+import Panel from './components/Panel';
+import AuthForm from './components/AuthForm/AuthForm';
 
 class App extends React.Component {
   constructor(props) {
@@ -132,7 +132,7 @@ class App extends React.Component {
               />
             )}/>
             <Route render={() => (
-              <Panel msg='404!' />
+              <Panel header='404!' />
             )}/>
           </Switch>
         </div>

@@ -55,7 +55,7 @@ class AddDirectorForm extends React.Component {
 
   render() {
     return (
-      <form action="/director" method="post">
+      <form action="/api/director" method="post">
         <div className="form-group">
             <label htmlFor="name" className="mt-2"><strong>Director Name:</strong></label>
             <input
@@ -100,7 +100,7 @@ class AddMovieForm extends React.Component {
       const dropdownItems = directors.map(director =>
         (<option key={director.id} value={director.id}>{director.name}</option>));
       return (
-        <form action="/movies" method="post">
+        <form action="/api/movies" method="post">
           <div className="form-group">
             <label htmlFor="title" className="mt-2"><strong>Film title:</strong></label>
             <input

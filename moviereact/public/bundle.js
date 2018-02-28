@@ -3449,11 +3449,13 @@ var _UserReviewsPage = __webpack_require__(121);
 
 var _UserReviewsPage2 = _interopRequireDefault(_UserReviewsPage);
 
-var _oldPanel = __webpack_require__(125);
+var _Panel = __webpack_require__(17);
 
-var _Auth = __webpack_require__(126);
+var _Panel2 = _interopRequireDefault(_Panel);
 
-var _Auth2 = _interopRequireDefault(_Auth);
+var _AuthForm = __webpack_require__(127);
+
+var _AuthForm2 = _interopRequireDefault(_AuthForm);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3596,14 +3598,14 @@ var App = function (_React$Component) {
                 });
               } }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/auth/login', render: function render() {
-                return _react2.default.createElement(_Auth2.default, {
+                return _react2.default.createElement(_AuthForm2.default, {
                   handleLogin: _this4.handleLogin,
                   authName: _this4.state.authName,
                   handleAuthNameChange: _this4.handleAuthNameChange
                 });
               } }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/auth/register', render: function render() {
-                return _react2.default.createElement(_Auth2.default, {
+                return _react2.default.createElement(_AuthForm2.default, {
                   register: true,
                   handleRegister: _this4.handleRegister,
                   authName: _this4.state.authName,
@@ -3611,7 +3613,7 @@ var App = function (_React$Component) {
                 });
               } }),
             _react2.default.createElement(_reactRouterDom.Route, { render: function render() {
-                return _react2.default.createElement(_oldPanel.Panel, { msg: '404!' });
+                return _react2.default.createElement(_Panel2.default, { header: '404!' });
               } })
           )
         )
@@ -25900,7 +25902,7 @@ var AddDirectorForm = function (_React$Component2) {
     value: function render() {
       return _react2.default.createElement(
         'form',
-        { action: '/director', method: 'post' },
+        { action: '/api/director', method: 'post' },
         _react2.default.createElement(
           'div',
           { className: 'form-group' },
@@ -25980,7 +25982,7 @@ var AddMovieForm = function (_React$Component3) {
         });
         return _react2.default.createElement(
           'form',
-          { action: '/movies', method: 'post' },
+          { action: '/api/movies', method: 'post' },
           _react2.default.createElement(
             'div',
             { className: 'form-group' },
@@ -27013,187 +27015,9 @@ UserReviewsRow.propTypes = {
 exports.default = UserReviewsRow;
 
 /***/ }),
-/* 125 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Panel = exports.PanelInfo = undefined;
-
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
-var _reactRouterDom = __webpack_require__(6);
-
-var _propTypes = __webpack_require__(1);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _modal = __webpack_require__(19);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var PanelInfo = function PanelInfo(props) {
-  var stats = void 0;
-  if (props.stats) {
-    stats = props.stats.map(function (_ref, i) {
-      var _ref2 = _slicedToArray(_ref, 2),
-          field = _ref2[0],
-          value = _ref2[1];
-
-      return _react2.default.createElement(
-        'div',
-        { key: i },
-        _react2.default.createElement(
-          'strong',
-          null,
-          field,
-          ':'
-        ),
-        ' ',
-        value
-      );
-    });
-  }
-  return _react2.default.createElement(
-    'div',
-    { className: 'panel-info' },
-    _react2.default.createElement('hr', null),
-    stats,
-    props.text,
-    props.session ? props.user : props.guest
-  );
-};
-
-PanelInfo.propTypes = {
-  text: _propTypes2.default.object,
-  stats: _propTypes2.default.array,
-  session: _propTypes2.default.object,
-  user: _propTypes2.default.object,
-  guest: _propTypes2.default.object
-};
-
-var Panel = function Panel(props) {
-  var panelHeader = props.msg || '...';
-  var panelInfo = void 0;
-  var type = props.type,
-      panelData = props.panelData,
-      session = props.session;
-
-
-  if (panelData) {
-    if (type === 'allMovies') {
-      panelHeader = 'All Movies';
-      panelInfo = _react2.default.createElement(PanelInfo, {
-        session: session,
-        user: _react2.default.createElement(_modal.ModalButtons, { buttons: [['+ Add Director', 'addDirector'], ['+ Add Film', 'addMovie']] }),
-        guest: _react2.default.createElement(
-          'h6',
-          { className: 'mint' },
-          'Sign in to add directors and movies.'
-        )
-      });
-    } else if (type === 'userReviews') {
-      panelHeader = panelData.user.username;
-      panelInfo = _react2.default.createElement(PanelInfo, {
-        text: _react2.default.createElement(
-          'span',
-          null,
-          _react2.default.createElement(
-            'strong',
-            null,
-            panelData.user.username,
-            ' '
-          ),
-          'has posted',
-          _react2.default.createElement(
-            'strong',
-            null,
-            ' ',
-            panelData.count,
-            ' '
-          ),
-          'review(s) on Movietown.'
-        ),
-        session: session
-      });
-    } else if (type === 'director') {
-      panelHeader = panelData.director.name;
-      panelInfo = _react2.default.createElement(PanelInfo, {
-        text: _react2.default.createElement(
-          'span',
-          null,
-          _react2.default.createElement(
-            'strong',
-            null,
-            panelData.director.name,
-            ' '
-          ),
-          'has released',
-          _react2.default.createElement(
-            'strong',
-            null,
-            ' ',
-            panelData.count,
-            ' '
-          ),
-          ' film(s) on Movietown.'
-        ),
-        session: session
-      });
-    } else if (type === 'movieReviews') {
-      panelHeader = panelData.movie.title;
-      panelInfo = _react2.default.createElement(PanelInfo, {
-        stats: [['Avg. Score', panelData.avg + ' \u2605'], ['Released', panelData.movie.year], ['Director', _react2.default.createElement(
-          _reactRouterDom.Link,
-          { key: 0, to: '/director/' + panelData.movie.director.id },
-          panelData.movie.director.name
-        )]],
-        session: session,
-        user: _react2.default.createElement(_modal.ModalButtons, { buttons: [['+ Add Review', 'addReview']] })
-      });
-    }
-  }
-
-  return _react2.default.createElement(
-    'div',
-    { className: 'row justify-content-center' },
-    _react2.default.createElement(
-      'div',
-      { className: 'col-sm-12 col-lg-5' },
-      _react2.default.createElement(
-        'div',
-        { className: 'panel' },
-        _react2.default.createElement(
-          'h1',
-          null,
-          panelHeader
-        ),
-        panelInfo
-      )
-    )
-  );
-};
-
-Panel.propTypes = {
-  type: _propTypes2.default.string,
-  panelData: _propTypes2.default.object,
-  msg: _propTypes2.default.string,
-  session: _propTypes2.default.object
-};
-
-exports.PanelInfo = PanelInfo;
-exports.Panel = Panel;
-
-/***/ }),
-/* 126 */
+/* 125 */,
+/* 126 */,
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
