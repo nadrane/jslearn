@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { AddDirectorForm, AddMovieForm, AddReviewForm } from './form';
+import { AddDirectorForm, AddMovieForm } from './form';
 
 
 const Modal = props => (
@@ -27,16 +27,6 @@ const Modal = props => (
       </div>
     </div>
   </div>
-);
-
-const AddReviewModal = () => (
-  <Modal
-    modalID="addReview"
-    modalTitle="Add a review"
-    modalBody={(
-      <AddReviewForm />
-    )}
-  />
 );
 
 const AddDirectorModal = () => (
@@ -84,4 +74,4 @@ ModalButtons.propTypes = {
   buttons: PropTypes.array,
 };
 
-export { AddReviewModal, AddDirectorModal, AddMovieModal, ModalButtons };
+export { AddDirectorModal, AddMovieModal, ModalButtons };

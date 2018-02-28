@@ -5,10 +5,20 @@ class AuthForm extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
+    this.handleRegister = this.handleRegister.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
   }
 
   handleChange(e) {
     this.props.handleAuthNameChange(e.target.value);
+  }
+
+  handleRegister(e) {
+    this.props.handleRegister(e);
+  }
+
+  handleLogin(e) {
+    this.props.handleLogin(e);
   }
 
   render() {
@@ -18,7 +28,7 @@ class AuthForm extends React.Component {
           <div className="panel">
             <h3 className="mint">{this.props.register ? 'Register' : 'Sign in'}</h3>
             <form
-              onSubmit={this.props.register ? this.props.handleRegister : this.props.handleLogin}
+              onSubmit={this.props.register ? this.handleRegister : this.handleLogin}
               method="post"
               className="mb-2"
             >

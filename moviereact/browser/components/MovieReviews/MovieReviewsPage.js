@@ -6,12 +6,13 @@ import { fetchRoot } from '../../config';
 // components
 import MovieReviewsPanel from './MovieReviewsPanel';
 import MovieReviewsTable from './MovieReviewsTable';
+import AddReviewModal from './add_forms/AddReviewModal';
 
 class MovieReviewsPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      panelData: null,
+      currentMovie: null,
       rows: null,
     };
   }
@@ -19,22 +20,34 @@ class MovieReviewsPage extends React.Component {
   componentDidMount() {
     axios.get(`${fetchRoot}/movies/film/${this.props.matchId}`)
       .then((resp) => {
+        const { data } = resp;
         this.setState({
-          panelData: resp.data,
-          rows: resp.data.movie.reviews,
+          currentMovie: {
+            id: data.movie.id,
+            title: data.movie.title,
+            director: data.movie.director,
+            avg: data.avg,
+          },
+          rows: data.movie.reviews,
         });
-      }).catch(e => console.log(e));
+      })
+      .catch(e => console.log(e));
   }
 
   render() {
-    return (
-      <div>
-        <div className="container-fluid">
-          <MovieReviewsPanel session={this.props.session} panelData={this.state.panelData} />
-          <MovieReviewsTable rows={this.state.rows} />
+    const session = this.props;
+    const { currentMovie, rows } = this.state;
+    if (currentMovie && rows) {
+      return (
+        <div>
+          <div className="container-fluid">
+            <MovieReviewsPanel session={this.props.session} movie={this.state.currentMovie} />
+            <MovieReviewsTable rows={this.state.rows} />
+          </div>
+          <AddReviewModal movie={this.state.currentMovie} userId={session ? session.id : null} />
         </div>
-      </div>
-    );
+      );
+    } return null;
   }
 }
 

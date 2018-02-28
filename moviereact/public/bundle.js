@@ -378,7 +378,7 @@ process.umask = function() { return 0; };
 "use strict";
 
 
-var bind = __webpack_require__(43);
+var bind = __webpack_require__(42);
 var isBuffer = __webpack_require__(89);
 
 /*global toString:true*/
@@ -748,7 +748,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "BrowserRouter", function() { return __WEBPACK_IMPORTED_MODULE_0__BrowserRouter__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__HashRouter__ = __webpack_require__(55);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "HashRouter", function() { return __WEBPACK_IMPORTED_MODULE_1__HashRouter__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Link__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Link__ = __webpack_require__(32);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Link", function() { return __WEBPACK_IMPORTED_MODULE_2__Link__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__MemoryRouter__ = __webpack_require__(57);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "MemoryRouter", function() { return __WEBPACK_IMPORTED_MODULE_3__MemoryRouter__["a"]; });
@@ -758,7 +758,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Prompt", function() { return __WEBPACK_IMPORTED_MODULE_5__Prompt__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Redirect__ = __webpack_require__(65);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Redirect", function() { return __WEBPACK_IMPORTED_MODULE_6__Redirect__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Route__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Route__ = __webpack_require__(33);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Route", function() { return __WEBPACK_IMPORTED_MODULE_7__Route__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Router__ = __webpack_require__(24);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Router", function() { return __WEBPACK_IMPORTED_MODULE_8__Router__["a"]; });
@@ -1303,8 +1303,8 @@ module.exports = warning;
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return createLocation; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return locationsAreEqual; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_resolve_pathname__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_value_equal__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_resolve_pathname__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_value_equal__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__PathUtils__ = __webpack_require__(13);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -1619,11 +1619,11 @@ exports.locationsAreEqual = exports.createLocation = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _resolvePathname = __webpack_require__(30);
+var _resolvePathname = __webpack_require__(29);
 
 var _resolvePathname2 = _interopRequireDefault(_resolvePathname);
 
-var _valueEqual = __webpack_require__(31);
+var _valueEqual = __webpack_require__(30);
 
 var _valueEqual2 = _interopRequireDefault(_valueEqual);
 
@@ -2098,10 +2098,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(44);
+    adapter = __webpack_require__(43);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(44);
+    adapter = __webpack_require__(43);
   }
   return adapter;
 }
@@ -2180,138 +2180,6 @@ module.exports = defaults;
 
 /***/ }),
 /* 29 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.ModalButtons = exports.AddMovieModal = exports.AddDirectorModal = exports.AddReviewModal = undefined;
-
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
-var _propTypes = __webpack_require__(1);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _form = __webpack_require__(110);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var Modal = function Modal(props) {
-  return _react2.default.createElement(
-    'div',
-    {
-      className: 'modal fade',
-      id: props.modalID,
-      tabIndex: '-1',
-      role: 'dialog',
-      'aria-labelledby': 'modalLabel',
-      'aria-hidden': 'true' },
-    _react2.default.createElement(
-      'div',
-      { className: 'modal-dialog', role: 'document' },
-      _react2.default.createElement(
-        'div',
-        { className: 'modal-content' },
-        _react2.default.createElement(
-          'div',
-          { className: 'modal-header' },
-          _react2.default.createElement(
-            'h5',
-            { className: 'modal-title', id: 'modalLabel' },
-            props.modalTitle
-          ),
-          _react2.default.createElement(
-            'button',
-            { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
-            _react2.default.createElement(
-              'span',
-              { 'aria-hidden': 'true' },
-              '\xD7'
-            )
-          )
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'modal-body' },
-          props.modalBody
-        )
-      )
-    )
-  );
-};
-
-var AddReviewModal = function AddReviewModal() {
-  return _react2.default.createElement(Modal, {
-    modalID: 'addReview',
-    modalTitle: 'Add a review',
-    modalBody: _react2.default.createElement(_form.AddReviewForm, null)
-  });
-};
-
-var AddDirectorModal = function AddDirectorModal() {
-  return _react2.default.createElement(Modal, {
-    modalID: 'addDirector',
-    modalTitle: 'Add a new director:',
-    modalBody: _react2.default.createElement(_form.AddDirectorForm, null)
-  });
-};
-
-var AddMovieModal = function AddMovieModal() {
-  return _react2.default.createElement(Modal, {
-    modalID: 'addMovie',
-    modalTitle: 'Add a new film:',
-    modalBody: _react2.default.createElement(_form.AddMovieForm, null)
-  });
-};
-
-var ModalButtons = function ModalButtons(props) {
-  return _react2.default.createElement(
-    'span',
-    null,
-    props.buttons.map(function (_ref, i) {
-      var _ref2 = _slicedToArray(_ref, 2),
-          button = _ref2[0],
-          modal = _ref2[1];
-
-      return _react2.default.createElement(
-        'button',
-        {
-          key: i,
-          type: 'button',
-          className: 'btn movie-btn add-btn mx-2',
-          'data-toggle': 'modal',
-          'data-target': '#' + modal },
-        button
-      );
-    })
-  );
-};
-
-Modal.propTypes = {
-  modalID: _propTypes2.default.string,
-  modalTitle: _propTypes2.default.string,
-  modalBody: _propTypes2.default.object
-};
-
-ModalButtons.propTypes = {
-  buttons: _propTypes2.default.array
-};
-
-exports.AddReviewModal = AddReviewModal;
-exports.AddDirectorModal = AddDirectorModal;
-exports.AddMovieModal = AddMovieModal;
-exports.ModalButtons = ModalButtons;
-
-/***/ }),
-/* 30 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2388,7 +2256,7 @@ function resolvePathname(to) {
 /* harmony default export */ __webpack_exports__["default"] = (resolvePathname);
 
 /***/ }),
-/* 31 */
+/* 30 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2433,7 +2301,7 @@ function valueEqual(a, b) {
 /* harmony default export */ __webpack_exports__["default"] = (valueEqual);
 
 /***/ }),
-/* 32 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2494,7 +2362,7 @@ var isExtraneousPopstateEvent = exports.isExtraneousPopstateEvent = function isE
 };
 
 /***/ }),
-/* 33 */
+/* 32 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2604,18 +2472,18 @@ Link.contextTypes = {
 /* harmony default export */ __webpack_exports__["a"] = (Link);
 
 /***/ }),
-/* 34 */
+/* 33 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_router_es_Route__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_router_es_Route__ = __webpack_require__(34);
 // Written in this round about way for babel-transform-imports
 
 
 /* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_0_react_router_es_Route__["a" /* default */]);
 
 /***/ }),
-/* 35 */
+/* 34 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2764,7 +2632,7 @@ Route.childContextTypes = {
 /* harmony default export */ __webpack_exports__["a"] = (Route);
 
 /***/ }),
-/* 36 */
+/* 35 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2830,7 +2698,7 @@ var isExtraneousPopstateEvent = function isExtraneousPopstateEvent(event) {
 };
 
 /***/ }),
-/* 37 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2869,7 +2737,7 @@ var ExecutionEnvironment = {
 module.exports = ExecutionEnvironment;
 
 /***/ }),
-/* 38 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2950,7 +2818,7 @@ module.exports = EventListener;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 39 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2992,7 +2860,7 @@ function getActiveElement(doc) /*?DOMElement*/{
 module.exports = getActiveElement;
 
 /***/ }),
-/* 40 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3063,7 +2931,7 @@ function shallowEqual(objA, objB) {
 module.exports = shallowEqual;
 
 /***/ }),
-/* 41 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3106,7 +2974,7 @@ function containsNode(outerNode, innerNode) {
 module.exports = containsNode;
 
 /***/ }),
-/* 42 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3136,7 +3004,7 @@ function focusNode(node) {
 module.exports = focusNode;
 
 /***/ }),
-/* 43 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3154,7 +3022,7 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 44 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3165,7 +3033,7 @@ var settle = __webpack_require__(92);
 var buildURL = __webpack_require__(94);
 var parseHeaders = __webpack_require__(95);
 var isURLSameOrigin = __webpack_require__(96);
-var createError = __webpack_require__(45);
+var createError = __webpack_require__(44);
 var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(97);
 
 module.exports = function xhrAdapter(config) {
@@ -3342,7 +3210,7 @@ module.exports = function xhrAdapter(config) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 45 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3367,7 +3235,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 
 /***/ }),
-/* 46 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3379,7 +3247,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 47 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3403,6 +3271,129 @@ Cancel.prototype.__CANCEL__ = true;
 
 module.exports = Cancel;
 
+
+/***/ }),
+/* 47 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.ModalButtons = exports.AddMovieModal = exports.AddDirectorModal = undefined;
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var _propTypes = __webpack_require__(1);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _form = __webpack_require__(110);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Modal = function Modal(props) {
+  return _react2.default.createElement(
+    'div',
+    {
+      className: 'modal fade',
+      id: props.modalID,
+      tabIndex: '-1',
+      role: 'dialog',
+      'aria-labelledby': 'modalLabel',
+      'aria-hidden': 'true' },
+    _react2.default.createElement(
+      'div',
+      { className: 'modal-dialog', role: 'document' },
+      _react2.default.createElement(
+        'div',
+        { className: 'modal-content' },
+        _react2.default.createElement(
+          'div',
+          { className: 'modal-header' },
+          _react2.default.createElement(
+            'h5',
+            { className: 'modal-title', id: 'modalLabel' },
+            props.modalTitle
+          ),
+          _react2.default.createElement(
+            'button',
+            { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
+            _react2.default.createElement(
+              'span',
+              { 'aria-hidden': 'true' },
+              '\xD7'
+            )
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'modal-body' },
+          props.modalBody
+        )
+      )
+    )
+  );
+};
+
+var AddDirectorModal = function AddDirectorModal() {
+  return _react2.default.createElement(Modal, {
+    modalID: 'addDirector',
+    modalTitle: 'Add a new director:',
+    modalBody: _react2.default.createElement(_form.AddDirectorForm, null)
+  });
+};
+
+var AddMovieModal = function AddMovieModal() {
+  return _react2.default.createElement(Modal, {
+    modalID: 'addMovie',
+    modalTitle: 'Add a new film:',
+    modalBody: _react2.default.createElement(_form.AddMovieForm, null)
+  });
+};
+
+var ModalButtons = function ModalButtons(props) {
+  return _react2.default.createElement(
+    'span',
+    null,
+    props.buttons.map(function (_ref, i) {
+      var _ref2 = _slicedToArray(_ref, 2),
+          button = _ref2[0],
+          modal = _ref2[1];
+
+      return _react2.default.createElement(
+        'button',
+        {
+          key: i,
+          type: 'button',
+          className: 'btn movie-btn add-btn mx-2',
+          'data-toggle': 'modal',
+          'data-target': '#' + modal },
+        button
+      );
+    })
+  );
+};
+
+Modal.propTypes = {
+  modalID: _propTypes2.default.string,
+  modalTitle: _propTypes2.default.string,
+  modalBody: _propTypes2.default.object
+};
+
+ModalButtons.propTypes = {
+  buttons: _propTypes2.default.array
+};
+
+exports.AddDirectorModal = AddDirectorModal;
+exports.AddMovieModal = AddMovieModal;
+exports.ModalButtons = ModalButtons;
 
 /***/ }),
 /* 48 */
@@ -3437,15 +3428,15 @@ var _AllMoviesPage = __webpack_require__(108);
 
 var _AllMoviesPage2 = _interopRequireDefault(_AllMoviesPage);
 
-var _DirectorPage = __webpack_require__(113);
+var _DirectorPage = __webpack_require__(117);
 
 var _DirectorPage2 = _interopRequireDefault(_DirectorPage);
 
-var _MovieReviewsPage = __webpack_require__(117);
+var _MovieReviewsPage = __webpack_require__(121);
 
 var _MovieReviewsPage2 = _interopRequireDefault(_MovieReviewsPage);
 
-var _UserReviewsPage = __webpack_require__(121);
+var _UserReviewsPage = __webpack_require__(125);
 
 var _UserReviewsPage2 = _interopRequireDefault(_UserReviewsPage);
 
@@ -3453,7 +3444,7 @@ var _Panel = __webpack_require__(14);
 
 var _Panel2 = _interopRequireDefault(_Panel);
 
-var _AuthForm = __webpack_require__(125);
+var _AuthForm = __webpack_require__(129);
 
 var _AuthForm2 = _interopRequireDefault(_AuthForm);
 
@@ -5730,7 +5721,7 @@ var _createTransitionManager = __webpack_require__(23);
 
 var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 
-var _DOMUtils = __webpack_require__(32);
+var _DOMUtils = __webpack_require__(31);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -6107,7 +6098,7 @@ var _createTransitionManager = __webpack_require__(23);
 
 var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 
-var _DOMUtils = __webpack_require__(32);
+var _DOMUtils = __webpack_require__(31);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -6673,8 +6664,8 @@ exports.default = createMemoryHistory;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Route__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Link__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Route__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Link__ = __webpack_require__(32);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -7446,7 +7437,7 @@ Redirect.contextTypes = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__LocationUtils__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__PathUtils__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__createTransitionManager__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__DOMUtils__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__DOMUtils__ = __webpack_require__(35);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -7750,7 +7741,7 @@ var createBrowserHistory = function createBrowserHistory() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__LocationUtils__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__PathUtils__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__createTransitionManager__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__DOMUtils__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__DOMUtils__ = __webpack_require__(35);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 
@@ -8559,7 +8550,7 @@ Switch.propTypes = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_hoist_non_react_statics__ = __webpack_require__(78);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_hoist_non_react_statics___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_hoist_non_react_statics__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Route__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Route__ = __webpack_require__(34);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
@@ -8734,7 +8725,7 @@ if (process.env.NODE_ENV === 'production') {
 /*
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(0),l=__webpack_require__(37),B=__webpack_require__(10),C=__webpack_require__(7),ba=__webpack_require__(38),da=__webpack_require__(39),ea=__webpack_require__(40),fa=__webpack_require__(41),ia=__webpack_require__(42),D=__webpack_require__(15);
+var aa=__webpack_require__(0),l=__webpack_require__(36),B=__webpack_require__(10),C=__webpack_require__(7),ba=__webpack_require__(37),da=__webpack_require__(38),ea=__webpack_require__(39),fa=__webpack_require__(40),ia=__webpack_require__(41),D=__webpack_require__(15);
 function E(a){for(var b=arguments.length-1,c="Minified React error #"+a+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d"+a,d=0;d<b;d++)c+="\x26args[]\x3d"+encodeURIComponent(arguments[d+1]);b=Error(c+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.");b.name="Invariant Violation";b.framesToPop=1;throw b;}aa?void 0:E("227");
 var oa={children:!0,dangerouslySetInnerHTML:!0,defaultValue:!0,defaultChecked:!0,innerHTML:!0,suppressContentEditableWarning:!0,suppressHydrationWarning:!0,style:!0};function pa(a,b){return(a&b)===b}
 var ta={MUST_USE_PROPERTY:1,HAS_BOOLEAN_VALUE:4,HAS_NUMERIC_VALUE:8,HAS_POSITIVE_NUMERIC_VALUE:24,HAS_OVERLOADED_BOOLEAN_VALUE:32,HAS_STRING_BOOLEAN_VALUE:64,injectDOMPropertyConfig:function(a){var b=ta,c=a.Properties||{},d=a.DOMAttributeNamespaces||{},e=a.DOMAttributeNames||{};a=a.DOMMutationMethods||{};for(var f in c){ua.hasOwnProperty(f)?E("48",f):void 0;var g=f.toLowerCase(),h=c[f];g={attributeName:g,attributeNamespace:null,propertyName:f,mutationMethod:null,mustUseProperty:pa(h,b.MUST_USE_PROPERTY),
@@ -9034,14 +9025,14 @@ if (process.env.NODE_ENV !== "production") {
 var React = __webpack_require__(0);
 var invariant = __webpack_require__(11);
 var warning = __webpack_require__(16);
-var ExecutionEnvironment = __webpack_require__(37);
+var ExecutionEnvironment = __webpack_require__(36);
 var _assign = __webpack_require__(10);
 var emptyFunction = __webpack_require__(7);
-var EventListener = __webpack_require__(38);
-var getActiveElement = __webpack_require__(39);
-var shallowEqual = __webpack_require__(40);
-var containsNode = __webpack_require__(41);
-var focusNode = __webpack_require__(42);
+var EventListener = __webpack_require__(37);
+var getActiveElement = __webpack_require__(38);
+var shallowEqual = __webpack_require__(39);
+var containsNode = __webpack_require__(40);
+var focusNode = __webpack_require__(41);
 var emptyObject = __webpack_require__(15);
 var checkPropTypes = __webpack_require__(20);
 var hyphenateStyleName = __webpack_require__(84);
@@ -24575,7 +24566,7 @@ module.exports = camelize;
 
 
 var utils = __webpack_require__(4);
-var bind = __webpack_require__(43);
+var bind = __webpack_require__(42);
 var Axios = __webpack_require__(90);
 var defaults = __webpack_require__(28);
 
@@ -24610,9 +24601,9 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(47);
+axios.Cancel = __webpack_require__(46);
 axios.CancelToken = __webpack_require__(104);
-axios.isCancel = __webpack_require__(46);
+axios.isCancel = __webpack_require__(45);
 
 // Expose all/spread
 axios.all = function all(promises) {
@@ -24765,7 +24756,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 "use strict";
 
 
-var createError = __webpack_require__(45);
+var createError = __webpack_require__(44);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -25198,7 +25189,7 @@ module.exports = InterceptorManager;
 
 var utils = __webpack_require__(4);
 var transformData = __webpack_require__(101);
-var isCancel = __webpack_require__(46);
+var isCancel = __webpack_require__(45);
 var defaults = __webpack_require__(28);
 var isAbsoluteURL = __webpack_require__(102);
 var combineURLs = __webpack_require__(103);
@@ -25358,7 +25349,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 "use strict";
 
 
-var Cancel = __webpack_require__(47);
+var Cancel = __webpack_require__(46);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -25620,11 +25611,11 @@ var _AllMoviesTable = __webpack_require__(111);
 
 var _AllMoviesTable2 = _interopRequireDefault(_AllMoviesTable);
 
-var _AddDirectorModal = __webpack_require__(126);
+var _AddDirectorModal = __webpack_require__(130);
 
 var _AddDirectorModal2 = _interopRequireDefault(_AddDirectorModal);
 
-var _AddMovieModal = __webpack_require__(128);
+var _AddMovieModal = __webpack_require__(132);
 
 var _AddMovieModal2 = _interopRequireDefault(_AddMovieModal);
 
@@ -25721,7 +25712,7 @@ var _PanelInfo = __webpack_require__(18);
 
 var _PanelInfo2 = _interopRequireDefault(_PanelInfo);
 
-var _modal = __webpack_require__(29);
+var _modal = __webpack_require__(47);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26186,7 +26177,11 @@ AllMoviesRow.propTypes = {
 exports.default = AllMoviesRow;
 
 /***/ }),
-/* 113 */
+/* 113 */,
+/* 114 */,
+/* 115 */,
+/* 116 */,
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26213,11 +26208,11 @@ var _axios2 = _interopRequireDefault(_axios);
 
 var _config = __webpack_require__(9);
 
-var _DirectorPanel = __webpack_require__(114);
+var _DirectorPanel = __webpack_require__(118);
 
 var _DirectorPanel2 = _interopRequireDefault(_DirectorPanel);
 
-var _DirectorTable = __webpack_require__(115);
+var _DirectorTable = __webpack_require__(119);
 
 var _DirectorTable2 = _interopRequireDefault(_DirectorTable);
 
@@ -26288,7 +26283,7 @@ DirectorPage.propTypes = {
 exports.default = DirectorPage;
 
 /***/ }),
-/* 114 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26361,7 +26356,7 @@ DirectorPanel.propTypes = {
 exports.default = DirectorPanel;
 
 /***/ }),
-/* 115 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26384,7 +26379,7 @@ var _Table = __webpack_require__(19);
 
 var _Table2 = _interopRequireDefault(_Table);
 
-var _DirectorRow = __webpack_require__(116);
+var _DirectorRow = __webpack_require__(120);
 
 var _DirectorRow2 = _interopRequireDefault(_DirectorRow);
 
@@ -26406,7 +26401,7 @@ DirectorTable.propTypes = {
 exports.default = DirectorTable;
 
 /***/ }),
-/* 116 */
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26462,7 +26457,7 @@ DirectorRow.propTypes = {
 exports.default = DirectorRow;
 
 /***/ }),
-/* 117 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26489,13 +26484,17 @@ var _axios2 = _interopRequireDefault(_axios);
 
 var _config = __webpack_require__(9);
 
-var _MovieReviewsPanel = __webpack_require__(118);
+var _MovieReviewsPanel = __webpack_require__(122);
 
 var _MovieReviewsPanel2 = _interopRequireDefault(_MovieReviewsPanel);
 
-var _MovieReviewsTable = __webpack_require__(119);
+var _MovieReviewsTable = __webpack_require__(123);
 
 var _MovieReviewsTable2 = _interopRequireDefault(_MovieReviewsTable);
+
+var _AddReviewModal = __webpack_require__(134);
+
+var _AddReviewModal2 = _interopRequireDefault(_AddReviewModal);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26517,7 +26516,7 @@ var MovieReviewsPage = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (MovieReviewsPage.__proto__ || Object.getPrototypeOf(MovieReviewsPage)).call(this, props));
 
     _this.state = {
-      panelData: null,
+      currentMovie: null,
       rows: null
     };
     return _this;
@@ -26529,9 +26528,16 @@ var MovieReviewsPage = function (_React$Component) {
       var _this2 = this;
 
       _axios2.default.get(_config.fetchRoot + '/movies/film/' + this.props.matchId).then(function (resp) {
+        var data = resp.data;
+
         _this2.setState({
-          panelData: resp.data,
-          rows: resp.data.movie.reviews
+          currentMovie: {
+            id: data.movie.id,
+            title: data.movie.title,
+            director: data.movie.director,
+            avg: data.avg
+          },
+          rows: data.movie.reviews
         });
       }).catch(function (e) {
         return console.log(e);
@@ -26540,16 +26546,24 @@ var MovieReviewsPage = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
+      var session = this.props;
+      var _state = this.state,
+          currentMovie = _state.currentMovie,
+          rows = _state.rows;
+
+      if (currentMovie && rows) {
+        return _react2.default.createElement(
           'div',
-          { className: 'container-fluid' },
-          _react2.default.createElement(_MovieReviewsPanel2.default, { session: this.props.session, panelData: this.state.panelData }),
-          _react2.default.createElement(_MovieReviewsTable2.default, { rows: this.state.rows })
-        )
-      );
+          null,
+          _react2.default.createElement(
+            'div',
+            { className: 'container-fluid' },
+            _react2.default.createElement(_MovieReviewsPanel2.default, { session: this.props.session, movie: this.state.currentMovie }),
+            _react2.default.createElement(_MovieReviewsTable2.default, { rows: this.state.rows })
+          ),
+          _react2.default.createElement(_AddReviewModal2.default, { movie: this.state.currentMovie, userId: session ? session.id : null })
+        );
+      }return null;
     }
   }]);
 
@@ -26564,7 +26578,7 @@ MovieReviewsPage.propTypes = {
 exports.default = MovieReviewsPage;
 
 /***/ }),
-/* 118 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26593,23 +26607,23 @@ var _PanelInfo = __webpack_require__(18);
 
 var _PanelInfo2 = _interopRequireDefault(_PanelInfo);
 
-var _modal = __webpack_require__(29);
+var _modal = __webpack_require__(47);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var MovieReviewsPanel = function MovieReviewsPanel(props) {
   var session = props.session,
-      panelData = props.panelData;
+      movie = props.movie;
 
   var panelHeader = void 0;
   var panelInfo = void 0;
-  if (panelData) {
-    panelHeader = panelData.movie.title;
+  if (movie) {
+    panelHeader = movie.title;
     panelInfo = _react2.default.createElement(_PanelInfo2.default, {
-      stats: [['Avg. Score', panelData.avg + ' \u2605'], ['Released', panelData.movie.year], ['Director', _react2.default.createElement(
+      stats: [['Avg. Score', movie.avg + ' \u2605'], ['Released', movie.year], ['Director', _react2.default.createElement(
         _reactRouterDom.Link,
-        { key: 0, to: '/director/' + panelData.movie.director.id },
-        panelData.movie.director.name
+        { key: 0, to: '/director/' + movie.director.id },
+        movie.director.name
       )]],
       session: session,
       user: _react2.default.createElement(_modal.ModalButtons, { buttons: [['+ Add Review', 'addReview']] })
@@ -26623,14 +26637,14 @@ var MovieReviewsPanel = function MovieReviewsPanel(props) {
 
 
 MovieReviewsPanel.propTypes = {
-  panelData: _propTypes2.default.object,
+  movie: _propTypes2.default.object,
   session: _propTypes2.default.object
 };
 
 exports.default = MovieReviewsPanel;
 
 /***/ }),
-/* 119 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26653,7 +26667,7 @@ var _Table = __webpack_require__(19);
 
 var _Table2 = _interopRequireDefault(_Table);
 
-var _MovieReviewsRow = __webpack_require__(120);
+var _MovieReviewsRow = __webpack_require__(124);
 
 var _MovieReviewsRow2 = _interopRequireDefault(_MovieReviewsRow);
 
@@ -26677,7 +26691,7 @@ MovieReviewsTable.propTypes = {
 exports.default = MovieReviewsTable;
 
 /***/ }),
-/* 120 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26739,7 +26753,7 @@ MovieReviewsRow.propTypes = {
 exports.default = MovieReviewsRow;
 
 /***/ }),
-/* 121 */
+/* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26766,11 +26780,11 @@ var _axios2 = _interopRequireDefault(_axios);
 
 var _config = __webpack_require__(9);
 
-var _UserReviewsPanel = __webpack_require__(122);
+var _UserReviewsPanel = __webpack_require__(126);
 
 var _UserReviewsPanel2 = _interopRequireDefault(_UserReviewsPanel);
 
-var _UserReviewsTable = __webpack_require__(123);
+var _UserReviewsTable = __webpack_require__(127);
 
 var _UserReviewsTable2 = _interopRequireDefault(_UserReviewsTable);
 
@@ -26841,7 +26855,7 @@ UserReviewsPage.propTypes = {
 exports.default = UserReviewsPage;
 
 /***/ }),
-/* 122 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26914,7 +26928,7 @@ UserReviewsPanel.propTypes = {
 exports.default = UserReviewsPanel;
 
 /***/ }),
-/* 123 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26937,7 +26951,7 @@ var _Table = __webpack_require__(19);
 
 var _Table2 = _interopRequireDefault(_Table);
 
-var _UserReviewsRow = __webpack_require__(124);
+var _UserReviewsRow = __webpack_require__(128);
 
 var _UserReviewsRow2 = _interopRequireDefault(_UserReviewsRow);
 
@@ -26959,7 +26973,7 @@ UserReviewsTable.propTypes = {
 exports.default = UserReviewsTable;
 
 /***/ }),
-/* 124 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27021,7 +27035,7 @@ UserReviewsRow.propTypes = {
 exports.default = UserReviewsRow;
 
 /***/ }),
-/* 125 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27059,6 +27073,8 @@ var AuthForm = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (AuthForm.__proto__ || Object.getPrototypeOf(AuthForm)).call(this, props));
 
     _this.handleChange = _this.handleChange.bind(_this);
+    _this.handleRegister = _this.handleRegister.bind(_this);
+    _this.handleLogin = _this.handleLogin.bind(_this);
     return _this;
   }
 
@@ -27066,6 +27082,16 @@ var AuthForm = function (_React$Component) {
     key: 'handleChange',
     value: function handleChange(e) {
       this.props.handleAuthNameChange(e.target.value);
+    }
+  }, {
+    key: 'handleRegister',
+    value: function handleRegister(e) {
+      this.props.handleRegister(e);
+    }
+  }, {
+    key: 'handleLogin',
+    value: function handleLogin(e) {
+      this.props.handleLogin(e);
     }
   }, {
     key: 'render',
@@ -27087,7 +27113,7 @@ var AuthForm = function (_React$Component) {
             _react2.default.createElement(
               'form',
               {
-                onSubmit: this.props.register ? this.props.handleRegister : this.props.handleLogin,
+                onSubmit: this.props.register ? this.handleRegister : this.handleLogin,
                 method: 'post',
                 className: 'mb-2'
               },
@@ -27145,7 +27171,7 @@ AuthForm.propTypes = {
 exports.default = AuthForm;
 
 /***/ }),
-/* 126 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27160,7 +27186,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _AddDirectorForm = __webpack_require__(127);
+var _AddDirectorForm = __webpack_require__(131);
 
 var _AddDirectorForm2 = _interopRequireDefault(_AddDirectorForm);
 
@@ -27213,7 +27239,7 @@ var AddDirectorModal = function AddDirectorModal() {
 exports.default = AddDirectorModal;
 
 /***/ }),
-/* 127 */
+/* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27306,7 +27332,7 @@ var AddDirectorForm = function (_React$Component) {
 exports.default = AddDirectorForm;
 
 /***/ }),
-/* 128 */
+/* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27321,13 +27347,13 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _AddMovieForm = __webpack_require__(129);
+var _AddMovieForm = __webpack_require__(133);
 
 var _AddMovieForm2 = _interopRequireDefault(_AddMovieForm);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var AddMovieModal = function AddMovieModal(props) {
+var AddMovieModal = function AddMovieModal() {
   return _react2.default.createElement(
     'div',
     {
@@ -27374,11 +27400,369 @@ var AddMovieModal = function AddMovieModal(props) {
 exports.default = AddMovieModal;
 
 /***/ }),
-/* 129 */
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _axios = __webpack_require__(8);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _config = __webpack_require__(9);
+
+var _config2 = _interopRequireDefault(_config);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var AddMovieForm = function (_React$Component) {
+  _inherits(AddMovieForm, _React$Component);
+
+  function AddMovieForm(props) {
+    _classCallCheck(this, AddMovieForm);
+
+    var _this = _possibleConstructorReturn(this, (AddMovieForm.__proto__ || Object.getPrototypeOf(AddMovieForm)).call(this, props));
+
+    _this.state = { directors: null };
+    return _this;
+  }
+
+  _createClass(AddMovieForm, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      _axios2.default.get(_config2.default.fetchRoot + '/director').then(function (resp) {
+        _this2.setState({
+          directors: resp.data.directors
+        });
+      }).catch(function (e) {
+        return console.log(e);
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var directors = this.state.directors;
+
+      if (directors) {
+        var dropdownItems = directors.map(function (director) {
+          return _react2.default.createElement(
+            'option',
+            { key: director.id, value: director.id },
+            director.name
+          );
+        });
+        return _react2.default.createElement(
+          'form',
+          { action: '/api/movies', method: 'post' },
+          _react2.default.createElement(
+            'div',
+            { className: 'form-group' },
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'title', className: 'mt-2' },
+              _react2.default.createElement(
+                'strong',
+                null,
+                'Film title:'
+              )
+            ),
+            _react2.default.createElement('input', {
+              type: 'input',
+              className: 'form-control',
+              id: 'title',
+              name: 'title',
+              placeholder: 'e.g. Gone with the Wind',
+              autoComplete: 'off'
+            })
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'form-group' },
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'year', className: 'mt-2' },
+              _react2.default.createElement(
+                'strong',
+                null,
+                'Year of release:'
+              )
+            ),
+            _react2.default.createElement('input', {
+              type: 'input',
+              className: 'form-control',
+              id: 'year',
+              name: 'year',
+              placeholder: 'e.g. 1940',
+              autoComplete: 'off'
+            })
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'form-group' },
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'director', className: 'mt-2' },
+              _react2.default.createElement(
+                'strong',
+                null,
+                'Director:'
+              )
+            ),
+            _react2.default.createElement(
+              'select',
+              { className: 'form-control', id: 'director', name: 'directorId' },
+              _react2.default.createElement(
+                'option',
+                { disabled: true },
+                'Select director'
+              ),
+              dropdownItems
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'form-group text-right' },
+            _react2.default.createElement(
+              'button',
+              { type: 'submit', className: 'btn btn-primary mr-auto movie-btn', action: 'submit' },
+              'Submit'
+            )
+          )
+        );
+      }return null;
+    }
+  }]);
+
+  return AddMovieForm;
+}(_react2.default.Component);
+
+exports.default = AddMovieForm;
+
+/***/ }),
+/* 134 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(1);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _AddReviewForm = __webpack_require__(135);
+
+var _AddReviewForm2 = _interopRequireDefault(_AddReviewForm);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var AddReviewModal = function AddReviewModal(props) {
+  return _react2.default.createElement(
+    'div',
+    {
+      className: 'modal fade',
+      id: 'addReview',
+      tabIndex: '-1',
+      role: 'dialog',
+      'aria-labelledby': 'modalLabel',
+      'aria-hidden': 'true' },
+    _react2.default.createElement(
+      'div',
+      { className: 'modal-dialog', role: 'document' },
+      _react2.default.createElement(
+        'div',
+        { className: 'modal-content' },
+        _react2.default.createElement(
+          'div',
+          { className: 'modal-header' },
+          _react2.default.createElement(
+            'h5',
+            { className: 'modal-title', id: 'modalLabel' },
+            'Add a review for ',
+            props.movie.title,
+            ':'
+          ),
+          _react2.default.createElement(
+            'button',
+            { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
+            _react2.default.createElement(
+              'span',
+              { 'aria-hidden': 'true' },
+              '\xD7'
+            )
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'modal-body' },
+          _react2.default.createElement(_AddReviewForm2.default, { userId: props.userId })
+        )
+      )
+    )
+  );
+};
+
+// components
+
+
+AddReviewModal.propTypes = {
+  movie: _propTypes2.default.object,
+  userId: _propTypes2.default.number
+};
+
+exports.default = AddReviewModal;
+
+/***/ }),
+/* 135 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var AddReviewForm = function (_React$Component) {
+  _inherits(AddReviewForm, _React$Component);
+
+  function AddReviewForm(props) {
+    _classCallCheck(this, AddReviewForm);
+
+    var _this = _possibleConstructorReturn(this, (AddReviewForm.__proto__ || Object.getPrototypeOf(AddReviewForm)).call(this, props));
+
+    _this.state = { value: '' };
+    _this.handleChange = _this.handleChange.bind(_this);
+    return _this;
+  }
+
+  _createClass(AddReviewForm, [{
+    key: 'handleChange',
+    value: function handleChange(e) {
+      this.setState({ value: e.target.value });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'form',
+        { action: '/movies/film/{{ movie.id }}', method: 'post' },
+        _react2.default.createElement(
+          'div',
+          { className: 'form-group' },
+          _react2.default.createElement(
+            'label',
+            { htmlFor: 'user', className: 'mt-2' },
+            _react2.default.createElement(
+              'strong',
+              null,
+              'Rating \u2605:'
+            )
+          ),
+          _react2.default.createElement(
+            'select',
+            { defaultValue: 1, className: 'form-control', id: 'stars', name: 'stars' },
+            _react2.default.createElement(
+              'option',
+              null,
+              '1'
+            ),
+            _react2.default.createElement(
+              'option',
+              null,
+              '2'
+            ),
+            _react2.default.createElement(
+              'option',
+              null,
+              '3'
+            ),
+            _react2.default.createElement(
+              'option',
+              null,
+              '4'
+            ),
+            _react2.default.createElement(
+              'option',
+              null,
+              this.hi
+            )
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'form-group' },
+          _react2.default.createElement(
+            'label',
+            { htmlFor: 'comment', className: 'mt-2' },
+            _react2.default.createElement(
+              'strong',
+              null,
+              'Review:'
+            )
+          ),
+          _react2.default.createElement('textarea', { className: 'form-control', id: 'comment', name: 'comment', rows: '3' })
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'form-group text-right' },
+          _react2.default.createElement(
+            'button',
+            { type: 'submit', className: 'btn btn-primary mr-auto movie-btn', action: 'submit' },
+            'Submit'
+          )
+        )
+      );
+    }
+  }]);
+
+  return AddReviewForm;
+}(_react2.default.Component);
+
+exports.default = AddReviewForm;
 
 /***/ })
 /******/ ]);

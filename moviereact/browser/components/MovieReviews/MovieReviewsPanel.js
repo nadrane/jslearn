@@ -8,21 +8,21 @@ import PanelInfo from '../PanelInfo';
 import { ModalButtons } from '../modal';
 
 const MovieReviewsPanel = (props) => {
-  const { session, panelData } = props;
+  const { session, movie } = props;
   let panelHeader;
   let panelInfo;
-  if (panelData) {
-    panelHeader = panelData.movie.title;
+  if (movie) {
+    panelHeader = movie.title;
     panelInfo = (
       <PanelInfo
         stats={[
-          ['Avg. Score', `${panelData.avg} ★`],
-          ['Released', panelData.movie.year],
+          ['Avg. Score', `${movie.avg} ★`],
+          ['Released', movie.year],
           [
             'Director',
             (
-              <Link key={0} to={`/director/${panelData.movie.director.id}`}>
-                {panelData.movie.director.name}
+              <Link key={0} to={`/director/${movie.director.id}`}>
+                {movie.director.name}
               </Link>
             ),
           ],
@@ -41,7 +41,7 @@ const MovieReviewsPanel = (props) => {
 };
 
 MovieReviewsPanel.propTypes = {
-  panelData: PropTypes.object,
+  movie: PropTypes.object,
   session: PropTypes.object,
 };
 
