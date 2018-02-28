@@ -23,7 +23,7 @@ const AddReviewModal = props => (
           </button>
         </div>
         <div className="modal-body">
-          <AddReviewForm userId={props.userId} />
+          <AddReviewForm session={props.session} movie={props.movie} />
         </div>
       </div>
     </div>
@@ -32,7 +32,7 @@ const AddReviewModal = props => (
 
 AddReviewModal.propTypes = {
   movie: PropTypes.object,
-  userId: PropTypes.number,
+  session: PropTypes.object,
 };
 
 export { AddReviewModal as default };

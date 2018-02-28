@@ -3294,9 +3294,10 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _form = __webpack_require__(110);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// import { AddDirectorForm, AddMovieForm } from './form';
+
 
 var Modal = function Modal(props) {
   return _react2.default.createElement(
@@ -3346,7 +3347,7 @@ var AddDirectorModal = function AddDirectorModal() {
   return _react2.default.createElement(Modal, {
     modalID: 'addDirector',
     modalTitle: 'Add a new director:',
-    modalBody: _react2.default.createElement(_form.AddDirectorForm, null)
+    modalBody: _react2.default.createElement(AddDirectorForm, null)
   });
 };
 
@@ -3354,7 +3355,7 @@ var AddMovieModal = function AddMovieModal() {
   return _react2.default.createElement(Modal, {
     modalID: 'addMovie',
     modalTitle: 'Add a new film:',
-    modalBody: _react2.default.createElement(_form.AddMovieForm, null)
+    modalBody: _react2.default.createElement(AddMovieForm, null)
   });
 };
 
@@ -3428,15 +3429,15 @@ var _AllMoviesPage = __webpack_require__(108);
 
 var _AllMoviesPage2 = _interopRequireDefault(_AllMoviesPage);
 
-var _DirectorPage = __webpack_require__(117);
+var _DirectorPage = __webpack_require__(116);
 
 var _DirectorPage2 = _interopRequireDefault(_DirectorPage);
 
-var _MovieReviewsPage = __webpack_require__(121);
+var _MovieReviewsPage = __webpack_require__(120);
 
 var _MovieReviewsPage2 = _interopRequireDefault(_MovieReviewsPage);
 
-var _UserReviewsPage = __webpack_require__(127);
+var _UserReviewsPage = __webpack_require__(126);
 
 var _UserReviewsPage2 = _interopRequireDefault(_UserReviewsPage);
 
@@ -3444,7 +3445,7 @@ var _Panel = __webpack_require__(14);
 
 var _Panel2 = _interopRequireDefault(_Panel);
 
-var _AuthForm = __webpack_require__(131);
+var _AuthForm = __webpack_require__(130);
 
 var _AuthForm2 = _interopRequireDefault(_AuthForm);
 
@@ -3468,9 +3469,12 @@ var App = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
     _this.state = {
-      session: null,
-      authName: '',
-      redirect: false
+      // session: null,
+      session: {
+        id: 1,
+        username: 'kubrickhead123'
+      },
+      authName: ''
     };
     _this.handleAuthNameChange = _this.handleAuthNameChange.bind(_this);
     _this.handleLogin = _this.handleLogin.bind(_this);
@@ -3481,8 +3485,8 @@ var App = function (_React$Component) {
 
   _createClass(App, [{
     key: 'handleAuthNameChange',
-    value: function handleAuthNameChange(value) {
-      this.setState({ authName: value });
+    value: function handleAuthNameChange(e) {
+      this.setState({ authName: e.target.value });
     }
   }, {
     key: 'handleLogin',
@@ -3496,7 +3500,6 @@ var App = function (_React$Component) {
       }).then(function (resp) {
         if (resp.data.id) {
           _this2.setState({
-            redirect: true,
             session: {
               id: resp.data.id,
               username: resp.data.username
@@ -3519,7 +3522,6 @@ var App = function (_React$Component) {
       }).then(function (resp) {
         if (resp.data.id) {
           _this3.setState({
-            redirect: true,
             session: {
               id: resp.data.id,
               username: resp.data.username
@@ -3541,15 +3543,6 @@ var App = function (_React$Component) {
     value: function render() {
       var _this4 = this;
 
-      // right here*******
-      if (this.state.redirect) {
-        this.setState({ redirect: false });
-        return _react2.default.createElement(
-          _reactRouterDom.BrowserRouter,
-          null,
-          _react2.default.createElement(_reactRouterDom.Redirect, { to: '/movies' })
-        );
-      }
       return _react2.default.createElement(
         _reactRouterDom.BrowserRouter,
         null,
@@ -3591,6 +3584,7 @@ var App = function (_React$Component) {
               } }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/auth/login', render: function render() {
                 return _react2.default.createElement(_AuthForm2.default, {
+                  session: _this4.state.session,
                   handleLogin: _this4.handleLogin,
                   authName: _this4.state.authName,
                   handleAuthNameChange: _this4.handleAuthNameChange
@@ -3599,6 +3593,7 @@ var App = function (_React$Component) {
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/auth/register', render: function render() {
                 return _react2.default.createElement(_AuthForm2.default, {
                   register: true,
+                  session: _this4.state.session,
                   handleRegister: _this4.handleRegister,
                   authName: _this4.state.authName,
                   handleAuthNameChange: _this4.handleAuthNameChange
@@ -25608,15 +25603,15 @@ var _AllMoviesPanel = __webpack_require__(109);
 
 var _AllMoviesPanel2 = _interopRequireDefault(_AllMoviesPanel);
 
-var _AllMoviesTable = __webpack_require__(111);
+var _AllMoviesTable = __webpack_require__(110);
 
 var _AllMoviesTable2 = _interopRequireDefault(_AllMoviesTable);
 
-var _AddDirectorModal = __webpack_require__(113);
+var _AddDirectorModal = __webpack_require__(112);
 
 var _AddDirectorModal2 = _interopRequireDefault(_AddDirectorModal);
 
-var _AddMovieModal = __webpack_require__(115);
+var _AddMovieModal = __webpack_require__(114);
 
 var _AddMovieModal2 = _interopRequireDefault(_AddMovieModal);
 
@@ -25661,17 +25656,24 @@ var AllMoviesPage = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      var session = this.props.session;
+      var rows = this.state.rows;
+
       return _react2.default.createElement(
         'div',
         null,
         _react2.default.createElement(
           'div',
           { className: 'container-fluid' },
-          _react2.default.createElement(_AllMoviesPanel2.default, { session: this.props.session }),
-          _react2.default.createElement(_AllMoviesTable2.default, { rows: this.state.rows })
+          _react2.default.createElement(_AllMoviesPanel2.default, { session: session }),
+          _react2.default.createElement(_AllMoviesTable2.default, { rows: rows })
         ),
-        _react2.default.createElement(_AddDirectorModal2.default, null),
-        _react2.default.createElement(_AddMovieModal2.default, null)
+        session && _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(_AddDirectorModal2.default, null),
+          _react2.default.createElement(_AddMovieModal2.default, null)
+        )
       );
     }
   }]);
@@ -25755,328 +25757,6 @@ exports.default = AllMoviesPanel;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.AddMovieForm = exports.AddDirectorForm = exports.AddReviewForm = undefined;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _axios = __webpack_require__(8);
-
-var _axios2 = _interopRequireDefault(_axios);
-
-var _config = __webpack_require__(9);
-
-var _config2 = _interopRequireDefault(_config);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var AddReviewForm = function (_React$Component) {
-  _inherits(AddReviewForm, _React$Component);
-
-  function AddReviewForm(props) {
-    _classCallCheck(this, AddReviewForm);
-
-    var _this = _possibleConstructorReturn(this, (AddReviewForm.__proto__ || Object.getPrototypeOf(AddReviewForm)).call(this, props));
-
-    _this.state = { value: '' };
-    _this.handleChange = _this.handleChange.bind(_this);
-    return _this;
-  }
-
-  _createClass(AddReviewForm, [{
-    key: 'handleChange',
-    value: function handleChange(e) {
-      this.setState({ value: e.target.value });
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        'form',
-        { action: '/movies/film/{{ movie.id }}', method: 'post' },
-        _react2.default.createElement(
-          'div',
-          { className: 'form-group' },
-          _react2.default.createElement(
-            'label',
-            { htmlFor: 'user', className: 'mt-2' },
-            _react2.default.createElement(
-              'strong',
-              null,
-              'Rating \u2605:'
-            )
-          ),
-          _react2.default.createElement(
-            'select',
-            { value: 1, className: 'form-control', id: 'stars', name: 'stars' },
-            _react2.default.createElement(
-              'option',
-              null,
-              '1'
-            ),
-            _react2.default.createElement(
-              'option',
-              null,
-              '2'
-            ),
-            _react2.default.createElement(
-              'option',
-              null,
-              '3'
-            ),
-            _react2.default.createElement(
-              'option',
-              null,
-              '4'
-            ),
-            _react2.default.createElement(
-              'option',
-              null,
-              this.hi
-            )
-          )
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'form-group' },
-          _react2.default.createElement(
-            'label',
-            { htmlFor: 'comment', className: 'mt-2' },
-            _react2.default.createElement(
-              'strong',
-              null,
-              'Review:'
-            )
-          ),
-          _react2.default.createElement('textarea', { className: 'form-control', id: 'comment', name: 'comment', rows: '3' })
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'form-group text-right' },
-          _react2.default.createElement(
-            'button',
-            { type: 'submit', className: 'btn btn-primary mr-auto movie-btn', action: 'submit' },
-            'Submit'
-          )
-        )
-      );
-    }
-  }]);
-
-  return AddReviewForm;
-}(_react2.default.Component);
-
-var AddDirectorForm = function (_React$Component2) {
-  _inherits(AddDirectorForm, _React$Component2);
-
-  function AddDirectorForm(props) {
-    _classCallCheck(this, AddDirectorForm);
-
-    var _this2 = _possibleConstructorReturn(this, (AddDirectorForm.__proto__ || Object.getPrototypeOf(AddDirectorForm)).call(this, props));
-
-    _this2.state = {
-      value: ''
-    };
-    _this2.handleChange = _this2.handleChange.bind(_this2);
-    return _this2;
-  }
-
-  _createClass(AddDirectorForm, [{
-    key: 'handleChange',
-    value: function handleChange(e) {
-      this.setState({ value: e.target.value });
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        'form',
-        { action: '/api/director', method: 'post' },
-        _react2.default.createElement(
-          'div',
-          { className: 'form-group' },
-          _react2.default.createElement(
-            'label',
-            { htmlFor: 'name', className: 'mt-2' },
-            _react2.default.createElement(
-              'strong',
-              null,
-              'Director Name:'
-            )
-          ),
-          _react2.default.createElement('input', {
-            type: 'input',
-            className: 'form-control',
-            id: 'name',
-            name: 'name',
-            placeholder: 'e.g. Robert Altman',
-            autoComplete: 'off',
-            value: this.state.value,
-            onChange: this.handleChange
-          })
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'form-group text-right' },
-          _react2.default.createElement(
-            'button',
-            { type: 'submit', className: 'btn btn-primary mr-auto movie-btn', action: 'submit' },
-            'Submit'
-          )
-        )
-      );
-    }
-  }]);
-
-  return AddDirectorForm;
-}(_react2.default.Component);
-
-var AddMovieForm = function (_React$Component3) {
-  _inherits(AddMovieForm, _React$Component3);
-
-  function AddMovieForm(props) {
-    _classCallCheck(this, AddMovieForm);
-
-    var _this3 = _possibleConstructorReturn(this, (AddMovieForm.__proto__ || Object.getPrototypeOf(AddMovieForm)).call(this, props));
-
-    _this3.state = { directors: null };
-    return _this3;
-  }
-
-  _createClass(AddMovieForm, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      var _this4 = this;
-
-      _axios2.default.get(_config2.default.fetchRoot + '/director').then(function (resp) {
-        _this4.setState({
-          directors: resp.data.directors
-        });
-      }).catch(function (e) {
-        return console.log(e);
-      });
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var directors = this.state.directors;
-
-      if (directors) {
-        var dropdownItems = directors.map(function (director) {
-          return _react2.default.createElement(
-            'option',
-            { key: director.id, value: director.id },
-            director.name
-          );
-        });
-        return _react2.default.createElement(
-          'form',
-          { action: '/api/movies', method: 'post' },
-          _react2.default.createElement(
-            'div',
-            { className: 'form-group' },
-            _react2.default.createElement(
-              'label',
-              { htmlFor: 'title', className: 'mt-2' },
-              _react2.default.createElement(
-                'strong',
-                null,
-                'Film title:'
-              )
-            ),
-            _react2.default.createElement('input', {
-              type: 'input',
-              className: 'form-control',
-              id: 'title',
-              name: 'title',
-              placeholder: 'e.g. Gone with the Wind',
-              autoComplete: 'off'
-            })
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'form-group' },
-            _react2.default.createElement(
-              'label',
-              { htmlFor: 'year', className: 'mt-2' },
-              _react2.default.createElement(
-                'strong',
-                null,
-                'Year of release:'
-              )
-            ),
-            _react2.default.createElement('input', {
-              type: 'input',
-              className: 'form-control',
-              id: 'year',
-              name: 'year',
-              placeholder: 'e.g. 1940',
-              autoComplete: 'off'
-            })
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'form-group' },
-            _react2.default.createElement(
-              'label',
-              { htmlFor: 'director', className: 'mt-2' },
-              _react2.default.createElement(
-                'strong',
-                null,
-                'Director:'
-              )
-            ),
-            _react2.default.createElement(
-              'select',
-              { className: 'form-control', id: 'director', name: 'directorId' },
-              _react2.default.createElement(
-                'option',
-                { disabled: true },
-                'Select director'
-              ),
-              dropdownItems
-            )
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'form-group text-right' },
-            _react2.default.createElement(
-              'button',
-              { type: 'submit', className: 'btn btn-primary mr-auto movie-btn', action: 'submit' },
-              'Submit'
-            )
-          )
-        );
-      }return null;
-    }
-  }]);
-
-  return AddMovieForm;
-}(_react2.default.Component);
-
-exports.AddReviewForm = AddReviewForm;
-exports.AddDirectorForm = AddDirectorForm;
-exports.AddMovieForm = AddMovieForm;
-
-/***/ }),
-/* 111 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
 exports.default = undefined;
 
 var _propTypes = __webpack_require__(1);
@@ -26091,7 +25771,7 @@ var _Table = __webpack_require__(19);
 
 var _Table2 = _interopRequireDefault(_Table);
 
-var _AllMoviesRow = __webpack_require__(112);
+var _AllMoviesRow = __webpack_require__(111);
 
 var _AllMoviesRow2 = _interopRequireDefault(_AllMoviesRow);
 
@@ -26113,7 +25793,7 @@ AllMoviesTable.propTypes = {
 exports.default = AllMoviesTable;
 
 /***/ }),
-/* 112 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26178,7 +25858,7 @@ AllMoviesRow.propTypes = {
 exports.default = AllMoviesRow;
 
 /***/ }),
-/* 113 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26193,7 +25873,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _AddDirectorForm = __webpack_require__(114);
+var _AddDirectorForm = __webpack_require__(113);
 
 var _AddDirectorForm2 = _interopRequireDefault(_AddDirectorForm);
 
@@ -26246,7 +25926,7 @@ var AddDirectorModal = function AddDirectorModal() {
 exports.default = AddDirectorModal;
 
 /***/ }),
-/* 114 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26339,7 +26019,7 @@ var AddDirectorForm = function (_React$Component) {
 exports.default = AddDirectorForm;
 
 /***/ }),
-/* 115 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26354,7 +26034,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _AddMovieForm = __webpack_require__(116);
+var _AddMovieForm = __webpack_require__(115);
 
 var _AddMovieForm2 = _interopRequireDefault(_AddMovieForm);
 
@@ -26407,7 +26087,7 @@ var AddMovieModal = function AddMovieModal() {
 exports.default = AddMovieModal;
 
 /***/ }),
-/* 116 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26566,7 +26246,7 @@ var AddMovieForm = function (_React$Component) {
 exports.default = AddMovieForm;
 
 /***/ }),
-/* 117 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26593,11 +26273,11 @@ var _axios2 = _interopRequireDefault(_axios);
 
 var _config = __webpack_require__(9);
 
-var _DirectorPanel = __webpack_require__(118);
+var _DirectorPanel = __webpack_require__(117);
 
 var _DirectorPanel2 = _interopRequireDefault(_DirectorPanel);
 
-var _DirectorTable = __webpack_require__(119);
+var _DirectorTable = __webpack_require__(118);
 
 var _DirectorTable2 = _interopRequireDefault(_DirectorTable);
 
@@ -26668,7 +26348,7 @@ DirectorPage.propTypes = {
 exports.default = DirectorPage;
 
 /***/ }),
-/* 118 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26741,7 +26421,7 @@ DirectorPanel.propTypes = {
 exports.default = DirectorPanel;
 
 /***/ }),
-/* 119 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26764,7 +26444,7 @@ var _Table = __webpack_require__(19);
 
 var _Table2 = _interopRequireDefault(_Table);
 
-var _DirectorRow = __webpack_require__(120);
+var _DirectorRow = __webpack_require__(119);
 
 var _DirectorRow2 = _interopRequireDefault(_DirectorRow);
 
@@ -26786,7 +26466,7 @@ DirectorTable.propTypes = {
 exports.default = DirectorTable;
 
 /***/ }),
-/* 120 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26842,7 +26522,7 @@ DirectorRow.propTypes = {
 exports.default = DirectorRow;
 
 /***/ }),
-/* 121 */
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26869,15 +26549,15 @@ var _axios2 = _interopRequireDefault(_axios);
 
 var _config = __webpack_require__(9);
 
-var _MovieReviewsPanel = __webpack_require__(122);
+var _MovieReviewsPanel = __webpack_require__(121);
 
 var _MovieReviewsPanel2 = _interopRequireDefault(_MovieReviewsPanel);
 
-var _MovieReviewsTable = __webpack_require__(123);
+var _MovieReviewsTable = __webpack_require__(122);
 
 var _MovieReviewsTable2 = _interopRequireDefault(_MovieReviewsTable);
 
-var _AddReviewModal = __webpack_require__(125);
+var _AddReviewModal = __webpack_require__(124);
 
 var _AddReviewModal2 = _interopRequireDefault(_AddReviewModal);
 
@@ -26931,7 +26611,7 @@ var MovieReviewsPage = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var session = this.props;
+      var session = this.props.session;
       var _state = this.state,
           currentMovie = _state.currentMovie,
           rows = _state.rows;
@@ -26946,7 +26626,7 @@ var MovieReviewsPage = function (_React$Component) {
             _react2.default.createElement(_MovieReviewsPanel2.default, { session: this.props.session, movie: this.state.currentMovie }),
             _react2.default.createElement(_MovieReviewsTable2.default, { rows: this.state.rows })
           ),
-          _react2.default.createElement(_AddReviewModal2.default, { movie: this.state.currentMovie, userId: session ? session.id : null })
+          session && _react2.default.createElement(_AddReviewModal2.default, { movie: this.state.currentMovie, session: session })
         );
       }return null;
     }
@@ -26963,7 +26643,7 @@ MovieReviewsPage.propTypes = {
 exports.default = MovieReviewsPage;
 
 /***/ }),
-/* 122 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27029,7 +26709,7 @@ MovieReviewsPanel.propTypes = {
 exports.default = MovieReviewsPanel;
 
 /***/ }),
-/* 123 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27052,7 +26732,7 @@ var _Table = __webpack_require__(19);
 
 var _Table2 = _interopRequireDefault(_Table);
 
-var _MovieReviewsRow = __webpack_require__(124);
+var _MovieReviewsRow = __webpack_require__(123);
 
 var _MovieReviewsRow2 = _interopRequireDefault(_MovieReviewsRow);
 
@@ -27076,7 +26756,7 @@ MovieReviewsTable.propTypes = {
 exports.default = MovieReviewsTable;
 
 /***/ }),
-/* 124 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27138,7 +26818,7 @@ MovieReviewsRow.propTypes = {
 exports.default = MovieReviewsRow;
 
 /***/ }),
-/* 125 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27157,7 +26837,7 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _AddReviewForm = __webpack_require__(126);
+var _AddReviewForm = __webpack_require__(125);
 
 var _AddReviewForm2 = _interopRequireDefault(_AddReviewForm);
 
@@ -27202,7 +26882,7 @@ var AddReviewModal = function AddReviewModal(props) {
         _react2.default.createElement(
           'div',
           { className: 'modal-body' },
-          _react2.default.createElement(_AddReviewForm2.default, { userId: props.userId })
+          _react2.default.createElement(_AddReviewForm2.default, { session: props.session, movie: props.movie })
         )
       )
     )
@@ -27214,13 +26894,13 @@ var AddReviewModal = function AddReviewModal(props) {
 
 AddReviewModal.propTypes = {
   movie: _propTypes2.default.object,
-  userId: _propTypes2.default.number
+  session: _propTypes2.default.object
 };
 
 exports.default = AddReviewModal;
 
 /***/ }),
-/* 126 */
+/* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27237,7 +26917,21 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = __webpack_require__(1);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _axios = __webpack_require__(8);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _reactRouterDom = __webpack_require__(6);
+
+var _config = __webpack_require__(9);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -27253,22 +26947,52 @@ var AddReviewForm = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (AddReviewForm.__proto__ || Object.getPrototypeOf(AddReviewForm)).call(this, props));
 
-    _this.state = { value: '' };
+    _this.state = {
+      redirect: false,
+      stars: 1,
+      comment: ''
+    };
     _this.handleChange = _this.handleChange.bind(_this);
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
     return _this;
   }
 
   _createClass(AddReviewForm, [{
     key: 'handleChange',
     value: function handleChange(e) {
-      this.setState({ value: e.target.value });
+      var value = e.target.value;
+      var name = e.target.name;
+
+      this.setState(_defineProperty({}, name, value));
+    }
+  }, {
+    key: 'handleSubmit',
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      var movieId = this.props.movie.id;
+      var userId = this.props.session.id;
+
+      _axios2.default.post(_config.fetchRoot + '/movies/film/' + movieId, {
+        stars: this.state.stars,
+        comment: this.state.comment,
+        movieId: movieId,
+        userId: userId
+      });
+      this.setState({ redirect: true });
     }
   }, {
     key: 'render',
     value: function render() {
+      var movieId = this.props.movie.id;
+
+      if (this.state.redirect) {
+        return _react2.default.createElement(_reactRouterDom.Redirect, { to: '/movies' });
+      }
+      var username = this.props.session.username;
+
       return _react2.default.createElement(
         'form',
-        { action: '/movies/film/{{ movie.id }}', method: 'post' },
+        { onSubmit: this.handleSubmit, method: 'post' },
         _react2.default.createElement(
           'div',
           { className: 'form-group' },
@@ -27278,36 +27002,47 @@ var AddReviewForm = function (_React$Component) {
             _react2.default.createElement(
               'strong',
               null,
-              'Rating \u2605:'
+              username + '\'s Rating:'
             )
           ),
           _react2.default.createElement(
             'select',
-            { defaultValue: 1, className: 'form-control', id: 'stars', name: 'stars' },
+            {
+              value: this.state.stars,
+              onChange: this.handleChange,
+              className: 'form-control',
+              id: 'stars',
+              name: 'stars'
+            },
             _react2.default.createElement(
               'option',
-              null,
-              '1'
+              { value: 1 },
+              '1 ',
+              '★'.repeat(1)
             ),
             _react2.default.createElement(
               'option',
-              null,
-              '2'
+              { value: 2 },
+              '2 ',
+              '★'.repeat(2)
             ),
             _react2.default.createElement(
               'option',
-              null,
-              '3'
+              { value: 3 },
+              '3 ',
+              '★'.repeat(3)
             ),
             _react2.default.createElement(
               'option',
-              null,
-              '4'
+              { value: 4 },
+              '4 ',
+              '★'.repeat(4)
             ),
             _react2.default.createElement(
               'option',
-              null,
-              this.hi
+              { value: 5 },
+              '5 ',
+              '★'.repeat(5)
             )
           )
         ),
@@ -27323,7 +27058,15 @@ var AddReviewForm = function (_React$Component) {
               'Review:'
             )
           ),
-          _react2.default.createElement('textarea', { className: 'form-control', id: 'comment', name: 'comment', rows: '3' })
+          _react2.default.createElement('textarea', {
+            value: this.state.comment,
+            onChange: this.handleChange,
+            className: 'form-control',
+            id: 'comment',
+            name: 'comment',
+            rows: '3',
+            placeholder: 'What did you think?'
+          })
         ),
         _react2.default.createElement(
           'div',
@@ -27341,10 +27084,15 @@ var AddReviewForm = function (_React$Component) {
   return AddReviewForm;
 }(_react2.default.Component);
 
+AddReviewForm.propTypes = {
+  session: _propTypes2.default.object,
+  movie: _propTypes2.default.object
+};
+
 exports.default = AddReviewForm;
 
 /***/ }),
-/* 127 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27371,11 +27119,11 @@ var _axios2 = _interopRequireDefault(_axios);
 
 var _config = __webpack_require__(9);
 
-var _UserReviewsPanel = __webpack_require__(128);
+var _UserReviewsPanel = __webpack_require__(127);
 
 var _UserReviewsPanel2 = _interopRequireDefault(_UserReviewsPanel);
 
-var _UserReviewsTable = __webpack_require__(129);
+var _UserReviewsTable = __webpack_require__(128);
 
 var _UserReviewsTable2 = _interopRequireDefault(_UserReviewsTable);
 
@@ -27446,7 +27194,7 @@ UserReviewsPage.propTypes = {
 exports.default = UserReviewsPage;
 
 /***/ }),
-/* 128 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27519,7 +27267,7 @@ UserReviewsPanel.propTypes = {
 exports.default = UserReviewsPanel;
 
 /***/ }),
-/* 129 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27542,7 +27290,7 @@ var _Table = __webpack_require__(19);
 
 var _Table2 = _interopRequireDefault(_Table);
 
-var _UserReviewsRow = __webpack_require__(130);
+var _UserReviewsRow = __webpack_require__(129);
 
 var _UserReviewsRow2 = _interopRequireDefault(_UserReviewsRow);
 
@@ -27564,7 +27312,7 @@ UserReviewsTable.propTypes = {
 exports.default = UserReviewsTable;
 
 /***/ }),
-/* 130 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27626,7 +27374,7 @@ UserReviewsRow.propTypes = {
 exports.default = UserReviewsRow;
 
 /***/ }),
-/* 131 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27647,6 +27395,8 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
+var _reactRouterDom = __webpack_require__(6);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -27658,35 +27408,26 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var AuthForm = function (_React$Component) {
   _inherits(AuthForm, _React$Component);
 
-  function AuthForm(props) {
+  function AuthForm() {
     _classCallCheck(this, AuthForm);
 
-    var _this = _possibleConstructorReturn(this, (AuthForm.__proto__ || Object.getPrototypeOf(AuthForm)).call(this, props));
-
-    _this.handleChange = _this.handleChange.bind(_this);
-    _this.handleRegister = _this.handleRegister.bind(_this);
-    _this.handleLogin = _this.handleLogin.bind(_this);
-    return _this;
+    return _possibleConstructorReturn(this, (AuthForm.__proto__ || Object.getPrototypeOf(AuthForm)).apply(this, arguments));
   }
 
   _createClass(AuthForm, [{
-    key: 'handleChange',
-    value: function handleChange(e) {
-      this.props.handleAuthNameChange(e.target.value);
-    }
-  }, {
-    key: 'handleRegister',
-    value: function handleRegister(e) {
-      this.props.handleRegister(e);
-    }
-  }, {
-    key: 'handleLogin',
-    value: function handleLogin(e) {
-      this.props.handleLogin(e);
-    }
-  }, {
     key: 'render',
     value: function render() {
+      var _props = this.props,
+          handleAuthNameChange = _props.handleAuthNameChange,
+          handleRegister = _props.handleRegister,
+          handleLogin = _props.handleLogin,
+          session = _props.session,
+          register = _props.register,
+          authName = _props.authName;
+
+      if (session) {
+        return _react2.default.createElement(_reactRouterDom.Redirect, { to: '/movies' });
+      }
       return _react2.default.createElement(
         'div',
         { className: 'row justify-content-center' },
@@ -27699,12 +27440,12 @@ var AuthForm = function (_React$Component) {
             _react2.default.createElement(
               'h3',
               { className: 'mint' },
-              this.props.register ? 'Register' : 'Sign in'
+              register ? 'Register' : 'Sign in'
             ),
             _react2.default.createElement(
               'form',
               {
-                onSubmit: this.props.register ? this.handleRegister : this.handleLogin,
+                onSubmit: register ? handleRegister : handleLogin,
                 method: 'post',
                 className: 'mb-2'
               },
@@ -27727,8 +27468,8 @@ var AuthForm = function (_React$Component) {
                   name: 'username',
                   placeholder: 'username',
                   autoComplete: 'off',
-                  value: this.props.authName,
-                  onChange: this.handleChange
+                  value: authName,
+                  onChange: handleAuthNameChange
                 }),
                 _react2.default.createElement('small', { id: 'access-warn' })
               ),
@@ -27753,6 +27494,7 @@ var AuthForm = function (_React$Component) {
 
 AuthForm.propTypes = {
   register: _propTypes2.default.bool,
+  session: _propTypes2.default.object,
   handleAuthNameChange: _propTypes2.default.func,
   handleRegister: _propTypes2.default.func,
   handleLogin: _propTypes2.default.func,

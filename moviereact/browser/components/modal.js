@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { AddDirectorForm, AddMovieForm } from './form';
+// import { AddDirectorForm, AddMovieForm } from './form';
 
 
 const Modal = props => (

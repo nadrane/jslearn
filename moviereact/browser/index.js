@@ -17,9 +17,12 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      session: null,
+      // session: null,
+      session: {
+        id: 1,
+        username: 'kubrickhead123',
+      },
       authName: '',
-      redirect: false,
     };
     this.handleAuthNameChange = this.handleAuthNameChange.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
@@ -27,8 +30,8 @@ class App extends React.Component {
     this.handleLogout = this.handleLogout.bind(this);
   }
 
-  handleAuthNameChange(value) {
-    this.setState({ authName: value });
+  handleAuthNameChange(e) {
+    this.setState({ authName: e.target.value });
   }
 
   handleLogin(e) {
@@ -40,7 +43,6 @@ class App extends React.Component {
       .then((resp) => {
         if (resp.data.id) {
           this.setState({
-            redirect: true,
             session: {
               id: resp.data.id,
               username: resp.data.username,
@@ -60,7 +62,6 @@ class App extends React.Component {
       .then((resp) => {
         if (resp.data.id) {
           this.setState({
-            redirect: true,
             session: {
               id: resp.data.id,
               username: resp.data.username,
@@ -77,15 +78,6 @@ class App extends React.Component {
   }
 
   render() {
-    // right here*******
-    if (this.state.redirect) {
-      this.setState({ redirect: false });
-      return (
-        <Router>
-          <Redirect to='/movies'/>
-        </Router>
-      );
-    }
     return (
       <Router>
         <div>
@@ -119,6 +111,7 @@ class App extends React.Component {
             )}/>
             <Route exact path='/auth/login' render={() => (
               <AuthForm
+                session={this.state.session}
                 handleLogin={this.handleLogin}
                 authName={this.state.authName}
                 handleAuthNameChange={this.handleAuthNameChange}
@@ -127,6 +120,7 @@ class App extends React.Component {
             <Route exact path='/auth/register' render={() => (
               <AuthForm
                 register={true}
+                session={this.state.session}
                 handleRegister={this.handleRegister}
                 authName={this.state.authName}
                 handleAuthNameChange={this.handleAuthNameChange}

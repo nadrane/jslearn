@@ -27,14 +27,20 @@ class AllMoviesPage extends React.Component {
   }
 
   render() {
+    const { session } = this.props;
+    const { rows } = this.state;
     return (
       <div>
         <div className="container-fluid">
-          <AllMoviesPanel session={this.props.session} />
-          <AllMoviesTable rows={this.state.rows} />
+          <AllMoviesPanel session={session} />
+          <AllMoviesTable rows={rows} />
         </div>
-          <AddDirectorModal />
-          <AddMovieModal />
+        {session && (
+          <div>
+            <AddDirectorModal />
+            <AddMovieModal />
+          </div>
+        )}
       </div>
     );
   }

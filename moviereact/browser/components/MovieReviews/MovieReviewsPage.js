@@ -35,7 +35,7 @@ class MovieReviewsPage extends React.Component {
   }
 
   render() {
-    const session = this.props;
+    const { session } = this.props;
     const { currentMovie, rows } = this.state;
     if (currentMovie && rows) {
       return (
@@ -44,7 +44,7 @@ class MovieReviewsPage extends React.Component {
             <MovieReviewsPanel session={this.props.session} movie={this.state.currentMovie} />
             <MovieReviewsTable rows={this.state.rows} />
           </div>
-          <AddReviewModal movie={this.state.currentMovie} userId={session ? session.id : null} />
+          {session && <AddReviewModal movie={this.state.currentMovie} session={session} />}
         </div>
       );
     } return null;

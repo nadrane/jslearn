@@ -71,16 +71,17 @@ router.get('/film/:id', (req, res, next) => {
 });
 
 /*
-* POST /movies/film/:id - add review
+* POST api/movies/film/:id - add review
 */
 router.post('/film/:id', (req, res, next) => {
+  console.log('received post!');
   Review.create({
     stars: req.body.stars,
     comment: req.body.comment,
-    movieId: req.params.id,
-    userId: req.session.sessionInfo.uid,
+    movieId: req.body.movieId,
+    userId: req.body.userId,
   })
-    .then(() => res.redirect(`/movies/film/${req.params.id}`))
+    .then(() => res.redirect('/director'))
     .catch(next);
 });
 
