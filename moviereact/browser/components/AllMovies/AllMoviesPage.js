@@ -6,7 +6,8 @@ import { fetchRoot } from '../../config';
 // components
 import AllMoviesPanel from './AllMoviesPanel';
 import AllMoviesTable from './AllMoviesTable';
-import { AddDirectorModal, AddMovieModal } from '../modal';
+import AddDirectorModal from './AddDirectorModal';
+import AddMovieModal from './AddMovieModal';
 
 class AllMoviesPage extends React.Component {
   constructor(props) {
