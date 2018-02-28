@@ -34,9 +34,6 @@ const AllMoviesPanel = (props) => {
 };
 
 AllMoviesPanel.propTypes = {
-  type: PropTypes.string,
-  panelData: PropTypes.object,
-  msg: PropTypes.string,
   session: PropTypes.object,
 };
 

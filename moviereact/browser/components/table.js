@@ -35,7 +35,7 @@ const Table = (props) => {
 
 Table.propTypes = {
   headers: PropTypes.array,
-  RowClass: PropTypes.object,
+  RowClass: PropTypes.func,
   rows: PropTypes.array,
 };
 

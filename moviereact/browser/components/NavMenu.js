@@ -27,9 +27,9 @@ const NavMenu = props => (
           </Link>
       </li>
       <li>
-          <a className="mint my-2 mx-2 my-sm-0" href="/auth/register">
+          <Link className="mint my-2 mx-2 my-sm-0" to="/auth/register">
             Register
-          </a>
+          </Link>
       </li>
     </ul>
   )

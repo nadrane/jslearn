@@ -6,15 +6,15 @@ const AllMoviesRow = props => (
   <tr>
     <td>
       <h6>
-        <a href={`/movies/film/${props.id}`}>
+        <Link to={`/movies/film/${props.id}`} className="mint">
           {props.row.title}
-        </a>
+        </Link>
       </h6>
     </td>
     <td>
-      <a href={`/director/${props.row.director.id}`} className="white">
+      <Link to={`/director/${props.row.director.id}`} className="white">
         {props.row.director.name}
-      </a>
+      </Link>
     </td>
     <td>{props.row.year}</td>
   </tr>
@@ -23,7 +23,6 @@ const AllMoviesRow = props => (
 AllMoviesRow.propTypes = {
   row: PropTypes.object.isRequired,
   id: PropTypes.number,
-  handleMovieLink: PropTypes.func,
 };
 
 export { AllMoviesRow as default };

@@ -113,7 +113,6 @@ DirectorRow.propTypes = {
 MoviesRow.propTypes = {
   row: PropTypes.object.isRequired,
   id: PropTypes.number,
-  handleMovieLink: PropTypes.func,
 };
 UserRow.propTypes = {
   row: PropTypes.object.isRequired,
@@ -124,7 +123,6 @@ ReviewsRow.propTypes = {
 Table.propTypes = {
   type: PropTypes.string,
   rows: PropTypes.array,
-  handleMovieLink: PropTypes.func,
 };
 
 export { MoviesRow, UserRow, DirectorRow, ReviewsRow, Table };

@@ -126,7 +126,7 @@ class AddMovieForm extends React.Component {
           <div className="form-group">
             <label htmlFor="director" className="mt-2"><strong>Director:</strong></label>
             <select className="form-control" id="director" name="directorId">
-                <option selected disabled>Select director</option>
+                <option disabled>Select director</option>
                 {dropdownItems}
             </select>
           </div>

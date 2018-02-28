@@ -8,7 +8,6 @@ import AllMoviesPanel from './AllMoviesPanel';
 import AllMoviesTable from './AllMoviesTable';
 import { AddDirectorModal, AddMovieModal } from '../modal';
 
-
 class AllMoviesPage extends React.Component {
   constructor(props) {
     super(props);

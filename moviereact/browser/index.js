@@ -5,12 +5,13 @@ import axios from 'axios';
 import { fetchRoot } from './config';
 
 // components
-
-import { NavBar } from './components/NavBar';
+import NavBar from './components/NavBar';
 import AllMoviesPage from './components/AllMovies/AllMoviesPage';
-// import { AllMoviesPage, MoviePage, UserPage, DirectorPage } from './components/page';
-// import { Panel } from './components/panel';
-// import Auth from './components/auth';
+import DirectorPage from './components/Director/DirectorPage';
+import MovieReviewsPage from './components/MovieReviews/MovieReviewsPage';
+import UserReviewsPage from './components/UserReviews/UserReviewsPage';
+import { Panel } from './components/old-Panel';
+import AuthForm from './components/Auth/Auth';
 
 class App extends React.Component {
   constructor(props) {
@@ -57,11 +58,11 @@ class App extends React.Component {
       username: this.state.authName,
     })
       .then((resp) => {
-        if (resp.data.uid) {
+        if (resp.data.id) {
           this.setState({
             redirect: true,
             session: {
-              id: resp.data.uid,
+              id: resp.data.id,
               username: resp.data.username,
             },
           });
@@ -98,13 +99,13 @@ class App extends React.Component {
               />
             )}/>
             <Route exact path='/movies/film/:id' render={({ match }) => (
-              <MoviePage
+              <MovieReviewsPage
                 matchId={match.params.id}
                 session={this.state.session}
               />
             )}/>
             <Route exact path='/user/:id' render={({ match }) => (
-              <UserPage
+              <UserReviewsPage
                 matchId={match.params.id}
                 session={this.state.session}
               />
@@ -116,14 +117,14 @@ class App extends React.Component {
               />
             )}/>
             <Route exact path='/auth/login' render={() => (
-              <Auth
+              <AuthForm
                 handleLogin={this.handleLogin}
                 authName={this.state.authName}
                 handleAuthNameChange={this.handleAuthNameChange}
               />
             )}/>
             <Route exact path='/auth/register' render={() => (
-              <Auth
+              <AuthForm
                 register={true}
                 handleRegister={this.handleRegister}
                 authName={this.state.authName}

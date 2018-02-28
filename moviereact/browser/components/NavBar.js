@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 // components
-import { NavMenu } from './NavMenu';
+import NavMenu from './NavMenu';
 
 const NavBar = props => (
   <nav className="navbar navbar-expand-md sticky-top navbar-dark bg-dark">

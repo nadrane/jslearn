@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class Auth extends React.Component {
+class AuthForm extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
@@ -53,8 +53,12 @@ class Auth extends React.Component {
   }
 }
 
-Auth.propTypes = {
+AuthForm.propTypes = {
   register: PropTypes.bool,
+  handleAuthNameChange: PropTypes.func,
+  handleRegister: PropTypes.func,
+  handleLogin: PropTypes.func,
+  authName: PropTypes.string,
 };
 
-export { Auth as default };
+export { AuthForm as default };

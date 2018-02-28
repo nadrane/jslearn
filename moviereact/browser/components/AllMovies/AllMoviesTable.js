@@ -5,10 +5,12 @@ import React from 'react';
 import Table from '../Table';
 import AllMoviesRow from './AllMoviesRow';
 
-// import MoviesRow component itself and pass in
-
 const AllMoviesTable = props => (
-    <Table headers={['Movie', 'Director', 'Year']} RowClass={AllMoviesRow} rows={props.rows} />
+  <Table
+    headers={['Movie', 'Director', 'Year']}
+    RowClass={AllMoviesRow}
+    rows={props.rows}
+  />
 );
 
 AllMoviesTable.propTypes = {
