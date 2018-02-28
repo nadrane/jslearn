@@ -3,10 +3,6 @@ const path = require('path');
 const logger = require('morgan');
 const session = require('express-session');
 const bodyParser = require('body-parser');
-// const { seedDB } = require('./db/index.js');
-
-// build dev database
-// seedDB();
 
 // routes
 const auth = require('./routes/auth');
@@ -21,23 +17,23 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(session({
-  secret: 'keyboard cat',
+  secret: '*N:K5zN!]rrp{og',
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
 }));
 app.use(express.static(path.resolve(__dirname, '..', 'public')));
-app.use('/auth', auth);
-app.use('/movies', movies);
-app.use('/director', director);
-app.use('/user', user);
+app.use('/api/auth', auth);
+app.use('/api/movies', movies);
+app.use('/api/director', director);
+app.use('/api/user', user);
 
 app.listen(process.env.PORT || 8080, () => {
-  console.log(`listening on ${process.env.PORT || 8080}`)
+  console.log(`Listening on ${process.env.PORT || 8080}`);
 });
 
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, "..", "public", "index.html"))
-})
+  res.sendFile(path.resolve(__dirname, '..', 'public', 'index.html'));
+});
 
 // postgres -D /usr/local/var/postgres
 // nodemon app.js

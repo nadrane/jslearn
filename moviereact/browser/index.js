@@ -2,12 +2,15 @@ import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-d
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
+import { fetchRoot } from './config';
 
 // components
-import { AllMoviesPage, MoviePage, UserPage, DirectorPage } from './components/page';
-import Auth from './components/auth';
-import { NavBar } from './components/layout';
-import { Panel } from './components/panel';
+
+import { NavBar } from './components/NavBar';
+import AllMoviesPage from './components/AllMovies/AllMoviesPage';
+// import { AllMoviesPage, MoviePage, UserPage, DirectorPage } from './components/page';
+// import { Panel } from './components/panel';
+// import Auth from './components/auth';
 
 class App extends React.Component {
   constructor(props) {
@@ -30,38 +33,41 @@ class App extends React.Component {
   handleLogin(e) {
     e.preventDefault();
     this.setState({ authName: '' });
-    console.log('posting here')
-    axios.post('http://localhost:3000/auth/login', {
+    axios.post(`${fetchRoot}/auth/login`, {
       username: this.state.authName,
-    }).then((resp) => {
-      if (resp.data.uid) {
-        this.setState({
-          redirect: true,
-          session: {
-            id: resp.data.uid,
-            username: resp.data.username,
-          },
-        });
-      }
-    }).catch(err => console.log(err));
+    })
+      .then((resp) => {
+        if (resp.data.id) {
+          this.setState({
+            redirect: true,
+            session: {
+              id: resp.data.id,
+              username: resp.data.username,
+            },
+          });
+        }
+      })
+      .catch(err => console.log(err));
   }
 
   handleRegister(e) {
     e.preventDefault();
     this.setState({ authName: '' });
-    axios.post('http://localhost:8080/auth/register', {
+    axios.post(`${fetchRoot}/auth/register`, {
       username: this.state.authName,
-    }).then((resp) => {
-      if (resp.data.uid) {
-        this.setState({
-          redirect: true,
-          session: {
-            id: resp.data.uid,
-            username: resp.data.username,
-          },
-        });
-      }
-    }).catch(err => console.log(err));
+    })
+      .then((resp) => {
+        if (resp.data.uid) {
+          this.setState({
+            redirect: true,
+            session: {
+              id: resp.data.uid,
+              username: resp.data.username,
+            },
+          });
+        }
+      })
+      .catch(err => console.log(err));
   }
 
   handleLogout(e) {
@@ -110,10 +116,19 @@ class App extends React.Component {
               />
             )}/>
             <Route exact path='/auth/login' render={() => (
-              <Auth handleLogin={this.handleLogin} authName={this.state.authName} handleAuthNameChange={this.handleAuthNameChange} />
+              <Auth
+                handleLogin={this.handleLogin}
+                authName={this.state.authName}
+                handleAuthNameChange={this.handleAuthNameChange}
+              />
             )}/>
             <Route exact path='/auth/register' render={() => (
-              <Auth register={true} handleRegister={this.handleRegister} authName={this.state.authName} handleAuthNameChange={this.handleAuthNameChange} />
+              <Auth
+                register={true}
+                handleRegister={this.handleRegister}
+                authName={this.state.authName}
+                handleAuthNameChange={this.handleAuthNameChange}
+              />
             )}/>
             <Route render={() => (
               <Panel msg='404!' />

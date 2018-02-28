@@ -1,10 +1,5 @@
 const config = {
-  fetchRoot: 'http://localhost:8080',
-  allMovies: {
-    type: 'allMovies',
-    fetchPath: 'movies',
-    rowFormat: data => data.movies,
-  },
+  fetchRoot: 'http://localhost:8080/api',
   userReviews: {
     type: 'userReviews',
     fetchPath: 'user',

@@ -9,24 +9,26 @@ const {
 
 const router = express.Router();
 
+/*
+* GET /api/movies - send data for all movies
+*/
 router.get('/', (req, res, next) => {
   Promise.all([
     Movie.findAll({ include: [Director], order: [['year', 'ASC']] }),
+    // see line below - can i remove this from here now?
     Director.findAll({ order: [['id', 'ASC']] }),
   ])
     .then(([movies, directors]) => {
-      res.setHeader('Content-Type', 'application/json');
-      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-      res.send(JSON.stringify({
+      res.json({
         movies,
         directors,
-      }));
+      });
     })
     .catch(next);
 });
 
 /*
-* POST /movies - add film
+* POST /api/movies - add film
 */
 router.post('/', (req, res, next) => {
   Movie.create(req.body, { fields: ['title', 'year', 'directorId'] })
@@ -35,7 +37,7 @@ router.post('/', (req, res, next) => {
 });
 
 /*
-* GET /movies/film - profile view
+* GET /api/movies/film - send data + reviews for one film
 */
 router.get('/film/:id', (req, res, next) => {
   // retrieve movie and all reviews
@@ -58,15 +60,12 @@ router.get('/film/:id', (req, res, next) => {
     attributes: [[connection.fn('AVG', connection.col('stars')), 'avgStars']],
   });
 
-  // resolve once all info available
   Promise.all([movieProm, avgProm])
     .then(([movie, avg]) => {
-      res.setHeader('Content-Type', 'application/json');
-      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-      res.send(JSON.stringify({
+      res.json({
         movie,
         avg: roundedToFixed(avg.get('avgStars'), 1),
-      }, null, 3));
+      });
     })
     .catch(next);
 });
@@ -80,7 +79,8 @@ router.post('/film/:id', (req, res, next) => {
     comment: req.body.comment,
     movieId: req.params.id,
     userId: req.session.sessionInfo.uid,
-  }).then(() => res.redirect(`/movies/film/${req.params.id}`))
+  })
+    .then(() => res.redirect(`/movies/film/${req.params.id}`))
     .catch(next);
 });
 

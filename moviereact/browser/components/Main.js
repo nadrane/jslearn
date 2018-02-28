@@ -1,10 +1,6 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
-import { Panel } from './panel';
-import { Table } from './table';
-import { AddDirectorModal, AddMovieModal, AddReviewModal } from './modal';
-import config from '../config';
 
 class Main extends React.Component {
   constructor(props) {
@@ -67,42 +63,3 @@ Main.propTypes = {
   session: PropTypes.object,
   modals: PropTypes.object,
 };
-
-const MoviePage = props => (
-  <Main
-    {...config.movieReviews}
-    matchId={props.matchId}
-    session={props.session}
-    modals={<AddReviewModal />}
-  />
-);
-MoviePage.propTypes = {
-  matchId: PropTypes.string,
-  session: PropTypes.object,
-};
-
-const UserPage = props => (
-  <Main
-    {...config.userReviews}
-    matchId={props.matchId}
-    session={props.session}
-  />
-);
-UserPage.propTypes = {
-  matchId: PropTypes.string,
-  session: PropTypes.object,
-};
-
-const DirectorPage = props => (
-  <Main
-    {...config.director}
-    matchId={props.matchId}
-    session={props.session}
-  />
-);
-DirectorPage.propTypes = {
-  matchId: PropTypes.string,
-  session: PropTypes.object,
-};
-
-export { AllMoviesPage, MoviePage, UserPage, DirectorPage };

@@ -1304,132 +1304,7 @@ var locationsAreEqual = function locationsAreEqual(a, b) {
 };
 
 /***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.NavBar = exports.BSCol = exports.BSRow = undefined;
-
-var _reactRouterDom = __webpack_require__(11);
-
-var _propTypes = __webpack_require__(1);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var BSRow = function BSRow(props) {
-  return _react2.default.createElement(
-    'div',
-    { className: 'row justify-content-center' },
-    props.children
-  );
-};
-
-var BSCol = function BSCol(props) {
-  return _react2.default.createElement(
-    'div',
-    { className: props.colClass },
-    props.children
-  );
-};
-
-var NavMenu = function NavMenu(props) {
-  return props.session ? _react2.default.createElement(
-    'ul',
-    { className: 'navbar-nav mr-auto' },
-    _react2.default.createElement(
-      'li',
-      null,
-      _react2.default.createElement(
-        _reactRouterDom.Link,
-        { className: 'white mr-5',
-          to: '/user/' + props.session.id },
-        props.session.username
-      )
-    ),
-    _react2.default.createElement(
-      'li',
-      null,
-      _react2.default.createElement(
-        _reactRouterDom.Link,
-        { to: '/',
-          className: 'mint my-2 my-sm-0',
-          onClick: props.onLogout },
-        'Logout'
-      )
-    )
-  ) : _react2.default.createElement(
-    'ul',
-    { className: 'navbar-nav mr-auto' },
-    _react2.default.createElement(
-      'li',
-      null,
-      _react2.default.createElement(
-        _reactRouterDom.Link,
-        { className: 'mint my-2 mx-2 my-sm-0', to: '/auth/login' },
-        'Sign In'
-      )
-    ),
-    _react2.default.createElement(
-      'li',
-      null,
-      _react2.default.createElement(
-        'a',
-        { className: 'mint my-2 mx-2 my-sm-0', href: '/auth/register' },
-        'Register'
-      )
-    )
-  );
-};
-
-var NavBar = function NavBar(props) {
-  return _react2.default.createElement(
-    'nav',
-    { className: 'navbar navbar-expand-md sticky-top navbar-dark bg-dark' },
-    _react2.default.createElement(
-      'div',
-      { className: 'container' },
-      _react2.default.createElement(
-        _reactRouterDom.Link,
-        { id: 'brand', className: 'navbar-brand', to: '/' },
-        'Movietown!'
-      )
-    ),
-    _react2.default.createElement(NavMenu, { session: props.session, onLogout: props.onLogout })
-  );
-};
-
-BSRow.propTypes = {
-  children: _propTypes2.default.object
-};
-BSCol.propTypes = {
-  colClass: _propTypes2.default.string.isRequired,
-  children: _propTypes2.default.object
-};
-NavMenu.propTypes = {
-  session: _propTypes2.default.object,
-  onLogout: _propTypes2.default.func
-};
-NavBar.propTypes = {
-  session: _propTypes2.default.object,
-  onLogout: _propTypes2.default.func
-};
-
-exports.BSRow = BSRow;
-exports.BSCol = BSCol;
-exports.NavBar = NavBar;
-
-/***/ }),
+/* 15 */,
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3187,188 +3062,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 44 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Panel = exports.PanelInfo = undefined;
-
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
-var _reactRouterDom = __webpack_require__(11);
-
-var _propTypes = __webpack_require__(1);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _layout = __webpack_require__(15);
-
-var _modal = __webpack_require__(45);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var PanelInfo = function PanelInfo(props) {
-  var stats = void 0;
-  if (props.stats) {
-    stats = props.stats.map(function (_ref, i) {
-      var _ref2 = _slicedToArray(_ref, 2),
-          field = _ref2[0],
-          value = _ref2[1];
-
-      return _react2.default.createElement(
-        'div',
-        { key: i },
-        _react2.default.createElement(
-          'strong',
-          null,
-          field,
-          ':'
-        ),
-        ' ',
-        value
-      );
-    });
-  }
-  return _react2.default.createElement(
-    'div',
-    { className: 'panel-info' },
-    _react2.default.createElement('hr', null),
-    stats,
-    props.text,
-    props.session ? props.user : props.guest
-  );
-};
-
-PanelInfo.propTypes = {
-  text: _propTypes2.default.object,
-  stats: _propTypes2.default.array,
-  session: _propTypes2.default.object,
-  user: _propTypes2.default.object,
-  guest: _propTypes2.default.object
-};
-
-var Panel = function Panel(props) {
-  var panelHeader = props.msg || '...';
-  var panelInfo = void 0;
-  var type = props.type,
-      panelData = props.panelData,
-      session = props.session;
-
-
-  if (panelData) {
-    if (type === 'allMovies') {
-      panelHeader = 'All Movies';
-      panelInfo = _react2.default.createElement(PanelInfo, {
-        session: session,
-        user: _react2.default.createElement(_modal.ModalButtons, { buttons: [['+ Add Director', 'addDirector'], ['+ Add Film', 'addMovie']] }),
-        guest: _react2.default.createElement(
-          'h6',
-          { className: 'mint' },
-          'Sign in to add directors and movies.'
-        )
-      });
-    } else if (type === 'userReviews') {
-      panelHeader = panelData.user.username;
-      panelInfo = _react2.default.createElement(PanelInfo, {
-        text: _react2.default.createElement(
-          'span',
-          null,
-          _react2.default.createElement(
-            'strong',
-            null,
-            panelData.user.username,
-            ' '
-          ),
-          'has posted',
-          _react2.default.createElement(
-            'strong',
-            null,
-            ' ',
-            panelData.count,
-            ' '
-          ),
-          'review(s) on Movietown.'
-        ),
-        session: session
-      });
-    } else if (type === 'director') {
-      panelHeader = panelData.director.name;
-      panelInfo = _react2.default.createElement(PanelInfo, {
-        text: _react2.default.createElement(
-          'span',
-          null,
-          _react2.default.createElement(
-            'strong',
-            null,
-            panelData.director.name,
-            ' '
-          ),
-          'has released',
-          _react2.default.createElement(
-            'strong',
-            null,
-            ' ',
-            panelData.count,
-            ' '
-          ),
-          ' film(s) on Movietown.'
-        ),
-        session: session
-      });
-    } else if (type === 'movieReviews') {
-      panelHeader = panelData.movie.title;
-      panelInfo = _react2.default.createElement(PanelInfo, {
-        stats: [['Avg. Score', panelData.avg + ' \u2605'], ['Released', panelData.movie.year], ['Director', _react2.default.createElement(
-          _reactRouterDom.Link,
-          { key: 0, to: '/director/' + panelData.movie.director.id },
-          panelData.movie.director.name
-        )]],
-        session: session,
-        user: _react2.default.createElement(_modal.ModalButtons, { buttons: [['+ Add Review', 'addReview']] })
-      });
-    }
-  }
-
-  return _react2.default.createElement(
-    _layout.BSRow,
-    null,
-    _react2.default.createElement(
-      _layout.BSCol,
-      { colClass: 'col-sm-12 col-lg-5' },
-      _react2.default.createElement(
-        'div',
-        { className: 'panel' },
-        _react2.default.createElement(
-          'h1',
-          null,
-          panelHeader
-        ),
-        panelInfo
-      )
-    )
-  );
-};
-
-Panel.propTypes = {
-  type: _propTypes2.default.string,
-  panelData: _propTypes2.default.object,
-  msg: _propTypes2.default.string,
-  session: _propTypes2.default.object
-};
-
-exports.PanelInfo = PanelInfo;
-exports.Panel = Panel;
-
-/***/ }),
+/* 44 */,
 /* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3508,14 +3202,7 @@ exports.ModalButtons = ModalButtons;
 
 
 var config = {
-  fetchRoot: 'http://localhost:8080',
-  allMovies: {
-    type: 'allMovies',
-    fetchPath: 'movies',
-    rowFormat: function rowFormat(data) {
-      return data.movies;
-    }
-  },
+  fetchRoot: 'http://localhost:8080/api',
   userReviews: {
     type: 'userReviews',
     fetchPath: 'user',
@@ -3564,15 +3251,13 @@ var _axios = __webpack_require__(24);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _page = __webpack_require__(105);
+var _config = __webpack_require__(46);
 
-var _auth = __webpack_require__(108);
+var _NavBar = __webpack_require__(109);
 
-var _auth2 = _interopRequireDefault(_auth);
+var _AllMoviesPage = __webpack_require__(111);
 
-var _layout = __webpack_require__(15);
-
-var _panel = __webpack_require__(44);
+var _AllMoviesPage2 = _interopRequireDefault(_AllMoviesPage);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3584,6 +3269,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 // components
 
+// import { AllMoviesPage, MoviePage, UserPage, DirectorPage } from './components/page';
+// import { Panel } from './components/panel';
+// import Auth from './components/auth';
 
 var App = function (_React$Component) {
   _inherits(App, _React$Component);
@@ -3617,15 +3305,14 @@ var App = function (_React$Component) {
 
       e.preventDefault();
       this.setState({ authName: '' });
-      console.log('posting here');
-      _axios2.default.post('http://localhost:3000/auth/login', {
+      _axios2.default.post(_config.fetchRoot + '/auth/login', {
         username: this.state.authName
       }).then(function (resp) {
-        if (resp.data.uid) {
+        if (resp.data.id) {
           _this2.setState({
             redirect: true,
             session: {
-              id: resp.data.uid,
+              id: resp.data.id,
               username: resp.data.username
             }
           });
@@ -3641,7 +3328,7 @@ var App = function (_React$Component) {
 
       e.preventDefault();
       this.setState({ authName: '' });
-      _axios2.default.post('http://localhost:8080/auth/register', {
+      _axios2.default.post(_config.fetchRoot + '/auth/register', {
         username: this.state.authName
       }).then(function (resp) {
         if (resp.data.uid) {
@@ -3682,7 +3369,7 @@ var App = function (_React$Component) {
         _react2.default.createElement(
           'div',
           null,
-          _react2.default.createElement(_layout.NavBar, { session: this.state.session, onLogout: this.handleLogout }),
+          _react2.default.createElement(_NavBar.NavBar, { session: this.state.session, onLogout: this.handleLogout }),
           _react2.default.createElement(
             _reactRouterDom.Switch,
             null,
@@ -3690,39 +3377,48 @@ var App = function (_React$Component) {
                 return _react2.default.createElement(_reactRouterDom.Redirect, { to: '/movies' });
               } }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/movies', render: function render() {
-                return _react2.default.createElement(_page.AllMoviesPage, {
+                return _react2.default.createElement(_AllMoviesPage2.default, {
                   session: _this4.state.session
                 });
               } }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/movies/film/:id', render: function render(_ref) {
                 var match = _ref.match;
-                return _react2.default.createElement(_page.MoviePage, {
+                return _react2.default.createElement(MoviePage, {
                   matchId: match.params.id,
                   session: _this4.state.session
                 });
               } }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/user/:id', render: function render(_ref2) {
                 var match = _ref2.match;
-                return _react2.default.createElement(_page.UserPage, {
+                return _react2.default.createElement(UserPage, {
                   matchId: match.params.id,
                   session: _this4.state.session
                 });
               } }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/director/:id', render: function render(_ref3) {
                 var match = _ref3.match;
-                return _react2.default.createElement(_page.DirectorPage, {
+                return _react2.default.createElement(DirectorPage, {
                   matchId: match.params.id,
                   session: _this4.state.session
                 });
               } }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/auth/login', render: function render() {
-                return _react2.default.createElement(_auth2.default, { handleLogin: _this4.handleLogin, authName: _this4.state.authName, handleAuthNameChange: _this4.handleAuthNameChange });
+                return _react2.default.createElement(Auth, {
+                  handleLogin: _this4.handleLogin,
+                  authName: _this4.state.authName,
+                  handleAuthNameChange: _this4.handleAuthNameChange
+                });
               } }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/auth/register', render: function render() {
-                return _react2.default.createElement(_auth2.default, { register: true, handleRegister: _this4.handleRegister, authName: _this4.state.authName, handleAuthNameChange: _this4.handleAuthNameChange });
+                return _react2.default.createElement(Auth, {
+                  register: true,
+                  handleRegister: _this4.handleRegister,
+                  authName: _this4.state.authName,
+                  handleAuthNameChange: _this4.handleAuthNameChange
+                });
               } }),
             _react2.default.createElement(_reactRouterDom.Route, { render: function render() {
-                return _react2.default.createElement(_panel.Panel, { msg: '404!' });
+                return _react2.default.createElement(Panel, { msg: '404!' });
               } })
           )
         )
@@ -25559,195 +25255,7 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 105 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.DirectorPage = exports.UserPage = exports.MoviePage = exports.AllMoviesPage = undefined;
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _propTypes = __webpack_require__(1);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _axios = __webpack_require__(24);
-
-var _axios2 = _interopRequireDefault(_axios);
-
-var _panel = __webpack_require__(44);
-
-var _table = __webpack_require__(107);
-
-var _modal = __webpack_require__(45);
-
-var _config = __webpack_require__(46);
-
-var _config2 = _interopRequireDefault(_config);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Main = function (_React$Component) {
-  _inherits(Main, _React$Component);
-
-  function Main(props) {
-    _classCallCheck(this, Main);
-
-    var _this = _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).call(this, props));
-
-    _this.state = {
-      panelData: null,
-      rows: null
-    };
-    return _this;
-  }
-
-  _createClass(Main, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      var rows = void 0;
-      var panelData = void 0;
-      var _props = this.props,
-          fetchPath = _props.fetchPath,
-          rowFormat = _props.rowFormat;
-
-      var fetchUrl = _config2.default.fetchRoot + '/' + fetchPath;
-
-      if (this.props.matchId) {
-        fetchUrl = fetchUrl + '/' + this.props.matchId;
-      }
-
-      _axios2.default.get(fetchUrl).then(function (resp) {
-        panelData = resp.data;
-        rows = rowFormat(panelData);
-        _this2.setState({
-          rows: rows,
-          panelData: panelData
-        });
-      }).catch(function (e) {
-        return console.log(e);
-      });
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _props2 = this.props,
-          session = _props2.session,
-          type = _props2.type,
-          modals = _props2.modals;
-      var _state = this.state,
-          panelData = _state.panelData,
-          rows = _state.rows;
-
-      if (panelData) {
-        return _react2.default.createElement(
-          'div',
-          null,
-          _react2.default.createElement(
-            'div',
-            { className: 'container-fluid' },
-            _react2.default.createElement(_panel.Panel, {
-              panelData: panelData,
-              type: type,
-              session: session
-            }),
-            _react2.default.createElement(_table.Table, {
-              rows: rows,
-              type: type
-            })
-          ),
-          modals
-        );
-      }return null;
-    }
-  }]);
-
-  return Main;
-}(_react2.default.Component);
-
-Main.propTypes = {
-  matchId: _propTypes2.default.string,
-  type: _propTypes2.default.string,
-  fetchPath: _propTypes2.default.string,
-  rowFormat: _propTypes2.default.func,
-  session: _propTypes2.default.object,
-  modals: _propTypes2.default.object
-};
-
-var AllMoviesPage = function AllMoviesPage(props) {
-  return _react2.default.createElement(Main, _extends({}, _config2.default.allMovies, {
-    session: props.session,
-    modals: _react2.default.createElement(
-      'div',
-      null,
-      _react2.default.createElement(_modal.AddDirectorModal, null),
-      _react2.default.createElement(_modal.AddMovieModal, null)
-    )
-  }));
-};
-AllMoviesPage.propTypes = {
-  session: _propTypes2.default.object
-};
-
-var MoviePage = function MoviePage(props) {
-  return _react2.default.createElement(Main, _extends({}, _config2.default.movieReviews, {
-    matchId: props.matchId,
-    session: props.session,
-    modals: _react2.default.createElement(_modal.AddReviewModal, null)
-  }));
-};
-MoviePage.propTypes = {
-  matchId: _propTypes2.default.string,
-  session: _propTypes2.default.object
-};
-
-var UserPage = function UserPage(props) {
-  return _react2.default.createElement(Main, _extends({}, _config2.default.userReviews, {
-    matchId: props.matchId,
-    session: props.session
-  }));
-};
-UserPage.propTypes = {
-  matchId: _propTypes2.default.string,
-  session: _propTypes2.default.object
-};
-
-var DirectorPage = function DirectorPage(props) {
-  return _react2.default.createElement(Main, _extends({}, _config2.default.director, {
-    matchId: props.matchId,
-    session: props.session
-  }));
-};
-DirectorPage.propTypes = {
-  matchId: _propTypes2.default.string,
-  session: _propTypes2.default.object
-};
-
-exports.AllMoviesPage = AllMoviesPage;
-exports.MoviePage = MoviePage;
-exports.UserPage = UserPage;
-exports.DirectorPage = DirectorPage;
-
-/***/ }),
+/* 105 */,
 /* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -26070,7 +25578,9 @@ exports.AddDirectorForm = AddDirectorForm;
 exports.AddMovieForm = AddMovieForm;
 
 /***/ }),
-/* 107 */
+/* 107 */,
+/* 108 */,
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26079,9 +25589,243 @@ exports.AddMovieForm = AddMovieForm;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Table = exports.ReviewsRow = exports.DirectorRow = exports.UserRow = exports.MoviesRow = undefined;
+exports.default = undefined;
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(1);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _reactRouterDom = __webpack_require__(11);
+
+var _NavMenu = __webpack_require__(110);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var NavBar = function NavBar(props) {
+  return _react2.default.createElement(
+    'nav',
+    { className: 'navbar navbar-expand-md sticky-top navbar-dark bg-dark' },
+    _react2.default.createElement(
+      'div',
+      { className: 'container' },
+      _react2.default.createElement(
+        _reactRouterDom.Link,
+        { id: 'brand', className: 'navbar-brand', to: '/' },
+        'Movietown!'
+      )
+    ),
+    _react2.default.createElement(_NavMenu.NavMenu, { session: props.session, onLogout: props.onLogout })
+  );
+};
+
+// components
+
+
+NavBar.propTypes = {
+  session: _propTypes2.default.object,
+  onLogout: _propTypes2.default.func
+};
+
+exports.default = NavBar;
+
+/***/ }),
+/* 110 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(1);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _reactRouterDom = __webpack_require__(11);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var NavMenu = function NavMenu(props) {
+  return props.session ? _react2.default.createElement(
+    'ul',
+    { className: 'navbar-nav mr-auto' },
+    _react2.default.createElement(
+      'li',
+      null,
+      _react2.default.createElement(
+        _reactRouterDom.Link,
+        { className: 'white mr-5',
+          to: '/user/' + props.session.id },
+        props.session.username
+      )
+    ),
+    _react2.default.createElement(
+      'li',
+      null,
+      _react2.default.createElement(
+        _reactRouterDom.Link,
+        { to: '/',
+          className: 'mint my-2 my-sm-0',
+          onClick: props.onLogout },
+        'Logout'
+      )
+    )
+  ) : _react2.default.createElement(
+    'ul',
+    { className: 'navbar-nav mr-auto' },
+    _react2.default.createElement(
+      'li',
+      null,
+      _react2.default.createElement(
+        _reactRouterDom.Link,
+        { className: 'mint my-2 mx-2 my-sm-0', to: '/auth/login' },
+        'Sign In'
+      )
+    ),
+    _react2.default.createElement(
+      'li',
+      null,
+      _react2.default.createElement(
+        'a',
+        { className: 'mint my-2 mx-2 my-sm-0', href: '/auth/register' },
+        'Register'
+      )
+    )
+  );
+};
+
+NavMenu.propTypes = {
+  session: _propTypes2.default.object,
+  onLogout: _propTypes2.default.func
+};
+
+exports.default = NavMenu;
+
+/***/ }),
+/* 111 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(1);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _axios = __webpack_require__(24);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _config = __webpack_require__(46);
+
+var _AllMoviesPanel = __webpack_require__(112);
+
+var _AllMoviesPanel2 = _interopRequireDefault(_AllMoviesPanel);
+
+var _AllMoviesTable = __webpack_require__(115);
+
+var _AllMoviesTable2 = _interopRequireDefault(_AllMoviesTable);
+
+var _modal = __webpack_require__(45);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+// components
+
+
+var AllMoviesPage = function (_React$Component) {
+  _inherits(AllMoviesPage, _React$Component);
+
+  function AllMoviesPage(props) {
+    _classCallCheck(this, AllMoviesPage);
+
+    var _this = _possibleConstructorReturn(this, (AllMoviesPage.__proto__ || Object.getPrototypeOf(AllMoviesPage)).call(this, props));
+
+    _this.state = {
+      rows: null
+    };
+    return _this;
+  }
+
+  _createClass(AllMoviesPage, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      _axios2.default.get(_config.fetchRoot + '/movies').then(function (resp) {
+        _this2.setState({
+          rows: resp.data.movies
+        });
+      }).catch(function (e) {
+        return console.log(e);
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'div',
+          { className: 'container-fluid' },
+          _react2.default.createElement(_AllMoviesPanel2.default, { session: this.props.session }),
+          _react2.default.createElement(_AllMoviesTable2.default, { rows: this.state.rows })
+        ),
+        _react2.default.createElement(_modal.AddDirectorModal, null),
+        _react2.default.createElement(_modal.AddMovieModal, null)
+      );
+    }
+  }]);
+
+  return AllMoviesPage;
+}(_react2.default.Component);
+
+AllMoviesPage.propTypes = {
+  session: _propTypes2.default.object
+};
+
+exports.default = AllMoviesPage;
+
+/***/ }),
+/* 112 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
 
 var _propTypes = __webpack_require__(1);
 
@@ -26091,158 +25835,242 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _layout = __webpack_require__(15);
+var _Panel = __webpack_require__(113);
+
+var _Panel2 = _interopRequireDefault(_Panel);
+
+var _PanelInfo = __webpack_require__(114);
+
+var _PanelInfo2 = _interopRequireDefault(_PanelInfo);
+
+var _modal = __webpack_require__(45);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var MoviesRow = function MoviesRow(props) {
+var AllMoviesPanel = function AllMoviesPanel(props) {
+  var session = props.session;
+
+  var panelHeader = 'All Movies';
+  var panelInfo = _react2.default.createElement(_PanelInfo2.default, {
+    session: session,
+    user: _react2.default.createElement(_modal.ModalButtons, {
+      buttons: [['+ Add Director', 'addDirector'], ['+ Add Film', 'addMovie']]
+    }),
+    guest: _react2.default.createElement(
+      'h6',
+      { className: 'mint' },
+      'Sign in to add directors and movies.'
+    )
+  });
+
+  return _react2.default.createElement(_Panel2.default, { header: panelHeader, panelInfo: panelInfo });
+};
+
+// components
+
+
+AllMoviesPanel.propTypes = {
+  type: _propTypes2.default.string,
+  panelData: _propTypes2.default.object,
+  msg: _propTypes2.default.string,
+  session: _propTypes2.default.object
+};
+
+exports.default = AllMoviesPanel;
+
+/***/ }),
+/* 113 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _propTypes = __webpack_require__(1);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Panel = function Panel(props) {
   return _react2.default.createElement(
-    'tr',
-    null,
+    'div',
+    { className: 'row justify-content-center' },
     _react2.default.createElement(
-      'td',
-      null,
+      'div',
+      { className: 'col-sm-12 col-lg-5' },
       _react2.default.createElement(
-        'h6',
-        null,
+        'div',
+        { className: 'panel' },
         _react2.default.createElement(
-          _reactRouterDom.Link,
-          { to: '/movies/film/' + props.id },
-          props.row.title
-        )
+          'h1',
+          null,
+          props.header
+        ),
+        props.panelInfo
       )
-    ),
-    _react2.default.createElement(
-      'td',
-      null,
-      _react2.default.createElement(
-        _reactRouterDom.Link,
-        { to: '/director/' + props.row.director.id, className: 'white' },
-        props.row.director.name
-      )
-    ),
-    _react2.default.createElement(
-      'td',
-      null,
-      props.row.year
     )
   );
 };
 
-var UserRow = function UserRow(props) {
-  return _react2.default.createElement(
-    'tr',
-    null,
-    _react2.default.createElement(
-      'td',
-      null,
-      _react2.default.createElement(
-        _reactRouterDom.Link,
-        { className: 'mint', to: '/movies/film/' + props.row.movie.id },
-        props.row.movie.title
-      )
-    ),
-    _react2.default.createElement(
-      'td',
-      null,
-      '★'.repeat(props.row.stars)
-    ),
-    _react2.default.createElement(
-      'td',
-      null,
-      props.row.comment
-    ),
-    _react2.default.createElement(
-      'td',
-      null,
-      props.row.ago
-    )
-  );
+Panel.propTypes = {
+  header: _propTypes2.default.string,
+  panelInfo: _propTypes2.default.object
 };
 
-var DirectorRow = function DirectorRow(props) {
-  return _react2.default.createElement(
-    'tr',
-    null,
-    _react2.default.createElement(
-      'td',
-      null,
-      _react2.default.createElement(
-        'h6',
-        null,
+exports.default = Panel;
+
+/***/ }),
+/* 114 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var _propTypes = __webpack_require__(1);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var PanelInfo = function PanelInfo(props) {
+  var stats = void 0;
+  if (props.stats) {
+    stats = props.stats.map(function (_ref, i) {
+      var _ref2 = _slicedToArray(_ref, 2),
+          field = _ref2[0],
+          value = _ref2[1];
+
+      return _react2.default.createElement(
+        'div',
+        { key: i },
         _react2.default.createElement(
-          _reactRouterDom.Link,
-          { className: 'mint', to: '/movies/film/' + props.row.id },
-          props.row.title
-        )
-      )
-    ),
-    _react2.default.createElement(
-      'td',
-      null,
-      props.row.year
-    )
+          'strong',
+          null,
+          field,
+          ':'
+        ),
+        ' ',
+        value
+      );
+    });
+  }
+  return _react2.default.createElement(
+    'div',
+    { className: 'panel-info' },
+    _react2.default.createElement('hr', null),
+    stats,
+    props.text,
+    props.session ? props.user : props.guest
   );
 };
 
-var ReviewsRow = function ReviewsRow(props) {
-  return _react2.default.createElement(
-    'tr',
-    null,
-    _react2.default.createElement(
-      'td',
-      null,
-      _react2.default.createElement(
-        _reactRouterDom.Link,
-        { className: 'mint', to: '/user/' + props.row.user.id },
-        props.row.user.username
-      )
-    ),
-    _react2.default.createElement(
-      'td',
-      null,
-      '★'.repeat(props.row.stars)
-    ),
-    _react2.default.createElement(
-      'td',
-      null,
-      props.row.comment
-    ),
-    _react2.default.createElement(
-      'td',
-      null,
-      props.row.ago
-    )
-  );
+PanelInfo.propTypes = {
+  text: _propTypes2.default.object,
+  stats: _propTypes2.default.array,
+  session: _propTypes2.default.object,
+  user: _propTypes2.default.object,
+  guest: _propTypes2.default.object
 };
+
+exports.default = PanelInfo;
+
+/***/ }),
+/* 115 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _propTypes = __webpack_require__(1);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Table = __webpack_require__(116);
+
+var _Table2 = _interopRequireDefault(_Table);
+
+var _AllMoviesRow = __webpack_require__(117);
+
+var _AllMoviesRow2 = _interopRequireDefault(_AllMoviesRow);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// import MoviesRow component itself and pass in
+
+// components
+var AllMoviesTable = function AllMoviesTable(props) {
+  return _react2.default.createElement(_Table2.default, { headers: ['Movie', 'Director', 'Year'], RowClass: _AllMoviesRow2.default, rows: props.rows });
+};
+
+AllMoviesTable.propTypes = {
+  rows: _propTypes2.default.array
+};
+
+exports.default = AllMoviesTable;
+
+/***/ }),
+/* 116 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(1);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Table = function Table(props) {
-  var headers = void 0;
-  var RowClass = void 0;
-  var type = props.type,
+  var headers = props.headers,
+      RowClass = props.RowClass,
       rows = props.rows;
 
 
-  if (type === 'allMovies') {
-    headers = ['Movie', 'Director', 'Year'];
-    RowClass = MoviesRow;
-  } else if (type === 'userReviews') {
-    headers = ['Movie', 'Rating (★★★★★)', 'Review', 'Posted'];
-    RowClass = UserRow;
-  } else if (type === 'director') {
-    headers = ['Movie', 'Released'];
-    RowClass = DirectorRow;
-  } else if (type === 'movieReviews') {
-    headers = ['User', 'Rating (★★★★★)', 'Review', 'Posted'];
-    RowClass = ReviewsRow;
-  }
-
   return _react2.default.createElement(
-    _layout.BSRow,
-    null,
+    'div',
+    { className: 'row justify-content-center' },
     _react2.default.createElement(
-      _layout.BSCol,
-      { colClass: 'col-sm-12 col-lg-8' },
+      'div',
+      { className: 'col-sm-12 col-lg-8' },
       _react2.default.createElement(
         'table',
         { className: 'table table-dark' },
@@ -26284,34 +26112,16 @@ var Table = function Table(props) {
   );
 };
 
-DirectorRow.propTypes = {
-  row: _propTypes2.default.object.isRequired
-};
-MoviesRow.propTypes = {
-  row: _propTypes2.default.object.isRequired,
-  id: _propTypes2.default.number,
-  handleMovieLink: _propTypes2.default.func
-};
-UserRow.propTypes = {
-  row: _propTypes2.default.object.isRequired
-};
-ReviewsRow.propTypes = {
-  row: _propTypes2.default.object.isRequired
-};
 Table.propTypes = {
-  type: _propTypes2.default.string,
-  rows: _propTypes2.default.array,
-  handleMovieLink: _propTypes2.default.func
+  headers: _propTypes2.default.array,
+  RowClass: _propTypes2.default.object,
+  rows: _propTypes2.default.array
 };
 
-exports.MoviesRow = MoviesRow;
-exports.UserRow = UserRow;
-exports.DirectorRow = DirectorRow;
-exports.ReviewsRow = ReviewsRow;
-exports.Table = Table;
+exports.default = Table;
 
 /***/ }),
-/* 108 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26322,115 +26132,59 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = undefined;
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _propTypes = __webpack_require__(1);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(1);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _layout = __webpack_require__(15);
+var _reactRouterDom = __webpack_require__(11);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Auth = function (_React$Component) {
-  _inherits(Auth, _React$Component);
-
-  function Auth(props) {
-    _classCallCheck(this, Auth);
-
-    var _this = _possibleConstructorReturn(this, (Auth.__proto__ || Object.getPrototypeOf(Auth)).call(this, props));
-
-    _this.handleChange = _this.handleChange.bind(_this);
-    return _this;
-  }
-
-  _createClass(Auth, [{
-    key: 'handleChange',
-    value: function handleChange(e) {
-      this.props.handleAuthNameChange(e.target.value);
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        _layout.BSRow,
+var AllMoviesRow = function AllMoviesRow(props) {
+  return _react2.default.createElement(
+    'tr',
+    null,
+    _react2.default.createElement(
+      'td',
+      null,
+      _react2.default.createElement(
+        'h6',
         null,
         _react2.default.createElement(
-          _layout.BSCol,
-          { colClass: 'col-11 col-md-9 col-lg-4' },
-          _react2.default.createElement(
-            'div',
-            { className: 'panel' },
-            _react2.default.createElement(
-              'h3',
-              { className: 'mint' },
-              this.props.register ? 'Register' : 'Sign in'
-            ),
-            _react2.default.createElement(
-              'form',
-              {
-                onSubmit: this.props.register ? this.props.handleRegister : this.props.handleLogin,
-                method: 'post',
-                className: 'mb-2'
-              },
-              _react2.default.createElement(
-                'div',
-                { className: 'form-group' },
-                _react2.default.createElement(
-                  'label',
-                  { htmlFor: 'username', className: 'mt-2' },
-                  _react2.default.createElement(
-                    'strong',
-                    null,
-                    'User'
-                  )
-                ),
-                _react2.default.createElement('input', {
-                  type: 'input',
-                  className: 'form-control',
-                  id: 'username',
-                  name: 'username',
-                  placeholder: 'username',
-                  autoComplete: 'off',
-                  value: this.props.authName,
-                  onChange: this.handleChange
-                }),
-                _react2.default.createElement('small', { id: 'access-warn' })
-              ),
-              _react2.default.createElement(
-                'button',
-                {
-                  id: 'access-btn',
-                  type: 'submit',
-                  className: 'btn btn-primary mb-2'
-                },
-                'Submit'
-              )
-            )
-          )
+          'a',
+          { href: '/movies/film/' + props.id },
+          props.row.title
         )
-      );
-    }
-  }]);
-
-  return Auth;
-}(_react2.default.Component);
-
-Auth.propTypes = {
-  register: _propTypes2.default.bool
+      )
+    ),
+    _react2.default.createElement(
+      'td',
+      null,
+      _react2.default.createElement(
+        'a',
+        { href: '/director/' + props.row.director.id, className: 'white' },
+        props.row.director.name
+      )
+    ),
+    _react2.default.createElement(
+      'td',
+      null,
+      props.row.year
+    )
+  );
 };
 
-exports.default = Auth;
+AllMoviesRow.propTypes = {
+  row: _propTypes2.default.object.isRequired,
+  id: _propTypes2.default.number,
+  handleMovieLink: _propTypes2.default.func
+};
+
+exports.default = AllMoviesRow;
 
 /***/ })
 /******/ ]);

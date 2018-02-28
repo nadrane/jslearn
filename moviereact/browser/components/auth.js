@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { BSRow, BSCol } from './layout';
 
 class Auth extends React.Component {
   constructor(props) {
@@ -14,8 +13,8 @@ class Auth extends React.Component {
 
   render() {
     return (
-      <BSRow>
-        <BSCol colClass="col-11 col-md-9 col-lg-4">
+      <div className="row justify-content-center">
+        <div className="col-11 col-md-9 col-lg-4">
           <div className="panel">
             <h3 className="mint">{this.props.register ? 'Register' : 'Sign in'}</h3>
             <form
@@ -48,8 +47,8 @@ class Auth extends React.Component {
               </button>
             </form>
           </div>
-        </BSCol>
-      </BSRow>
+        </div>
+      </div>
     );
   }
 }
