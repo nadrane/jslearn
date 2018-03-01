@@ -14,7 +14,9 @@ class MovieReviewsPage extends React.Component {
     this.state = {
       currentMovie: null,
       rows: null,
+      foo: 'bar',
     };
+    this.mySubmit = this.mySubmit.bind(this);
   }
 
   componentDidMount() {
@@ -34,6 +36,22 @@ class MovieReviewsPage extends React.Component {
       .catch(e => console.log(e));
   }
 
+  // just moved this up from form, might need to redirect from here.
+  mySubmit(e) {
+    e.preventDefault();
+    console.log(e.target);
+    this.setState({ foo: 'HEY' });
+    // const { id: movieId } = this.props.movie;
+    // const { id: userId } = this.props.session;
+    axios.post(`${fetchRoot}/movies/film/11`, {
+      stars: 4,
+      comment: 'TEST',
+      movieId: 11,
+      userId: 1,
+    });
+    // this.setState({ redirect: true });
+  }
+
   render() {
     const { session } = this.props;
     const { currentMovie, rows } = this.state;
@@ -44,7 +62,7 @@ class MovieReviewsPage extends React.Component {
             <MovieReviewsPanel session={this.props.session} movie={this.state.currentMovie} />
             <MovieReviewsTable rows={this.state.rows} />
           </div>
-          {session && <AddReviewModal movie={this.state.currentMovie} session={session} />}
+          {session && <AddReviewModal mySubmit={this.mySubmit} movie={this.state.currentMovie} session={session} />}
         </div>
       );
     } return null;

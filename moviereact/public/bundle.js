@@ -26582,8 +26582,10 @@ var MovieReviewsPage = function (_React$Component) {
 
     _this.state = {
       currentMovie: null,
-      rows: null
+      rows: null,
+      foo: 'bar'
     };
+    _this.mySubmit = _this.mySubmit.bind(_this);
     return _this;
   }
 
@@ -26608,6 +26610,25 @@ var MovieReviewsPage = function (_React$Component) {
         return console.log(e);
       });
     }
+
+    // just moved this up from form, might need to redirect from here.
+
+  }, {
+    key: 'mySubmit',
+    value: function mySubmit(e) {
+      e.preventDefault();
+      console.log(e.target);
+      this.setState({ foo: 'HEY' });
+      // const { id: movieId } = this.props.movie;
+      // const { id: userId } = this.props.session;
+      _axios2.default.post(_config.fetchRoot + '/movies/film/11', {
+        stars: 4,
+        comment: 'TEST',
+        movieId: 11,
+        userId: 1
+      });
+      // this.setState({ redirect: true });
+    }
   }, {
     key: 'render',
     value: function render() {
@@ -26626,7 +26647,7 @@ var MovieReviewsPage = function (_React$Component) {
             _react2.default.createElement(_MovieReviewsPanel2.default, { session: this.props.session, movie: this.state.currentMovie }),
             _react2.default.createElement(_MovieReviewsTable2.default, { rows: this.state.rows })
           ),
-          session && _react2.default.createElement(_AddReviewModal2.default, { movie: this.state.currentMovie, session: session })
+          session && _react2.default.createElement(_AddReviewModal2.default, { mySubmit: this.mySubmit, movie: this.state.currentMovie, session: session })
         );
       }return null;
     }
@@ -26882,7 +26903,7 @@ var AddReviewModal = function AddReviewModal(props) {
         _react2.default.createElement(
           'div',
           { className: 'modal-body' },
-          _react2.default.createElement(_AddReviewForm2.default, { session: props.session, movie: props.movie })
+          _react2.default.createElement(_AddReviewForm2.default, { mySubmit: props.mySubmit, session: props.session, movie: props.movie })
         )
       )
     )
@@ -26965,20 +26986,23 @@ var AddReviewForm = function (_React$Component) {
 
       this.setState(_defineProperty({}, name, value));
     }
+
+    // original location of form submit handler
+
   }, {
     key: 'handleSubmit',
     value: function handleSubmit(e) {
-      e.preventDefault();
-      var movieId = this.props.movie.id;
-      var userId = this.props.session.id;
-
-      _axios2.default.post(_config.fetchRoot + '/movies/film/' + movieId, {
-        stars: this.state.stars,
-        comment: this.state.comment,
-        movieId: movieId,
-        userId: userId
-      });
-      this.setState({ redirect: true });
+      this.props.mySubmit(e);
+      // e.preventDefault();
+      // const { id: movieId } = this.props.movie;
+      // const { id: userId } = this.props.session;
+      // axios.post(`${fetchRoot}/movies/film/${movieId}`, {
+      //   stars: this.state.stars,
+      //   comment: this.state.comment,
+      //   movieId,
+      //   userId,
+      // });
+      // this.setState({ redirect: true });
     }
   }, {
     key: 'render',

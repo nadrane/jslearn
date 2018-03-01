@@ -24,17 +24,19 @@ class AddReviewForm extends React.Component {
     });
   }
 
+  // original location of form submit handler
   handleSubmit(e) {
-    e.preventDefault();
-    const { id: movieId } = this.props.movie;
-    const { id: userId } = this.props.session;
-    axios.post(`${fetchRoot}/movies/film/${movieId}`, {
-      stars: this.state.stars,
-      comment: this.state.comment,
-      movieId,
-      userId,
-    });
-    this.setState({ redirect: true });
+    this.props.mySubmit(e);
+    // e.preventDefault();
+    // const { id: movieId } = this.props.movie;
+    // const { id: userId } = this.props.session;
+    // axios.post(`${fetchRoot}/movies/film/${movieId}`, {
+    //   stars: this.state.stars,
+    //   comment: this.state.comment,
+    //   movieId,
+    //   userId,
+    // });
+    // this.setState({ redirect: true });
   }
 
   render() {

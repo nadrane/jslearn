@@ -23,7 +23,7 @@ const AddReviewModal = props => (
           </button>
         </div>
         <div className="modal-body">
-          <AddReviewForm session={props.session} movie={props.movie} />
+          <AddReviewForm mySubmit={props.mySubmit} session={props.session} movie={props.movie} />
         </div>
       </div>
     </div>
