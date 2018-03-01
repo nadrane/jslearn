@@ -26606,9 +26606,7 @@ var MovieReviewsPage = function (_React$Component) {
           },
           rows: data.movie.reviews
         });
-      }).catch(function (e) {
-        return console.log(e);
-      });
+      }).catch(console.log);
     }
 
     // just moved this up from form, might need to redirect from here.
@@ -26616,17 +26614,23 @@ var MovieReviewsPage = function (_React$Component) {
   }, {
     key: 'mySubmit',
     value: function mySubmit(e) {
+      var _this3 = this;
+
       e.preventDefault();
-      console.log(e.target);
       this.setState({ foo: 'HEY' });
       // const { id: movieId } = this.props.movie;
       // const { id: userId } = this.props.session;
       _axios2.default.post(_config.fetchRoot + '/movies/film/11', {
         stars: 4,
-        comment: 'TEST',
+        comment: 'HEYWERAWERAWE',
         movieId: 11,
         userId: 1
-      });
+      }).then(function (resp) {
+        var rows = _this3.state.rows;
+
+        var newRow = resp.data;
+        _this3.setState({ rows: [newRow].concat(rows) });
+      }).catch(console.log);
       // this.setState({ redirect: true });
     }
   }, {

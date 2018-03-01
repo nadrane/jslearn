@@ -5,6 +5,7 @@ const {
   Director,
   Movie,
   Review,
+  User,
 } = require('../db/index');
 
 const router = express.Router();
@@ -74,14 +75,21 @@ router.get('/film/:id', (req, res, next) => {
 * POST api/movies/film/:id - add review
 */
 router.post('/film/:id', (req, res, next) => {
+  const {
+    stars, comment, movieId, userId, username,
+  } = req.body;
   console.log('received post!');
   Review.create({
-    stars: req.body.stars,
-    comment: req.body.comment,
-    movieId: req.body.movieId,
-    userId: req.body.userId,
+    stars,
+    comment,
+    movieId,
+    userId,
   })
-    .then(() => res.redirect('/director'))
+    .then(dbReturn =>
+      Review.findById(dbReturn.id, {
+        include: [User],
+      }))
+    .then(newRow => res.json(newRow))
     .catch(next);
 });
 

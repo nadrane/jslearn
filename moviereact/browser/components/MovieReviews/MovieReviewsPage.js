@@ -33,22 +33,27 @@ class MovieReviewsPage extends React.Component {
           rows: data.movie.reviews,
         });
       })
-      .catch(e => console.log(e));
+      .catch(console.log);
   }
 
   // just moved this up from form, might need to redirect from here.
   mySubmit(e) {
     e.preventDefault();
-    console.log(e.target);
     this.setState({ foo: 'HEY' });
     // const { id: movieId } = this.props.movie;
     // const { id: userId } = this.props.session;
     axios.post(`${fetchRoot}/movies/film/11`, {
       stars: 4,
-      comment: 'TEST',
+      comment: 'HEYWERAWERAWE',
       movieId: 11,
       userId: 1,
-    });
+    })
+      .then((resp) => {
+        const { rows } = this.state;
+        const newRow = resp.data;
+        this.setState({ rows: [newRow].concat(rows) });
+      })
+      .catch(console.log);
     // this.setState({ redirect: true });
   }
 
