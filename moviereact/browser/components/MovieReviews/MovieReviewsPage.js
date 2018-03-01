@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import ReactModal from 'react-modal';
 import { fetchRoot } from '../../config';
 
 // components
 import MovieReviewsPanel from './MovieReviewsPanel';
 import MovieReviewsTable from './MovieReviewsTable';
-import AddReviewModal from './add_forms/AddReviewModal';
+import AddReviewForm from './add_forms/AddReviewForm';
 
 class MovieReviewsPage extends React.Component {
   constructor(props) {
@@ -14,9 +15,13 @@ class MovieReviewsPage extends React.Component {
     this.state = {
       currentMovie: null,
       rows: null,
-      foo: 'bar',
+      stars: 1,
+      comment: '',
     };
-    this.mySubmit = this.mySubmit.bind(this);
+    this.handleOpenModal = this.handleOpenModal.bind(this);
+    this.handleCloseModal = this.handleCloseModal.bind(this);
+    this.handleFormChange = this.handleFormChange.bind(this);
+    this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -28,25 +33,43 @@ class MovieReviewsPage extends React.Component {
             id: data.movie.id,
             title: data.movie.title,
             director: data.movie.director,
+            year: data.movie.year,
             avg: data.avg,
           },
           rows: data.movie.reviews,
+          modal: false,
         });
       })
       .catch(console.log);
   }
 
+  handleOpenModal(e) {
+    e.target.blur();
+    this.setState({ modal: true });
+  }
+  handleCloseModal() {
+    this.setState({ modal: false });
+  }
+
+  handleFormChange(e) {
+    const { value } = e.target;
+    const { name } = e.target;
+    this.setState({
+      [name]: value,
+    });
+  }
+
   // just moved this up from form, might need to redirect from here.
-  mySubmit(e) {
+  handleFormSubmit(e) {
     e.preventDefault();
-    this.setState({ foo: 'HEY' });
-    // const { id: movieId } = this.props.movie;
-    // const { id: userId } = this.props.session;
-    axios.post(`${fetchRoot}/movies/film/11`, {
-      stars: 4,
-      comment: 'HEYWERAWERAWE',
-      movieId: 11,
-      userId: 1,
+    this.handleCloseModal();
+    const { id: movieId } = this.state.currentMovie;
+    const { id: userId } = this.props.session;
+    axios.post(`${fetchRoot}/movies/film/${movieId}`, {
+      stars: this.state.stars,
+      comment: this.state.comment,
+      movieId,
+      userId,
     })
       .then((resp) => {
         const { rows } = this.state;
@@ -59,15 +82,45 @@ class MovieReviewsPage extends React.Component {
 
   render() {
     const { session } = this.props;
-    const { currentMovie, rows } = this.state;
+    const { currentMovie, rows, modal } = this.state;
     if (currentMovie && rows) {
       return (
         <div>
           <div className="container-fluid">
-            <MovieReviewsPanel session={this.props.session} movie={this.state.currentMovie} />
-            <MovieReviewsTable rows={this.state.rows} />
+            <MovieReviewsPanel
+              session={session}
+              movie={currentMovie}
+              modalTrigger={this.handleOpenModal}
+            />
+            <MovieReviewsTable rows={rows} />
           </div>
-          {session && <AddReviewModal mySubmit={this.mySubmit} movie={this.state.currentMovie} session={session} />}
+          <ReactModal
+            isOpen={modal}
+            onRequestClose={this.handleCloseModal}
+            ariaHideApp={false}
+            style={{
+              overlay: {
+                backgroundColor: 'rgba(0, 0, 0, .5)',
+              },
+              content: {
+                top: '10%',
+                left: '25%',
+                right: '25%',
+                bottom: '30%',
+                backgroundColor: '#E9F5FD',
+                overflow: 'auto',
+              },
+            }}
+          >
+            <AddReviewForm
+              handleFormChange={this.handleFormChange}
+              handleFormSubmit={this.handleFormSubmit}
+              session={session}
+              movie={currentMovie}
+              stars={this.state.stars}
+              comment={this.state.comment}
+            />
+          </ReactModal>
         </div>
       );
     } return null;

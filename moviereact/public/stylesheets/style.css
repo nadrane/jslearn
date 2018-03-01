@@ -4,8 +4,12 @@ body {
 }
 
 nav {
-  margin-bottom: 2em;
+  margin-bottom: 0.5em;
   text-align: center;
+}
+
+.modal-container {
+  margin-top: 5%;
 }
 
 .table {
@@ -21,7 +25,7 @@ nav {
 }
 
 .mint, #brand {
-  color: mediumaquamarine;
+  color: #6accab;
 }
 
 .panel {
@@ -35,8 +39,8 @@ nav {
 
 .movie-btn {
   color: white;
-  background-color: mediumaquamarine;
-  border-color: mediumaquamarine;
+  background-color: #6accab;
+  border-color: #6accab;
 }
 
 .add-btn {

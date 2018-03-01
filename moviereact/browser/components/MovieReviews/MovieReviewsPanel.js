@@ -29,7 +29,12 @@ const MovieReviewsPanel = (props) => {
         ]}
         session={session}
         user={(
-          <ModalButtons buttons={[['+ Add Review', 'addReview']]} />
+          <button
+              onClick={props.modalTrigger}
+              type="button"
+              className="btn movie-btn add-btn mx-2">
+            + Add Review
+          </button>
         )}
       />
     );
