@@ -40,11 +40,8 @@ router.get('/', (req, res, next) => {
 * POST /api/director - add new director
 */
 router.post('/', (req, res, next) => {
-  if (!req.body.name) {
-    return res.redirect('/');
-  }
-  return Director.create(req.body, { fields: ['name'] })
-    .then(() => res.redirect('/'))
+  Director.create(req.body, { fields: ['name'] })
+    .then(director => res.json(director))
     .catch(next);
 });
 

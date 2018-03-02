@@ -9,7 +9,7 @@ class AddReviewForm extends React.Component {
     } = this.props;
     return (
       <div className="modal-container">
-        <form onSubmit={handleFormSubmit} method="post">
+        <form onSubmit={handleFormSubmit}>
           <div className="form-group">
               <label htmlFor="user" className="mt-2"><strong>{`${username}'s Rating:`}</strong></label>
               <select

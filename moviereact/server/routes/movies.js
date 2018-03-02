@@ -11,20 +11,11 @@ const {
 const router = express.Router();
 
 /*
-* GET /api/movies - send data for all movies
+* GET /api/movies - GET data for all movies
 */
 router.get('/', (req, res, next) => {
-  Promise.all([
-    Movie.findAll({ include: [Director], order: [['year', 'ASC']] }),
-    // see line below - can i remove this from here now?
-    Director.findAll({ order: [['id', 'ASC']] }),
-  ])
-    .then(([movies, directors]) => {
-      res.json({
-        movies,
-        directors,
-      });
-    })
+  Movie.findAll({ include: [Director], order: [['year', 'ASC']] })
+    .then(movies => res.json(movies))
     .catch(next);
 });
 
@@ -33,7 +24,9 @@ router.get('/', (req, res, next) => {
 */
 router.post('/', (req, res, next) => {
   Movie.create(req.body, { fields: ['title', 'year', 'directorId'] })
-    .then(() => res.redirect('/'))
+    .then(dbRes =>
+      Movie.findById(dbRes.id, { include: [Director] }))
+    .then(movie => res.json(movie))
     .catch(next);
 });
 
@@ -76,7 +69,7 @@ router.get('/film/:id', (req, res, next) => {
 */
 router.post('/film/:id', (req, res, next) => {
   const {
-    stars, comment, movieId, userId, username,
+    stars, comment, movieId, userId,
   } = req.body;
   console.log('received post!');
   Review.create({

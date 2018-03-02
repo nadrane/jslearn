@@ -3319,130 +3319,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 48 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.ModalButtons = exports.AddMovieModal = exports.AddDirectorModal = undefined;
-
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
-var _propTypes = __webpack_require__(1);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// import { AddDirectorForm, AddMovieForm } from './form';
-
-
-var Modal = function Modal(props) {
-  return _react2.default.createElement(
-    'div',
-    {
-      className: 'modal fade',
-      id: props.modalID,
-      tabIndex: '-1',
-      role: 'dialog',
-      'aria-labelledby': 'modalLabel',
-      'aria-hidden': 'true' },
-    _react2.default.createElement(
-      'div',
-      { className: 'modal-dialog', role: 'document' },
-      _react2.default.createElement(
-        'div',
-        { className: 'modal-content' },
-        _react2.default.createElement(
-          'div',
-          { className: 'modal-header' },
-          _react2.default.createElement(
-            'h5',
-            { className: 'modal-title', id: 'modalLabel' },
-            props.modalTitle
-          ),
-          _react2.default.createElement(
-            'button',
-            { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
-            _react2.default.createElement(
-              'span',
-              { 'aria-hidden': 'true' },
-              '\xD7'
-            )
-          )
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'modal-body' },
-          props.modalBody
-        )
-      )
-    )
-  );
-};
-
-var AddDirectorModal = function AddDirectorModal() {
-  return _react2.default.createElement(Modal, {
-    modalID: 'addDirector',
-    modalTitle: 'Add a new director:',
-    modalBody: _react2.default.createElement(AddDirectorForm, null)
-  });
-};
-
-var AddMovieModal = function AddMovieModal() {
-  return _react2.default.createElement(Modal, {
-    modalID: 'addMovie',
-    modalTitle: 'Add a new film:',
-    modalBody: _react2.default.createElement(AddMovieForm, null)
-  });
-};
-
-var ModalButtons = function ModalButtons(props) {
-  return _react2.default.createElement(
-    'span',
-    null,
-    props.buttons.map(function (_ref, i) {
-      var _ref2 = _slicedToArray(_ref, 2),
-          button = _ref2[0],
-          modal = _ref2[1];
-
-      return _react2.default.createElement(
-        'button',
-        {
-          key: i,
-          type: 'button',
-          className: 'btn movie-btn add-btn mx-2',
-          'data-toggle': 'modal',
-          'data-target': '#' + modal },
-        button
-      );
-    })
-  );
-};
-
-Modal.propTypes = {
-  modalID: _propTypes2.default.string,
-  modalTitle: _propTypes2.default.string,
-  modalBody: _propTypes2.default.object
-};
-
-ModalButtons.propTypes = {
-  buttons: _propTypes2.default.array
-};
-
-exports.AddDirectorModal = AddDirectorModal;
-exports.AddMovieModal = AddMovieModal;
-exports.ModalButtons = ModalButtons;
-
-/***/ }),
+/* 48 */,
 /* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3678,7 +3555,6 @@ var App = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
     _this.state = {
-      // session: null,
       session: null,
       authName: ''
     };
@@ -25627,7 +25503,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var NavBar = function NavBar(props) {
   return _react2.default.createElement(
     'nav',
-    { className: 'navbar navbar-expand-md sticky-top navbar-dark bg-dark' },
+    { className: 'navbar navbar-expand-md navbar-dark bg-dark' },
     _react2.default.createElement(
       'div',
       { className: 'container' },
@@ -25753,6 +25629,10 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
+var _reactModal = __webpack_require__(124);
+
+var _reactModal2 = _interopRequireDefault(_reactModal);
+
 var _axios = __webpack_require__(8);
 
 var _axios2 = _interopRequireDefault(_axios);
@@ -25767,15 +25647,17 @@ var _AllMoviesTable = __webpack_require__(113);
 
 var _AllMoviesTable2 = _interopRequireDefault(_AllMoviesTable);
 
-var _AddDirectorModal = __webpack_require__(115);
+var _AddDirectorForm = __webpack_require__(116);
 
-var _AddDirectorModal2 = _interopRequireDefault(_AddDirectorModal);
+var _AddDirectorForm2 = _interopRequireDefault(_AddDirectorForm);
 
-var _AddMovieModal = __webpack_require__(117);
+var _AddMovieForm = __webpack_require__(118);
 
-var _AddMovieModal2 = _interopRequireDefault(_AddMovieModal);
+var _AddMovieForm2 = _interopRequireDefault(_AddMovieForm);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -25795,8 +25677,17 @@ var AllMoviesPage = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (AllMoviesPage.__proto__ || Object.getPrototypeOf(AllMoviesPage)).call(this, props));
 
     _this.state = {
-      rows: null
+      rows: null,
+      showDirModal: false,
+      showMovieModal: false,
+      movieTitle: '',
+      movieYear: '',
+      dirSelect: -1
     };
+    _this.handleOpenModal = _this.handleOpenModal.bind(_this);
+    _this.handleCloseModal = _this.handleCloseModal.bind(_this);
+    _this.handleChange = _this.handleChange.bind(_this);
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
     return _this;
   }
 
@@ -25807,17 +25698,76 @@ var AllMoviesPage = function (_React$Component) {
 
       _axios2.default.get(_config.fetchRoot + '/movies').then(function (resp) {
         _this2.setState({
-          rows: resp.data.movies
+          rows: resp.data
         });
       }).catch(function (e) {
         return console.log(e);
       });
     }
   }, {
+    key: 'handleOpenModal',
+    value: function handleOpenModal(e) {
+      e.target.blur();
+      if (e.target.name === 'addDirectorBtn') {
+        this.setState({ showDirModal: true });
+      } else if (e.target.name === 'addMovieBtn') {
+        this.setState({ showMovieModal: true });
+      }
+    }
+  }, {
+    key: 'handleCloseModal',
+    value: function handleCloseModal() {
+      this.setState({ showDirModal: false, showMovieModal: false });
+    }
+  }, {
+    key: 'handleChange',
+    value: function handleChange(e) {
+      var _e$target = e.target,
+          name = _e$target.name,
+          value = _e$target.value;
+
+      this.setState(_defineProperty({}, name, value));
+    }
+  }, {
+    key: 'handleSubmit',
+    value: function handleSubmit(e) {
+      var _this3 = this;
+
+      var _state = this.state,
+          title = _state.movieTitle,
+          year = _state.movieYear,
+          directorId = _state.dirSelect;
+
+      e.preventDefault();
+      this.handleCloseModal();
+      console.log(this.state.rows);
+      _axios2.default.post(_config.fetchRoot + '/movies', {
+        title: title,
+        year: year,
+        directorId: directorId
+      })
+      // .then(movie => console.log(movie));
+      .then(function (movie) {
+        return _this3.setState(function (prevState) {
+          return {
+            rows: [movie.data].concat(prevState.rows).sort(function (a, b) {
+              return a.year - b.year;
+            }),
+            movieTitle: null,
+            movieYear: null,
+            dirSelect: -1
+          };
+        });
+      }).catch(console.log);
+    }
+  }, {
     key: 'render',
     value: function render() {
       var session = this.props.session;
-      var rows = this.state.rows;
+      var _state2 = this.state,
+          rows = _state2.rows,
+          showDirModal = _state2.showDirModal,
+          showMovieModal = _state2.showMovieModal;
 
       return _react2.default.createElement(
         'div',
@@ -25825,14 +25775,37 @@ var AllMoviesPage = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { className: 'container-fluid' },
-          _react2.default.createElement(_AllMoviesPanel2.default, { session: session }),
+          _react2.default.createElement(_AllMoviesPanel2.default, { session: session, handleOpenModal: this.handleOpenModal }),
           _react2.default.createElement(_AllMoviesTable2.default, { rows: rows })
         ),
         session && _react2.default.createElement(
-          'div',
-          null,
-          _react2.default.createElement(_AddDirectorModal2.default, null),
-          _react2.default.createElement(_AddMovieModal2.default, null)
+          _reactModal2.default,
+          {
+            isOpen: showDirModal || showMovieModal,
+            onRequestClose: this.handleCloseModal,
+            ariaHideApp: false,
+            style: {
+              overlay: {
+                backgroundColor: 'rgba(0, 0, 0, .5)'
+              },
+              content: {
+                top: '10%',
+                left: '25%',
+                right: '25%',
+                bottom: '30%',
+                backgroundColor: '#E9F5FD',
+                overflow: 'auto'
+              }
+            }
+          },
+          showDirModal && _react2.default.createElement(_AddDirectorForm2.default, { handleCloseModal: this.handleCloseModal }),
+          showMovieModal && _react2.default.createElement(_AddMovieForm2.default, {
+            handleChange: this.handleChange,
+            handleSubmit: this.handleSubmit,
+            movieTitle: this.state.movieTitle,
+            movieYear: this.state.movieYear,
+            dirSelect: this.state.dirSelect
+          })
         )
       );
     }
@@ -25875,19 +25848,38 @@ var _PanelInfo = __webpack_require__(18);
 
 var _PanelInfo2 = _interopRequireDefault(_PanelInfo);
 
-var _modal = __webpack_require__(48);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// components
 var AllMoviesPanel = function AllMoviesPanel(props) {
-  var session = props.session;
+  var session = props.session,
+      handleOpenModal = props.handleOpenModal;
 
   var panelHeader = 'All Movies';
   var panelInfo = _react2.default.createElement(_PanelInfo2.default, {
     session: session,
-    user: _react2.default.createElement(_modal.ModalButtons, {
-      buttons: [['+ Add Director', 'addDirector'], ['+ Add Film', 'addMovie']]
-    }),
+    user: _react2.default.createElement(
+      'span',
+      null,
+      _react2.default.createElement(
+        'button',
+        {
+          name: 'addDirectorBtn',
+          onClick: handleOpenModal,
+          type: 'button',
+          className: 'btn movie-btn add-btn mx-2' },
+        '+ Add Director'
+      ),
+      _react2.default.createElement(
+        'button',
+        {
+          name: 'addMovieBtn',
+          onClick: handleOpenModal,
+          type: 'button',
+          className: 'btn movie-btn add-btn mx-2' },
+        '+ Add Film'
+      )
+    ),
     guest: _react2.default.createElement(
       'h6',
       { className: 'mint' },
@@ -25898,11 +25890,9 @@ var AllMoviesPanel = function AllMoviesPanel(props) {
   return _react2.default.createElement(_Panel2.default, { header: panelHeader, panelInfo: panelInfo });
 };
 
-// components
-
-
 AllMoviesPanel.propTypes = {
-  session: _propTypes2.default.object
+  session: _propTypes2.default.object,
+  handleOpenModal: _propTypes2.default.func
 };
 
 exports.default = AllMoviesPanel;
@@ -26018,74 +26008,7 @@ AllMoviesRow.propTypes = {
 exports.default = AllMoviesRow;
 
 /***/ }),
-/* 115 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = undefined;
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _AddDirectorForm = __webpack_require__(116);
-
-var _AddDirectorForm2 = _interopRequireDefault(_AddDirectorForm);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var AddDirectorModal = function AddDirectorModal() {
-  return _react2.default.createElement(
-    'div',
-    {
-      className: 'modal fade',
-      id: 'addDirector',
-      tabIndex: '-1',
-      role: 'dialog',
-      'aria-labelledby': 'modalLabel',
-      'aria-hidden': 'true' },
-    _react2.default.createElement(
-      'div',
-      { className: 'modal-dialog', role: 'document' },
-      _react2.default.createElement(
-        'div',
-        { className: 'modal-content' },
-        _react2.default.createElement(
-          'div',
-          { className: 'modal-header' },
-          _react2.default.createElement(
-            'h5',
-            { className: 'modal-title', id: 'modalLabel' },
-            'Add a new director:'
-          ),
-          _react2.default.createElement(
-            'button',
-            { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
-            _react2.default.createElement(
-              'span',
-              { 'aria-hidden': 'true' },
-              '\xD7'
-            )
-          )
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'modal-body' },
-          _react2.default.createElement(_AddDirectorForm2.default, null)
-        )
-      )
-    )
-  );
-};
-
-exports.default = AddDirectorModal;
-
-/***/ }),
+/* 115 */,
 /* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -26102,6 +26025,16 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(1);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _axios = __webpack_require__(8);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _config = __webpack_require__(9);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26123,6 +26056,7 @@ var AddDirectorForm = function (_React$Component) {
       value: ''
     };
     _this.handleChange = _this.handleChange.bind(_this);
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
     return _this;
   }
 
@@ -26132,41 +26066,56 @@ var AddDirectorForm = function (_React$Component) {
       this.setState({ value: e.target.value });
     }
   }, {
+    key: 'handleSubmit',
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      if (this.state.value) {
+        _axios2.default.post(_config.fetchRoot + '/director', {
+          name: this.state.value
+        }).catch(console.log);
+        this.props.handleCloseModal();
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        'form',
-        { action: '/api/director', method: 'post' },
+        'div',
+        { className: 'modal-container' },
         _react2.default.createElement(
-          'div',
-          { className: 'form-group' },
+          'form',
+          { onSubmit: this.handleSubmit, method: 'post' },
           _react2.default.createElement(
-            'label',
-            { htmlFor: 'name', className: 'mt-2' },
+            'div',
+            { className: 'form-group' },
             _react2.default.createElement(
-              'strong',
-              null,
-              'Director Name:'
-            )
+              'label',
+              { htmlFor: 'name', className: 'mt-2' },
+              _react2.default.createElement(
+                'strong',
+                null,
+                'Director Name:'
+              )
+            ),
+            _react2.default.createElement('input', {
+              type: 'input',
+              className: 'form-control',
+              id: 'name',
+              name: 'name',
+              placeholder: 'e.g. Robert Altman',
+              autoComplete: 'off',
+              value: this.state.value,
+              onChange: this.handleChange
+            })
           ),
-          _react2.default.createElement('input', {
-            type: 'input',
-            className: 'form-control',
-            id: 'name',
-            name: 'name',
-            placeholder: 'e.g. Robert Altman',
-            autoComplete: 'off',
-            value: this.state.value,
-            onChange: this.handleChange
-          })
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'form-group text-right' },
           _react2.default.createElement(
-            'button',
-            { type: 'submit', className: 'btn btn-primary mr-auto movie-btn', action: 'submit' },
-            'Submit'
+            'div',
+            { className: 'form-group text-right' },
+            _react2.default.createElement(
+              'button',
+              { type: 'submit', className: 'btn btn-primary mr-auto movie-btn', action: 'submit' },
+              'Submit'
+            )
           )
         )
       );
@@ -26176,77 +26125,14 @@ var AddDirectorForm = function (_React$Component) {
   return AddDirectorForm;
 }(_react2.default.Component);
 
+AddDirectorForm.propTypes = {
+  handleCloseModal: _propTypes2.default.func
+};
+
 exports.default = AddDirectorForm;
 
 /***/ }),
-/* 117 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = undefined;
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _AddMovieForm = __webpack_require__(118);
-
-var _AddMovieForm2 = _interopRequireDefault(_AddMovieForm);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var AddMovieModal = function AddMovieModal() {
-  return _react2.default.createElement(
-    'div',
-    {
-      className: 'modal fade',
-      id: 'addMovie',
-      tabIndex: '-1',
-      role: 'dialog',
-      'aria-labelledby': 'modalLabel',
-      'aria-hidden': 'true' },
-    _react2.default.createElement(
-      'div',
-      { className: 'modal-dialog', role: 'document' },
-      _react2.default.createElement(
-        'div',
-        { className: 'modal-content' },
-        _react2.default.createElement(
-          'div',
-          { className: 'modal-header' },
-          _react2.default.createElement(
-            'h5',
-            { className: 'modal-title', id: 'modalLabel' },
-            'Add a new film:'
-          ),
-          _react2.default.createElement(
-            'button',
-            { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
-            _react2.default.createElement(
-              'span',
-              { 'aria-hidden': 'true' },
-              '\xD7'
-            )
-          )
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'modal-body' },
-          _react2.default.createElement(_AddMovieForm2.default, null)
-        )
-      )
-    )
-  );
-};
-
-exports.default = AddMovieModal;
-
-/***/ }),
+/* 117 */,
 /* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -26263,6 +26149,10 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(1);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _axios = __webpack_require__(8);
 
@@ -26308,6 +26198,12 @@ var AddMovieForm = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      var _props = this.props,
+          handleChange = _props.handleChange,
+          handleSubmit = _props.handleSubmit,
+          movieTitle = _props.movieTitle,
+          movieYear = _props.movieYear,
+          dirSelect = _props.dirSelect;
       var directors = this.state.directors;
 
       if (directors) {
@@ -26319,80 +26215,89 @@ var AddMovieForm = function (_React$Component) {
           );
         });
         return _react2.default.createElement(
-          'form',
-          { action: '/api/movies', method: 'post' },
+          'div',
+          { className: 'modal-container' },
           _react2.default.createElement(
-            'div',
-            { className: 'form-group' },
+            'form',
+            { onSubmit: handleSubmit },
             _react2.default.createElement(
-              'label',
-              { htmlFor: 'title', className: 'mt-2' },
+              'div',
+              { className: 'form-group' },
               _react2.default.createElement(
-                'strong',
-                null,
-                'Film title:'
-              )
-            ),
-            _react2.default.createElement('input', {
-              type: 'input',
-              className: 'form-control',
-              id: 'title',
-              name: 'title',
-              placeholder: 'e.g. Gone with the Wind',
-              autoComplete: 'off'
-            })
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'form-group' },
-            _react2.default.createElement(
-              'label',
-              { htmlFor: 'year', className: 'mt-2' },
-              _react2.default.createElement(
-                'strong',
-                null,
-                'Year of release:'
-              )
-            ),
-            _react2.default.createElement('input', {
-              type: 'input',
-              className: 'form-control',
-              id: 'year',
-              name: 'year',
-              placeholder: 'e.g. 1940',
-              autoComplete: 'off'
-            })
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'form-group' },
-            _react2.default.createElement(
-              'label',
-              { htmlFor: 'director', className: 'mt-2' },
-              _react2.default.createElement(
-                'strong',
-                null,
-                'Director:'
-              )
-            ),
-            _react2.default.createElement(
-              'select',
-              { className: 'form-control', id: 'director', name: 'directorId' },
-              _react2.default.createElement(
-                'option',
-                { disabled: true },
-                'Select director'
+                'label',
+                { htmlFor: 'title', className: 'mt-2' },
+                _react2.default.createElement(
+                  'strong',
+                  null,
+                  'Film title:'
+                )
               ),
-              dropdownItems
-            )
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'form-group text-right' },
+              _react2.default.createElement('input', {
+                name: 'movieTitle',
+                value: movieTitle,
+                onChange: handleChange,
+                className: 'form-control',
+                placeholder: 'e.g. Gone with the Wind',
+                autoComplete: 'off'
+              })
+            ),
             _react2.default.createElement(
-              'button',
-              { type: 'submit', className: 'btn btn-primary mr-auto movie-btn', action: 'submit' },
-              'Submit'
+              'div',
+              { className: 'form-group' },
+              _react2.default.createElement(
+                'label',
+                { htmlFor: 'year', className: 'mt-2' },
+                _react2.default.createElement(
+                  'strong',
+                  null,
+                  'Year of release:'
+                )
+              ),
+              _react2.default.createElement('input', {
+                name: 'movieYear',
+                value: movieYear,
+                onChange: handleChange,
+                className: 'form-control',
+                placeholder: 'e.g. 1940',
+                autoComplete: 'off'
+              })
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'form-group' },
+              _react2.default.createElement(
+                'label',
+                { htmlFor: 'director', className: 'mt-2' },
+                _react2.default.createElement(
+                  'strong',
+                  null,
+                  'Director:'
+                )
+              ),
+              _react2.default.createElement(
+                'select',
+                {
+                  value: dirSelect,
+                  onChange: handleChange,
+                  className: 'form-control',
+                  name: 'dirSelect'
+                },
+                _react2.default.createElement(
+                  'option',
+                  { value: -1, disabled: true },
+                  'Select director'
+                ),
+                dropdownItems
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'form-group text-right' },
+              _react2.default.createElement(
+                'button',
+                { type: 'submit', className: 'btn btn-primary mr-auto movie-btn', action: 'submit' },
+                'Submit'
+              )
             )
           )
         );
@@ -26402,6 +26307,15 @@ var AddMovieForm = function (_React$Component) {
 
   return AddMovieForm;
 }(_react2.default.Component);
+
+AddMovieForm.propTypes = {
+  handleChange: _propTypes2.default.func,
+  handleSubmit: _propTypes2.default.func,
+  movieTitle: _propTypes2.default.string,
+  movieYear: _propTypes2.default.number,
+  dirSelect: _propTypes2.default.number,
+  session: _propTypes2.default.object
+};
 
 exports.default = AddMovieForm;
 
@@ -26747,7 +26661,7 @@ var MovieReviewsPage = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (MovieReviewsPage.__proto__ || Object.getPrototypeOf(MovieReviewsPage)).call(this, props));
 
     _this.state = {
-      currentMovie: null,
+      movie: null,
       rows: null,
       stars: 1,
       comment: ''
@@ -26765,17 +26679,12 @@ var MovieReviewsPage = function (_React$Component) {
       var _this2 = this;
 
       _axios2.default.get(_config.fetchRoot + '/movies/film/' + this.props.matchId).then(function (resp) {
-        var data = resp.data;
+        var movie = resp.data.movie;
 
+        movie.avg = resp.data.avg;
         _this2.setState({
-          currentMovie: {
-            id: data.movie.id,
-            title: data.movie.title,
-            director: data.movie.director,
-            year: data.movie.year,
-            avg: data.avg
-          },
-          rows: data.movie.reviews,
+          movie: movie,
+          rows: movie.reviews,
           modal: false
         });
       }).catch(console.log);
@@ -26794,14 +26703,12 @@ var MovieReviewsPage = function (_React$Component) {
   }, {
     key: 'handleFormChange',
     value: function handleFormChange(e) {
-      var value = e.target.value;
-      var name = e.target.name;
+      var _e$target = e.target,
+          name = _e$target.name,
+          value = _e$target.value;
 
       this.setState(_defineProperty({}, name, value));
     }
-
-    // just moved this up from form, might need to redirect from here.
-
   }, {
     key: 'handleFormSubmit',
     value: function handleFormSubmit(e) {
@@ -26809,7 +26716,7 @@ var MovieReviewsPage = function (_React$Component) {
 
       e.preventDefault();
       this.handleCloseModal();
-      var movieId = this.state.currentMovie.id;
+      var movieId = this.state.movie.id;
       var userId = this.props.session.id;
 
       _axios2.default.post(_config.fetchRoot + '/movies/film/' + movieId, {
@@ -26818,23 +26725,25 @@ var MovieReviewsPage = function (_React$Component) {
         movieId: movieId,
         userId: userId
       }).then(function (resp) {
-        var rows = _this3.state.rows;
-
-        var newRow = resp.data;
-        _this3.setState({ rows: [newRow].concat(rows) });
+        return _this3.setState(function (prevState) {
+          return {
+            rows: [resp.data].concat(prevState.rows),
+            stars: 1,
+            comment: ''
+          };
+        });
       }).catch(console.log);
-      // this.setState({ redirect: true });
     }
   }, {
     key: 'render',
     value: function render() {
       var session = this.props.session;
       var _state = this.state,
-          currentMovie = _state.currentMovie,
+          movie = _state.movie,
           rows = _state.rows,
           modal = _state.modal;
 
-      if (currentMovie && rows) {
+      if (movie && rows) {
         return _react2.default.createElement(
           'div',
           null,
@@ -26843,12 +26752,12 @@ var MovieReviewsPage = function (_React$Component) {
             { className: 'container-fluid' },
             _react2.default.createElement(_MovieReviewsPanel2.default, {
               session: session,
-              movie: currentMovie,
-              modalTrigger: this.handleOpenModal
+              movie: movie,
+              handleOpenModal: this.handleOpenModal
             }),
             _react2.default.createElement(_MovieReviewsTable2.default, { rows: rows })
           ),
-          _react2.default.createElement(
+          session && _react2.default.createElement(
             _reactModal2.default,
             {
               isOpen: modal,
@@ -26872,7 +26781,7 @@ var MovieReviewsPage = function (_React$Component) {
               handleFormChange: this.handleFormChange,
               handleFormSubmit: this.handleFormSubmit,
               session: session,
-              movie: currentMovie,
+              movie: movie,
               stars: this.state.stars,
               comment: this.state.comment
             })
@@ -27965,13 +27874,13 @@ var _PanelInfo = __webpack_require__(18);
 
 var _PanelInfo2 = _interopRequireDefault(_PanelInfo);
 
-var _modal = __webpack_require__(48);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// components
 var MovieReviewsPanel = function MovieReviewsPanel(props) {
   var session = props.session,
-      movie = props.movie;
+      movie = props.movie,
+      handleOpenModal = props.handleOpenModal;
 
   var panelHeader = void 0;
   var panelInfo = void 0;
@@ -27987,7 +27896,7 @@ var MovieReviewsPanel = function MovieReviewsPanel(props) {
       user: _react2.default.createElement(
         'button',
         {
-          onClick: props.modalTrigger,
+          onClick: handleOpenModal,
           type: 'button',
           className: 'btn movie-btn add-btn mx-2' },
         '+ Add Review'
@@ -27998,12 +27907,10 @@ var MovieReviewsPanel = function MovieReviewsPanel(props) {
   return _react2.default.createElement(_Panel2.default, { header: panelHeader, panelInfo: panelInfo });
 };
 
-// components
-
-
 MovieReviewsPanel.propTypes = {
   movie: _propTypes2.default.object,
-  session: _propTypes2.default.object
+  session: _propTypes2.default.object,
+  handleOpenModal: _propTypes2.default.func
 };
 
 exports.default = MovieReviewsPanel;
@@ -28171,7 +28078,7 @@ var AddReviewForm = function (_React$Component) {
         { className: 'modal-container' },
         _react2.default.createElement(
           'form',
-          { onSubmit: handleFormSubmit, method: 'post' },
+          { onSubmit: handleFormSubmit },
           _react2.default.createElement(
             'div',
             { className: 'form-group' },
@@ -28630,7 +28537,6 @@ var AuthForm = function (_React$Component) {
               'form',
               {
                 onSubmit: register ? handleRegister : handleLogin,
-                method: 'post',
                 className: 'mb-2'
               },
               _react2.default.createElement(
@@ -28646,9 +28552,7 @@ var AuthForm = function (_React$Component) {
                   )
                 ),
                 _react2.default.createElement('input', {
-                  type: 'input',
                   className: 'form-control',
-                  id: 'username',
                   name: 'username',
                   placeholder: 'username',
                   autoComplete: 'off',
@@ -28659,11 +28563,7 @@ var AuthForm = function (_React$Component) {
               ),
               _react2.default.createElement(
                 'button',
-                {
-                  id: 'access-btn',
-                  type: 'submit',
-                  className: 'btn btn-primary mb-2'
-                },
+                { className: 'btn btn-primary mb-2' },
                 'Submit'
               )
             )

@@ -4,21 +4,30 @@ import React from 'react';
 // components
 import Panel from '../Panel';
 import PanelInfo from '../PanelInfo';
-import { ModalButtons } from '../modal';
 
 const AllMoviesPanel = (props) => {
-  const { session } = props;
+  const { session, handleOpenModal } = props;
   const panelHeader = 'All Movies';
   const panelInfo = (
     <PanelInfo
       session={session}
       user={(
-        <ModalButtons
-          buttons={[
-            ['+ Add Director', 'addDirector'],
-            ['+ Add Film', 'addMovie'],
-          ]}
-        />
+        <span>
+          <button
+              name="addDirectorBtn"
+              onClick={handleOpenModal}
+              type="button"
+              className="btn movie-btn add-btn mx-2">
+            + Add Director
+          </button>
+          <button
+              name="addMovieBtn"
+              onClick={handleOpenModal}
+              type="button"
+              className="btn movie-btn add-btn mx-2">
+            + Add Film
+          </button>
+        </span>
       )}
       guest={(
         <h6 className="mint">
@@ -35,6 +44,7 @@ const AllMoviesPanel = (props) => {
 
 AllMoviesPanel.propTypes = {
   session: PropTypes.object,
+  handleOpenModal: PropTypes.func,
 };
 
 export { AllMoviesPanel as default };

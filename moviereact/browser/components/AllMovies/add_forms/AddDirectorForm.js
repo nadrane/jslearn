@@ -1,4 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import axios from 'axios';
+import { fetchRoot } from '../../../config';
 
 class AddDirectorForm extends React.Component {
   constructor(props) {
@@ -7,36 +10,54 @@ class AddDirectorForm extends React.Component {
       value: '',
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(e) {
     this.setState({ value: e.target.value });
   }
 
+  handleSubmit(e) {
+    e.preventDefault();
+    if (this.state.value) {
+      axios.post(`${fetchRoot}/director`, {
+        name: this.state.value,
+      })
+        .catch(console.log);
+      this.props.handleCloseModal();
+    }
+  }
+
   render() {
     return (
-      <form action="/api/director" method="post">
-        <div className="form-group">
-            <label htmlFor="name" className="mt-2"><strong>Director Name:</strong></label>
-            <input
-              type="input"
-              className="form-control"
-              id="name"
-              name="name"
-              placeholder="e.g. Robert Altman"
-              autoComplete="off"
-              value={this.state.value}
-              onChange={this.handleChange}
-            />
-        </div>
-        <div className="form-group text-right">
-            <button type="submit" className="btn btn-primary mr-auto movie-btn" action="submit">
-              Submit
-            </button>
-        </div>
-      </form>
+      <div className="modal-container">
+        <form onSubmit={this.handleSubmit} method="post">
+          <div className="form-group">
+              <label htmlFor="name" className="mt-2"><strong>Director Name:</strong></label>
+              <input
+                type="input"
+                className="form-control"
+                id="name"
+                name="name"
+                placeholder="e.g. Robert Altman"
+                autoComplete="off"
+                value={this.state.value}
+                onChange={this.handleChange}
+              />
+          </div>
+          <div className="form-group text-right">
+              <button type="submit" className="btn btn-primary mr-auto movie-btn" action="submit">
+                Submit
+              </button>
+          </div>
+        </form>
+      </div>
     );
   }
 }
+
+AddDirectorForm.propTypes = {
+  handleCloseModal: PropTypes.func,
+};
 
 export { AddDirectorForm as default };

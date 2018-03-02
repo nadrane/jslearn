@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import NavMenu from './NavMenu';
 
 const NavBar = props => (
-  <nav className="navbar navbar-expand-md sticky-top navbar-dark bg-dark">
+  <nav className="navbar navbar-expand-md navbar-dark bg-dark">
     <div className="container">
         <Link id="brand" className="navbar-brand" to="/">Movietown!</Link>
     </div>

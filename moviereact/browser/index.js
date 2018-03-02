@@ -17,7 +17,6 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // session: null,
       session: null,
       authName: '',
     };

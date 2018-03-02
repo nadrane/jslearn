@@ -2,7 +2,7 @@ const Director = require('./models/director');
 const Movie = require('./models/movie');
 const User = require('./models/user');
 const Review = require('./models/review');
-const { seedDB } = require('./seed');
+// const { seedDB } = require('./seed');
 
 // define model associations
 Movie.Director = Movie.belongsTo(Director);

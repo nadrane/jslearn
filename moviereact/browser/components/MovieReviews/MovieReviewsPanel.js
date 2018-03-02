@@ -5,10 +5,9 @@ import { Link } from 'react-router-dom';
 // components
 import Panel from '../Panel';
 import PanelInfo from '../PanelInfo';
-import { ModalButtons } from '../modal';
 
 const MovieReviewsPanel = (props) => {
-  const { session, movie } = props;
+  const { session, movie, handleOpenModal } = props;
   let panelHeader;
   let panelInfo;
   if (movie) {
@@ -30,7 +29,7 @@ const MovieReviewsPanel = (props) => {
         session={session}
         user={(
           <button
-              onClick={props.modalTrigger}
+              onClick={handleOpenModal}
               type="button"
               className="btn movie-btn add-btn mx-2">
             + Add Review
@@ -48,6 +47,7 @@ const MovieReviewsPanel = (props) => {
 MovieReviewsPanel.propTypes = {
   movie: PropTypes.object,
   session: PropTypes.object,
+  handleOpenModal: PropTypes.func,
 };
 
 export { MovieReviewsPanel as default };

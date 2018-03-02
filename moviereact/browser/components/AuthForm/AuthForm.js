@@ -22,7 +22,6 @@ class AuthForm extends React.Component {
             <h3 className="mint">{register ? 'Register' : 'Sign in'}</h3>
             <form
               onSubmit={register ? handleRegister : handleLogin}
-              method="post"
               className="mb-2"
             >
               <div className="form-group">
@@ -30,9 +29,7 @@ class AuthForm extends React.Component {
                   <strong>User</strong>
                 </label>
                 <input
-                  type="input"
                   className="form-control"
-                  id="username"
                   name="username"
                   placeholder="username"
                   autoComplete="off"
@@ -41,11 +38,7 @@ class AuthForm extends React.Component {
                 />
                 <small id="access-warn" />
               </div>
-              <button
-                id="access-btn"
-                type="submit"
-                className="btn btn-primary mb-2"
-              >
+              <button className="btn btn-primary mb-2">
                 Submit
               </button>
             </form>
