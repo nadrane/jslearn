@@ -19,11 +19,11 @@ class UserReviewsPage extends React.Component {
   }
 
   componentDidMount() {
-    this.fetch();
+    this.fetch(`${fetchRoot}/user/${this.props.matchId}`);
   }
 
-  fetch() {
-    axios.get(`${fetchRoot}/user/${this.props.matchId}`)
+  fetch(url) {
+    axios.get(url)
       .then(resp => this.setState({
         user: resp.data.user,
         rows: resp.data.user.reviews,
@@ -38,16 +38,19 @@ class UserReviewsPage extends React.Component {
       });
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.matchId !== this.props.matchId) {
+      this.fetch(`${fetchRoot}/user/${nextProps.matchId}`);
+    }
+  }
+
   render() {
-    const { session, matchId } = this.props;
+    const { session } = this.props;
     const { user, rows, err } = this.state;
     if (err) {
       return (<Panel header={err.header} message={err.message} />);
     }
     if (user) {
-      if (matchId !== user.id) {
-        this.fetch();
-      }
       return (
         <div>
           <div className="container-fluid">

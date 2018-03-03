@@ -28296,14 +28296,14 @@ var UserReviewsPage = function (_React$Component) {
   _createClass(UserReviewsPage, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      this.fetch();
+      this.fetch(_config.fetchRoot + '/user/' + this.props.matchId);
     }
   }, {
     key: 'fetch',
-    value: function fetch() {
+    value: function fetch(url) {
       var _this2 = this;
 
-      _axios2.default.get(_config.fetchRoot + '/user/' + this.props.matchId).then(function (resp) {
+      _axios2.default.get(url).then(function (resp) {
         return _this2.setState({
           user: resp.data.user,
           rows: resp.data.user.reviews
@@ -28319,11 +28319,16 @@ var UserReviewsPage = function (_React$Component) {
       });
     }
   }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      if (nextProps.matchId !== this.props.matchId) {
+        this.fetch(_config.fetchRoot + '/user/' + nextProps.matchId);
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
-      var _props = this.props,
-          session = _props.session,
-          matchId = _props.matchId;
+      var session = this.props.session;
       var _state = this.state,
           user = _state.user,
           rows = _state.rows,
@@ -28333,9 +28338,6 @@ var UserReviewsPage = function (_React$Component) {
         return _react2.default.createElement(_Panel2.default, { header: err.header, message: err.message });
       }
       if (user) {
-        if (matchId !== user.id) {
-          this.fetch();
-        }
         return _react2.default.createElement(
           'div',
           null,
