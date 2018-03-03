@@ -6,35 +6,54 @@ import { fetchRoot } from '../../config';
 // components
 import DirectorPanel from './DirectorPanel';
 import DirectorTable from './DirectorTable';
+import Panel from '../Panel';
 
 class DirectorPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      panelData: null,
+      director: null,
       rows: null,
+      err: null,
     };
   }
 
   componentDidMount() {
     axios.get(`${fetchRoot}/director/${this.props.matchId}`)
-      .then((resp) => {
-        this.setState({
-          panelData: resp.data,
-          rows: resp.data.director.movies,
-        });
-      }).catch(e => console.log(e));
+      .then(resp => this.setState({
+        director: resp.data.director,
+        rows: resp.data.director.movies,
+      }))
+      .catch((err) => {
+        const { status } = err.response;
+        if (status === 404 || status === 500) {
+          this.setState({
+            err: { header: 'Not found!', message: "That director doesn't exist." },
+          });
+        }
+      });
   }
 
   render() {
-    return (
-      <div>
-        <div className="container-fluid">
-          <DirectorPanel session={this.props.session} panelData={this.state.panelData} />
-          <DirectorTable rows={this.state.rows} />
+    const { session } = this.props;
+    const { director, rows, err } = this.state;
+    if (err) {
+      return (<Panel header={err.header} message={err.message} />);
+    }
+    if (director) {
+      return (
+        <div>
+          <div className="container-fluid">
+            <DirectorPanel
+              session={session}
+              director={director}
+              count={director.movies.length}
+            />
+            <DirectorTable rows={rows} />
+          </div>
         </div>
-      </div>
-    );
+      );
+    } return null;
   }
 }
 

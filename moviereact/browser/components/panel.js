@@ -6,6 +6,7 @@ const Panel = props => (
     <div className="col-sm-12 col-lg-5">
       <div className="panel">
         <h1>{props.header}</h1>
+        {props.message}
         {props.panelInfo}
       </div>
     </div>
@@ -14,6 +15,7 @@ const Panel = props => (
 
 Panel.propTypes = {
   header: PropTypes.string,
+  message: PropTypes.string,
   panelInfo: PropTypes.object,
 };
 

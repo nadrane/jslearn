@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import ReactModal from 'react-modal';
-import { fetchRoot } from '../../config';
+import { fetchRoot, avgStars, modalStyle } from '../../config';
 
 // components
 import MovieReviewsPanel from './MovieReviewsPanel';
 import MovieReviewsTable from './MovieReviewsTable';
 import AddReviewForm from './add_forms/AddReviewForm';
+import Panel from '../Panel';
 
 class MovieReviewsPage extends React.Component {
   constructor(props) {
@@ -17,6 +18,7 @@ class MovieReviewsPage extends React.Component {
       rows: null,
       stars: 1,
       comment: '',
+      err: null,
     };
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
@@ -28,14 +30,20 @@ class MovieReviewsPage extends React.Component {
     axios.get(`${fetchRoot}/movies/film/${this.props.matchId}`)
       .then((resp) => {
         const { movie } = resp.data;
-        movie.avg = resp.data.avg;
         this.setState({
           movie,
           rows: movie.reviews,
           modal: false,
         });
       })
-      .catch(console.log);
+      .catch((err) => {
+        const { status } = err.response;
+        if (status === 404 || status === 500) {
+          this.setState({
+            err: { header: 'Not found!', message: "That movie doesn't exist." },
+          });
+        }
+      });
   }
 
   handleOpenModal(e) {
@@ -65,24 +73,33 @@ class MovieReviewsPage extends React.Component {
       userId,
     })
       .then(resp =>
-        this.setState(prevState => ({
-          rows: [resp.data].concat(prevState.rows),
-          stars: 1,
-          comment: '',
-        })))
+        this.setState((prevState) => {
+          const rows = [resp.data].concat(prevState.rows);
+          return {
+            rows,
+            stars: 1,
+            comment: '',
+          };
+        }))
       .catch(console.log);
   }
 
   render() {
     const { session } = this.props;
-    const { movie, rows, modal } = this.state;
-    if (movie && rows) {
+    const {
+      movie, rows, modal, err,
+    } = this.state;
+    if (err) {
+      return (<Panel header={err.header} message={err.message} />);
+    }
+    if (movie) {
       return (
         <div>
           <div className="container-fluid">
             <MovieReviewsPanel
               session={session}
               movie={movie}
+              avg={avgStars(rows)}
               handleOpenModal={this.handleOpenModal}
             />
             <MovieReviewsTable rows={rows} />
@@ -92,19 +109,7 @@ class MovieReviewsPage extends React.Component {
               isOpen={modal}
               onRequestClose={this.handleCloseModal}
               ariaHideApp={false}
-              style={{
-                overlay: {
-                  backgroundColor: 'rgba(0, 0, 0, .5)',
-                },
-                content: {
-                  top: '10%',
-                  left: '25%',
-                  right: '25%',
-                  bottom: '30%',
-                  backgroundColor: '#E9F5FD',
-                  overflow: 'auto',
-                },
-              }}
+              style={modalStyle}
             >
               <AddReviewForm
                 handleFormChange={this.handleFormChange}

@@ -7,38 +7,38 @@ import PanelInfo from '../PanelInfo';
 
 const AllMoviesPanel = (props) => {
   const { session, handleOpenModal } = props;
-  const panelHeader = 'All Movies';
-  const panelInfo = (
-    <PanelInfo
-      session={session}
-      user={(
-        <span>
-          <button
-              name="addDirectorBtn"
-              onClick={handleOpenModal}
-              type="button"
-              className="btn movie-btn add-btn mx-2">
-            + Add Director
-          </button>
-          <button
-              name="addMovieBtn"
-              onClick={handleOpenModal}
-              type="button"
-              className="btn movie-btn add-btn mx-2">
-            + Add Film
-          </button>
-        </span>
-      )}
-      guest={(
-        <h6 className="mint">
-          Sign in to add directors and movies.
-        </h6>
+  return (
+    <Panel
+      header="All Movies"
+      panelInfo={(
+        <PanelInfo
+          session={session}
+          user={(
+            <span>
+              <button
+                  name="addDirectorBtn"
+                  onClick={handleOpenModal}
+                  type="button"
+                  className="btn movie-btn add-btn mx-2">
+                + Add Director
+              </button>
+              <button
+                  name="addMovieBtn"
+                  onClick={handleOpenModal}
+                  type="button"
+                  className="btn movie-btn add-btn mx-2">
+                + Add Film
+              </button>
+            </span>
+          )}
+          guest={(
+            <h6 className="mint">
+              Sign in to add directors and movies.
+            </h6>
+          )}
+        />
       )}
     />
-  );
-
-  return (
-    <Panel header={panelHeader} panelInfo={panelInfo} />
   );
 };
 

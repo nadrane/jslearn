@@ -33,10 +33,12 @@ class AddDirectorForm extends React.Component {
       <div className="modal-container">
         <form onSubmit={this.handleSubmit} method="post">
           <div className="form-group">
-              <label htmlFor="name" className="mt-2"><strong>Director Name:</strong></label>
+              <label htmlFor="name" className="mt-2 col-form-label-lg">
+                <strong>Director Name:</strong>
+              </label>
               <input
                 type="input"
-                className="form-control"
+                className="form-control form-control-lg"
                 id="name"
                 name="name"
                 placeholder="e.g. Robert Altman"
@@ -45,8 +47,11 @@ class AddDirectorForm extends React.Component {
                 onChange={this.handleChange}
               />
           </div>
-          <div className="form-group text-right">
-              <button type="submit" className="btn btn-primary mr-auto movie-btn" action="submit">
+          <div className="form-group">
+              <button type="submit"
+                className="btn btn-primary movie-btn btn-lg mt-2"
+                action="submit"
+              >
                 Submit
               </button>
           </div>

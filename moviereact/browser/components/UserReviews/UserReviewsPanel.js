@@ -6,33 +6,30 @@ import Panel from '../Panel';
 import PanelInfo from '../PanelInfo';
 
 const UserReviewsPanel = (props) => {
-  const { session, panelData } = props;
-  let panelHeader;
-  let panelInfo;
-  if (panelData) {
-    panelHeader = panelData.user.username;
-    panelInfo = (
-      <PanelInfo
-        text={(
-          <span>
-            <strong>{panelData.user.username} </strong>
-            has posted
-            <strong> {panelData.count} </strong>review(s) on Movietown.
-          </span>
-        )}
-        session={session}
-      />
-    );
-  }
-
+  const { session, user, count } = props;
   return (
-    <Panel header={panelHeader} panelInfo={panelInfo} />
+    <Panel
+      header={user.username}
+      panelInfo={(
+        <PanelInfo
+          text={(
+            <span>
+              <strong>{user.username} </strong>
+              has posted
+              <strong> {count} </strong>review(s) on Movietown.
+            </span>
+          )}
+          session={session}
+        />
+      )}
+    />
   );
 };
 
 UserReviewsPanel.propTypes = {
-  panelData: PropTypes.object,
   session: PropTypes.object,
+  user: PropTypes.object,
+  count: PropTypes.number,
 };
 
 export { UserReviewsPanel as default };

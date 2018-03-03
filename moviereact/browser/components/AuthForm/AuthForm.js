@@ -5,12 +5,7 @@ import { Redirect } from 'react-router-dom';
 class AuthForm extends React.Component {
   render() {
     const {
-      handleAuthNameChange,
-      handleRegister,
-      handleLogin,
-      session,
-      register,
-      authName,
+      handleAuthNameChange, handleRegister, handleLogin, session, register, authName,
     } = this.props;
     if (session) {
       return <Redirect to='/movies'/>;
@@ -22,10 +17,9 @@ class AuthForm extends React.Component {
             <h3 className="mint">{register ? 'Register' : 'Sign in'}</h3>
             <form
               onSubmit={register ? handleRegister : handleLogin}
-              className="mb-2"
             >
               <div className="form-group">
-                <label htmlFor="username" className="mt-2">
+                <label htmlFor="username">
                   <strong>User</strong>
                 </label>
                 <input
@@ -36,11 +30,8 @@ class AuthForm extends React.Component {
                   value={authName}
                   onChange={handleAuthNameChange}
                 />
-                <small id="access-warn" />
               </div>
-              <button className="btn btn-primary mb-2">
-                Submit
-              </button>
+              <button className="btn btn-primary">Submit</button>
             </form>
           </div>
         </div>
@@ -50,11 +41,11 @@ class AuthForm extends React.Component {
 }
 
 AuthForm.propTypes = {
-  register: PropTypes.bool,
-  session: PropTypes.object,
   handleAuthNameChange: PropTypes.func,
   handleRegister: PropTypes.func,
   handleLogin: PropTypes.func,
+  session: PropTypes.object,
+  register: PropTypes.bool,
   authName: PropTypes.string,
 };
 

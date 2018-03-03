@@ -4,35 +4,20 @@ const { Director, Movie } = require('../db/index');
 const router = express.Router();
 
 /*
-* GET /api/director/:id - send data for individual director profile
+* GET /api/director - get all directors
 */
-router.get('/:id', (req, res, next) => {
-  Director.findById(req.params.id, { include: [Movie], order: [[Movie, 'year', 'ASC']] })
-    .then((director) => {
-      if (!director) {
-        // look into err handling
-        // const uErr = new Error("Sorry! That director doesn't exist.");
-        // uErr.status = 404;
-        // throw uErr;
-      }
-      res.json({
-        director,
-        count: director.movies.length,
-      });
-    })
+router.get('/', (req, res, next) => {
+  Director.findAll({ order: [['id', 'ASC']] })
+    .then(directors => res.json({ directors }))
     .catch(next);
 });
 
 /*
-* GET /api/director - send data for all directors
+* GET /api/director/:id - get data and movies for single director
 */
-router.get('/', (req, res, next) => {
-  Director.findAll({ order: [['id', 'ASC']] })
-    .then((directors) => {
-      res.json({
-        directors,
-      });
-    })
+router.get('/:id', (req, res, next) => {
+  Director.findById(req.params.id, { include: [Movie], order: [[Movie, 'year', 'ASC']] })
+    .then(director => (director ? res.json({ director }) : res.status(404).send()))
     .catch(next);
 });
 

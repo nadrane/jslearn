@@ -8,16 +8,21 @@ nav {
   text-align: center;
 }
 
-.modal-container {
-  margin-top: 5%;
+form {
+  margin-top: 2em;
+}
+
+.form-group {
+  text-align: center;
+}
+
+.form-control {
+  width: 75%;
+  margin: auto;
 }
 
 .table {
   margin-bottom: 1em;
-}
-
-.hide {
-  display: none;
 }
 
 .white {

@@ -27,9 +27,8 @@ app.use('/api/movies', movies);
 app.use('/api/director', director);
 app.use('/api/user', user);
 
-app.listen(process.env.PORT || 8080, () => {
-  console.log(`Listening on ${process.env.PORT || 8080}`);
-});
+app.listen(process.env.PORT || 8080, () =>
+  console.log(`Listening on ${process.env.PORT || 8080}`));
 
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '..', 'public', 'index.html'));

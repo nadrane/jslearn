@@ -18,12 +18,19 @@ class App extends React.Component {
     super(props);
     this.state = {
       session: null,
+      // session: { id: 1, username: 'kubrickhead123' },
       authName: '',
     };
     this.handleAuthNameChange = this.handleAuthNameChange.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
     this.handleRegister = this.handleRegister.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+  }
+
+  componentDidMount() {
+    axios.get(`${fetchRoot}/auth/session`)
+      .then(session => this.setState({ session: session.data }))
+      .catch(console.log);
   }
 
   handleAuthNameChange(e) {
@@ -46,7 +53,7 @@ class App extends React.Component {
           });
         }
       })
-      .catch(err => console.log(err));
+      .catch(console.log);
   }
 
   handleRegister(e) {
@@ -65,12 +72,13 @@ class App extends React.Component {
           });
         }
       })
-      .catch(err => console.log(err));
+      .catch(console.log);
   }
 
   handleLogout(e) {
     e.preventDefault();
     this.setState({ session: null });
+    axios.get(`${fetchRoot}/auth/logout`);
   }
 
   render() {
@@ -123,7 +131,7 @@ class App extends React.Component {
               />
             )}/>
             <Route render={() => (
-              <Panel header='404!' />
+              <Panel header='404!' message="Page not found." />
             )}/>
           </Switch>
         </div>

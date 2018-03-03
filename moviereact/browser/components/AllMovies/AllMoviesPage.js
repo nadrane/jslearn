@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactModal from 'react-modal';
 import axios from 'axios';
-import { fetchRoot } from '../../config';
+import { fetchRoot, modalStyle } from '../../config';
 
 // components
 import AllMoviesPanel from './AllMoviesPanel';
@@ -19,7 +19,7 @@ class AllMoviesPage extends React.Component {
       showMovieModal: false,
       movieTitle: '',
       movieYear: '',
-      dirSelect: -1,
+      dirSelect: '-1',
     };
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
@@ -29,11 +29,10 @@ class AllMoviesPage extends React.Component {
 
   componentDidMount() {
     axios.get(`${fetchRoot}/movies`)
-      .then((resp) => {
-        this.setState({
-          rows: resp.data,
-        });
-      }).catch(e => console.log(e));
+      .then(resp => this.setState({
+        rows: resp.data,
+      }))
+      .catch(console.log);
   }
 
   handleOpenModal(e) {
@@ -55,25 +54,25 @@ class AllMoviesPage extends React.Component {
   }
 
   handleSubmit(e) {
+    e.preventDefault();
     const {
       movieTitle: title, movieYear: year, dirSelect: directorId,
     } = this.state;
-    e.preventDefault();
-    this.handleCloseModal();
-    console.log(this.state.rows);
-    axios.post(`${fetchRoot}/movies`, {
-      title,
-      year,
-      directorId,
-    })
-      // .then(movie => console.log(movie));
-      .then(movie => this.setState(prevState => ({
-        rows: [movie.data].concat(prevState.rows).sort((a, b) => a.year - b.year),
-        movieTitle: null,
-        movieYear: null,
-        dirSelect: -1,
-      })))
-      .catch(console.log);
+    if (title && year && directorId) {
+      axios.post(`${fetchRoot}/movies`, {
+        title, year, directorId,
+      })
+        .then((movie) => {
+          this.setState(prevState => ({
+            rows: [movie.data].concat(prevState.rows).sort((a, b) => a.year - b.year),
+            movieTitle: '',
+            movieYear: '',
+            dirSelect: '-1',
+          }));
+          return this.handleCloseModal();
+        })
+        .catch(console.log);
+    }
   }
 
   render() {
@@ -90,19 +89,7 @@ class AllMoviesPage extends React.Component {
               isOpen={showDirModal || showMovieModal}
               onRequestClose={this.handleCloseModal}
               ariaHideApp={false}
-              style={{
-                overlay: {
-                  backgroundColor: 'rgba(0, 0, 0, .5)',
-                },
-                content: {
-                  top: '10%',
-                  left: '25%',
-                  right: '25%',
-                  bottom: '30%',
-                  backgroundColor: '#E9F5FD',
-                  overflow: 'auto',
-                },
-              }}
+              style={modalStyle}
             >
               {showDirModal && <AddDirectorForm handleCloseModal={this.handleCloseModal} />}
               {showMovieModal && <AddMovieForm

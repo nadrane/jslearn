@@ -19,13 +19,13 @@ class AddMovieForm extends React.Component {
   }
 
   render() {
-    const {
-      handleChange, handleSubmit, movieTitle, movieYear, dirSelect,
-    } = this.props;
     const { directors } = this.state;
     if (directors) {
       const dropdownItems = directors.map(director =>
         (<option key={director.id} value={director.id}>{director.name}</option>));
+      const {
+        handleChange, handleSubmit, movieTitle, movieYear, dirSelect,
+      } = this.props;
       return (
         <div className="modal-container">
           <form onSubmit={handleSubmit}>
@@ -59,12 +59,12 @@ class AddMovieForm extends React.Component {
                 className="form-control"
                 name="dirSelect"
               >
-                  <option value={-1} disabled>Select director</option>
+                <option value="-1" disabled>Select director</option>
                   {dropdownItems}
               </select>
             </div>
-            <div className="form-group text-right">
-              <button type="submit" className="btn btn-primary mr-auto movie-btn" action="submit">
+            <div className="form-group">
+              <button type="submit" className="btn btn-primary movie-btn mt-2" action="submit">
                 Submit
               </button>
             </div>
@@ -79,8 +79,8 @@ AddMovieForm.propTypes = {
   handleChange: PropTypes.func,
   handleSubmit: PropTypes.func,
   movieTitle: PropTypes.string,
-  movieYear: PropTypes.number,
-  dirSelect: PropTypes.number,
+  movieYear: PropTypes.string,
+  dirSelect: PropTypes.string,
   session: PropTypes.object,
 };
 

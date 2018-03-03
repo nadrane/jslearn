@@ -3,38 +3,41 @@ const { User } = require('../db/index');
 
 const router = express.Router();
 
-/* POST to api/auth/login - set user session --- need to set server session here */
+/*
+* POST to api/auth/login - set user session
+*/
 router.post('/login', (req, res, next) => {
-  User.findOne({
-    where: { username: req.body.username },
-  })
+  User.findOne({ where: { username: req.body.username } })
     .then((user) => {
       if (!user) {
-        // send err code here
-        return res.send({ err: 'bad!' });
+        return res.status(404).send();
       }
+      req.session.user = {
+        id: user.id,
+        username: user.username,
+      };
       return res.json(user);
     })
     .catch(next);
 });
 
-/* GET api/auth/logout */
-router.get('/logout', (req, res, next) => {
-  req.session.destroy((err) => {
-    if (err) console.log(err);
-    return res.redirect('/');
-  });
-});
+/*
+* GET api/auth/session - check for current server session
+*/
+router.get('/session', (req, res, next) => res.json((req.session.user ? req.session.user : null)));
 
-/* POST to api/auth/register - write new user and set session --- need to set server session here */
+/*
+* GET api/auth/logout - destroy server session
+*/
+router.get('/logout', (req, res, next) =>
+  req.session.destroy(err => (err ? next(err) : res.status(200).send())));
+
+/*
+* POST to api/auth/register - set new user session
+*/
 router.post('/register', (req, res, next) => {
   User.create(req.body, { fields: ['username'] })
-    .then((user) => {
-      if (!user) {
-        return res.json({ err: 'bad!' });
-      }
-      return res.json(user);
-    })
+    .then(user => (user ? res.json(user) : res.status(404).send()))
     .catch(next);
 });
 

@@ -16,8 +16,5 @@ Movie.hasMany(Review);
 // seedDB();
 
 module.exports = {
-  Director,
-  Movie,
-  User,
-  Review,
+  Director, Movie, User, Review,
 };

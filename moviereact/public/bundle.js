@@ -852,8 +852,38 @@ module.exports = __webpack_require__(91);
 "use strict";
 
 
+function roundedToFixed(float, digits) {
+  var rounder = Math.pow(10, digits);
+  return (Math.round(float * rounder) / rounder).toFixed(digits);
+}
+
 var config = {
-  fetchRoot: 'http://localhost:8080/api'
+  fetchRoot: 'http://localhost:8080/api',
+  modalStyle: {
+    overlay: {
+      backgroundColor: 'rgba(0, 0, 0, .5)'
+    },
+    content: {
+      top: '10%',
+      left: '25%',
+      right: '25%',
+      bottom: '30%',
+      backgroundColor: '#E9F5FD',
+      overflow: 'auto'
+    }
+  },
+  avgStars: function avgStars(arr) {
+    var avg = 0;
+    if (arr) {
+      avg = arr.reduce(function (accum, obj) {
+        return accum + obj.stars;
+      }, 0) / arr.length;
+      if (typeof avg !== 'number' || Number.isNaN(avg)) {
+        avg = 0;
+      }
+    }
+    return roundedToFixed(avg, 1);
+  }
 };
 
 module.exports = config;
@@ -1190,6 +1220,7 @@ var Panel = function Panel(props) {
           null,
           props.header
         ),
+        props.message,
         props.panelInfo
       )
     )
@@ -1198,6 +1229,7 @@ var Panel = function Panel(props) {
 
 Panel.propTypes = {
   header: _propTypes2.default.string,
+  message: _propTypes2.default.string,
   panelInfo: _propTypes2.default.object
 };
 
@@ -3319,7 +3351,26 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 48 */,
+/* 48 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _Modal = __webpack_require__(112);
+
+var _Modal2 = _interopRequireDefault(_Modal);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = _Modal2.default;
+module.exports = exports["default"];
+
+/***/ }),
 /* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3468,7 +3519,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.canUseDOM = undefined;
 
-var _exenv = __webpack_require__(130);
+var _exenv = __webpack_require__(117);
 
 var _exenv2 = _interopRequireDefault(_exenv);
 
@@ -3515,15 +3566,15 @@ var _AllMoviesPage = __webpack_require__(111);
 
 var _AllMoviesPage2 = _interopRequireDefault(_AllMoviesPage);
 
-var _DirectorPage = __webpack_require__(119);
+var _DirectorPage = __webpack_require__(123);
 
 var _DirectorPage2 = _interopRequireDefault(_DirectorPage);
 
-var _MovieReviewsPage = __webpack_require__(123);
+var _MovieReviewsPage = __webpack_require__(127);
 
 var _MovieReviewsPage2 = _interopRequireDefault(_MovieReviewsPage);
 
-var _UserReviewsPage = __webpack_require__(135);
+var _UserReviewsPage = __webpack_require__(132);
 
 var _UserReviewsPage2 = _interopRequireDefault(_UserReviewsPage);
 
@@ -3531,7 +3582,7 @@ var _Panel = __webpack_require__(14);
 
 var _Panel2 = _interopRequireDefault(_Panel);
 
-var _AuthForm = __webpack_require__(139);
+var _AuthForm = __webpack_require__(136);
 
 var _AuthForm2 = _interopRequireDefault(_AuthForm);
 
@@ -3556,6 +3607,7 @@ var App = function (_React$Component) {
 
     _this.state = {
       session: null,
+      // session: { id: 1, username: 'kubrickhead123' },
       authName: ''
     };
     _this.handleAuthNameChange = _this.handleAuthNameChange.bind(_this);
@@ -3566,6 +3618,15 @@ var App = function (_React$Component) {
   }
 
   _createClass(App, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      _axios2.default.get(_config.fetchRoot + '/auth/session').then(function (session) {
+        return _this2.setState({ session: session.data });
+      }).catch(console.log);
+    }
+  }, {
     key: 'handleAuthNameChange',
     value: function handleAuthNameChange(e) {
       this.setState({ authName: e.target.value });
@@ -3573,33 +3634,11 @@ var App = function (_React$Component) {
   }, {
     key: 'handleLogin',
     value: function handleLogin(e) {
-      var _this2 = this;
-
-      e.preventDefault();
-      this.setState({ authName: '' });
-      _axios2.default.post(_config.fetchRoot + '/auth/login', {
-        username: this.state.authName
-      }).then(function (resp) {
-        if (resp.data.id) {
-          _this2.setState({
-            session: {
-              id: resp.data.id,
-              username: resp.data.username
-            }
-          });
-        }
-      }).catch(function (err) {
-        return console.log(err);
-      });
-    }
-  }, {
-    key: 'handleRegister',
-    value: function handleRegister(e) {
       var _this3 = this;
 
       e.preventDefault();
       this.setState({ authName: '' });
-      _axios2.default.post(_config.fetchRoot + '/auth/register', {
+      _axios2.default.post(_config.fetchRoot + '/auth/login', {
         username: this.state.authName
       }).then(function (resp) {
         if (resp.data.id) {
@@ -3610,20 +3649,39 @@ var App = function (_React$Component) {
             }
           });
         }
-      }).catch(function (err) {
-        return console.log(err);
-      });
+      }).catch(console.log);
+    }
+  }, {
+    key: 'handleRegister',
+    value: function handleRegister(e) {
+      var _this4 = this;
+
+      e.preventDefault();
+      this.setState({ authName: '' });
+      _axios2.default.post(_config.fetchRoot + '/auth/register', {
+        username: this.state.authName
+      }).then(function (resp) {
+        if (resp.data.id) {
+          _this4.setState({
+            session: {
+              id: resp.data.id,
+              username: resp.data.username
+            }
+          });
+        }
+      }).catch(console.log);
     }
   }, {
     key: 'handleLogout',
     value: function handleLogout(e) {
       e.preventDefault();
       this.setState({ session: null });
+      _axios2.default.get(_config.fetchRoot + '/auth/logout');
     }
   }, {
     key: 'render',
     value: function render() {
-      var _this4 = this;
+      var _this5 = this;
 
       return _react2.default.createElement(
         _reactRouterDom.BrowserRouter,
@@ -3640,49 +3698,49 @@ var App = function (_React$Component) {
               } }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/movies', render: function render() {
                 return _react2.default.createElement(_AllMoviesPage2.default, {
-                  session: _this4.state.session
+                  session: _this5.state.session
                 });
               } }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/movies/film/:id', render: function render(_ref) {
                 var match = _ref.match;
                 return _react2.default.createElement(_MovieReviewsPage2.default, {
                   matchId: match.params.id,
-                  session: _this4.state.session
+                  session: _this5.state.session
                 });
               } }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/user/:id', render: function render(_ref2) {
                 var match = _ref2.match;
                 return _react2.default.createElement(_UserReviewsPage2.default, {
                   matchId: match.params.id,
-                  session: _this4.state.session
+                  session: _this5.state.session
                 });
               } }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/director/:id', render: function render(_ref3) {
                 var match = _ref3.match;
                 return _react2.default.createElement(_DirectorPage2.default, {
                   matchId: match.params.id,
-                  session: _this4.state.session
+                  session: _this5.state.session
                 });
               } }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/auth/login', render: function render() {
                 return _react2.default.createElement(_AuthForm2.default, {
-                  session: _this4.state.session,
-                  handleLogin: _this4.handleLogin,
-                  authName: _this4.state.authName,
-                  handleAuthNameChange: _this4.handleAuthNameChange
+                  session: _this5.state.session,
+                  handleLogin: _this5.handleLogin,
+                  authName: _this5.state.authName,
+                  handleAuthNameChange: _this5.handleAuthNameChange
                 });
               } }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/auth/register', render: function render() {
                 return _react2.default.createElement(_AuthForm2.default, {
                   register: true,
-                  session: _this4.state.session,
-                  handleRegister: _this4.handleRegister,
-                  authName: _this4.state.authName,
-                  handleAuthNameChange: _this4.handleAuthNameChange
+                  session: _this5.state.session,
+                  handleRegister: _this5.handleRegister,
+                  authName: _this5.state.authName,
+                  handleAuthNameChange: _this5.handleAuthNameChange
                 });
               } }),
             _react2.default.createElement(_reactRouterDom.Route, { render: function render() {
-                return _react2.default.createElement(_Panel2.default, { header: '404!' });
+                return _react2.default.createElement(_Panel2.default, { header: '404!', message: 'Page not found.' });
               } })
           )
         )
@@ -25629,7 +25687,7 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactModal = __webpack_require__(124);
+var _reactModal = __webpack_require__(48);
 
 var _reactModal2 = _interopRequireDefault(_reactModal);
 
@@ -25639,19 +25697,19 @@ var _axios2 = _interopRequireDefault(_axios);
 
 var _config = __webpack_require__(9);
 
-var _AllMoviesPanel = __webpack_require__(112);
+var _AllMoviesPanel = __webpack_require__(118);
 
 var _AllMoviesPanel2 = _interopRequireDefault(_AllMoviesPanel);
 
-var _AllMoviesTable = __webpack_require__(113);
+var _AllMoviesTable = __webpack_require__(119);
 
 var _AllMoviesTable2 = _interopRequireDefault(_AllMoviesTable);
 
-var _AddDirectorForm = __webpack_require__(116);
+var _AddDirectorForm = __webpack_require__(121);
 
 var _AddDirectorForm2 = _interopRequireDefault(_AddDirectorForm);
 
-var _AddMovieForm = __webpack_require__(118);
+var _AddMovieForm = __webpack_require__(122);
 
 var _AddMovieForm2 = _interopRequireDefault(_AddMovieForm);
 
@@ -25682,7 +25740,7 @@ var AllMoviesPage = function (_React$Component) {
       showMovieModal: false,
       movieTitle: '',
       movieYear: '',
-      dirSelect: -1
+      dirSelect: '-1'
     };
     _this.handleOpenModal = _this.handleOpenModal.bind(_this);
     _this.handleCloseModal = _this.handleCloseModal.bind(_this);
@@ -25697,12 +25755,10 @@ var AllMoviesPage = function (_React$Component) {
       var _this2 = this;
 
       _axios2.default.get(_config.fetchRoot + '/movies').then(function (resp) {
-        _this2.setState({
+        return _this2.setState({
           rows: resp.data
         });
-      }).catch(function (e) {
-        return console.log(e);
-      });
+      }).catch(console.log);
     }
   }, {
     key: 'handleOpenModal',
@@ -25733,32 +25789,29 @@ var AllMoviesPage = function (_React$Component) {
     value: function handleSubmit(e) {
       var _this3 = this;
 
+      e.preventDefault();
       var _state = this.state,
           title = _state.movieTitle,
           year = _state.movieYear,
           directorId = _state.dirSelect;
 
-      e.preventDefault();
-      this.handleCloseModal();
-      console.log(this.state.rows);
-      _axios2.default.post(_config.fetchRoot + '/movies', {
-        title: title,
-        year: year,
-        directorId: directorId
-      })
-      // .then(movie => console.log(movie));
-      .then(function (movie) {
-        return _this3.setState(function (prevState) {
-          return {
-            rows: [movie.data].concat(prevState.rows).sort(function (a, b) {
-              return a.year - b.year;
-            }),
-            movieTitle: null,
-            movieYear: null,
-            dirSelect: -1
-          };
-        });
-      }).catch(console.log);
+      if (title && year && directorId) {
+        _axios2.default.post(_config.fetchRoot + '/movies', {
+          title: title, year: year, directorId: directorId
+        }).then(function (movie) {
+          _this3.setState(function (prevState) {
+            return {
+              rows: [movie.data].concat(prevState.rows).sort(function (a, b) {
+                return a.year - b.year;
+              }),
+              movieTitle: '',
+              movieYear: '',
+              dirSelect: '-1'
+            };
+          });
+          return _this3.handleCloseModal();
+        }).catch(console.log);
+      }
     }
   }, {
     key: 'render',
@@ -25784,19 +25837,7 @@ var AllMoviesPage = function (_React$Component) {
             isOpen: showDirModal || showMovieModal,
             onRequestClose: this.handleCloseModal,
             ariaHideApp: false,
-            style: {
-              overlay: {
-                backgroundColor: 'rgba(0, 0, 0, .5)'
-              },
-              content: {
-                top: '10%',
-                left: '25%',
-                right: '25%',
-                bottom: '30%',
-                backgroundColor: '#E9F5FD',
-                overflow: 'auto'
-              }
-            }
+            style: _config.modalStyle
           },
           showDirModal && _react2.default.createElement(_AddDirectorForm2.default, { handleCloseModal: this.handleCloseModal }),
           showMovieModal && _react2.default.createElement(_AddMovieForm2.default, {
@@ -25830,1007 +25871,6 @@ exports.default = AllMoviesPage;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = undefined;
-
-var _propTypes = __webpack_require__(1);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _Panel = __webpack_require__(14);
-
-var _Panel2 = _interopRequireDefault(_Panel);
-
-var _PanelInfo = __webpack_require__(18);
-
-var _PanelInfo2 = _interopRequireDefault(_PanelInfo);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// components
-var AllMoviesPanel = function AllMoviesPanel(props) {
-  var session = props.session,
-      handleOpenModal = props.handleOpenModal;
-
-  var panelHeader = 'All Movies';
-  var panelInfo = _react2.default.createElement(_PanelInfo2.default, {
-    session: session,
-    user: _react2.default.createElement(
-      'span',
-      null,
-      _react2.default.createElement(
-        'button',
-        {
-          name: 'addDirectorBtn',
-          onClick: handleOpenModal,
-          type: 'button',
-          className: 'btn movie-btn add-btn mx-2' },
-        '+ Add Director'
-      ),
-      _react2.default.createElement(
-        'button',
-        {
-          name: 'addMovieBtn',
-          onClick: handleOpenModal,
-          type: 'button',
-          className: 'btn movie-btn add-btn mx-2' },
-        '+ Add Film'
-      )
-    ),
-    guest: _react2.default.createElement(
-      'h6',
-      { className: 'mint' },
-      'Sign in to add directors and movies.'
-    )
-  });
-
-  return _react2.default.createElement(_Panel2.default, { header: panelHeader, panelInfo: panelInfo });
-};
-
-AllMoviesPanel.propTypes = {
-  session: _propTypes2.default.object,
-  handleOpenModal: _propTypes2.default.func
-};
-
-exports.default = AllMoviesPanel;
-
-/***/ }),
-/* 113 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = undefined;
-
-var _propTypes = __webpack_require__(1);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _Table = __webpack_require__(19);
-
-var _Table2 = _interopRequireDefault(_Table);
-
-var _AllMoviesRow = __webpack_require__(114);
-
-var _AllMoviesRow2 = _interopRequireDefault(_AllMoviesRow);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// components
-var AllMoviesTable = function AllMoviesTable(props) {
-  return _react2.default.createElement(_Table2.default, {
-    headers: ['Movie', 'Director', 'Year'],
-    RowClass: _AllMoviesRow2.default,
-    rows: props.rows
-  });
-};
-
-AllMoviesTable.propTypes = {
-  rows: _propTypes2.default.array
-};
-
-exports.default = AllMoviesTable;
-
-/***/ }),
-/* 114 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = undefined;
-
-var _propTypes = __webpack_require__(1);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactRouterDom = __webpack_require__(6);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var AllMoviesRow = function AllMoviesRow(props) {
-  return _react2.default.createElement(
-    'tr',
-    null,
-    _react2.default.createElement(
-      'td',
-      null,
-      _react2.default.createElement(
-        'h6',
-        null,
-        _react2.default.createElement(
-          _reactRouterDom.Link,
-          { to: '/movies/film/' + props.id, className: 'mint' },
-          props.row.title
-        )
-      )
-    ),
-    _react2.default.createElement(
-      'td',
-      null,
-      _react2.default.createElement(
-        _reactRouterDom.Link,
-        { to: '/director/' + props.row.director.id, className: 'white' },
-        props.row.director.name
-      )
-    ),
-    _react2.default.createElement(
-      'td',
-      null,
-      props.row.year
-    )
-  );
-};
-
-AllMoviesRow.propTypes = {
-  row: _propTypes2.default.object.isRequired,
-  id: _propTypes2.default.number
-};
-
-exports.default = AllMoviesRow;
-
-/***/ }),
-/* 115 */,
-/* 116 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = undefined;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = __webpack_require__(1);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _axios = __webpack_require__(8);
-
-var _axios2 = _interopRequireDefault(_axios);
-
-var _config = __webpack_require__(9);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var AddDirectorForm = function (_React$Component) {
-  _inherits(AddDirectorForm, _React$Component);
-
-  function AddDirectorForm(props) {
-    _classCallCheck(this, AddDirectorForm);
-
-    var _this = _possibleConstructorReturn(this, (AddDirectorForm.__proto__ || Object.getPrototypeOf(AddDirectorForm)).call(this, props));
-
-    _this.state = {
-      value: ''
-    };
-    _this.handleChange = _this.handleChange.bind(_this);
-    _this.handleSubmit = _this.handleSubmit.bind(_this);
-    return _this;
-  }
-
-  _createClass(AddDirectorForm, [{
-    key: 'handleChange',
-    value: function handleChange(e) {
-      this.setState({ value: e.target.value });
-    }
-  }, {
-    key: 'handleSubmit',
-    value: function handleSubmit(e) {
-      e.preventDefault();
-      if (this.state.value) {
-        _axios2.default.post(_config.fetchRoot + '/director', {
-          name: this.state.value
-        }).catch(console.log);
-        this.props.handleCloseModal();
-      }
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        'div',
-        { className: 'modal-container' },
-        _react2.default.createElement(
-          'form',
-          { onSubmit: this.handleSubmit, method: 'post' },
-          _react2.default.createElement(
-            'div',
-            { className: 'form-group' },
-            _react2.default.createElement(
-              'label',
-              { htmlFor: 'name', className: 'mt-2' },
-              _react2.default.createElement(
-                'strong',
-                null,
-                'Director Name:'
-              )
-            ),
-            _react2.default.createElement('input', {
-              type: 'input',
-              className: 'form-control',
-              id: 'name',
-              name: 'name',
-              placeholder: 'e.g. Robert Altman',
-              autoComplete: 'off',
-              value: this.state.value,
-              onChange: this.handleChange
-            })
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'form-group text-right' },
-            _react2.default.createElement(
-              'button',
-              { type: 'submit', className: 'btn btn-primary mr-auto movie-btn', action: 'submit' },
-              'Submit'
-            )
-          )
-        )
-      );
-    }
-  }]);
-
-  return AddDirectorForm;
-}(_react2.default.Component);
-
-AddDirectorForm.propTypes = {
-  handleCloseModal: _propTypes2.default.func
-};
-
-exports.default = AddDirectorForm;
-
-/***/ }),
-/* 117 */,
-/* 118 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = undefined;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = __webpack_require__(1);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _axios = __webpack_require__(8);
-
-var _axios2 = _interopRequireDefault(_axios);
-
-var _config = __webpack_require__(9);
-
-var _config2 = _interopRequireDefault(_config);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var AddMovieForm = function (_React$Component) {
-  _inherits(AddMovieForm, _React$Component);
-
-  function AddMovieForm(props) {
-    _classCallCheck(this, AddMovieForm);
-
-    var _this = _possibleConstructorReturn(this, (AddMovieForm.__proto__ || Object.getPrototypeOf(AddMovieForm)).call(this, props));
-
-    _this.state = { directors: null };
-    return _this;
-  }
-
-  _createClass(AddMovieForm, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      _axios2.default.get(_config2.default.fetchRoot + '/director').then(function (resp) {
-        _this2.setState({
-          directors: resp.data.directors
-        });
-      }).catch(function (e) {
-        return console.log(e);
-      });
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _props = this.props,
-          handleChange = _props.handleChange,
-          handleSubmit = _props.handleSubmit,
-          movieTitle = _props.movieTitle,
-          movieYear = _props.movieYear,
-          dirSelect = _props.dirSelect;
-      var directors = this.state.directors;
-
-      if (directors) {
-        var dropdownItems = directors.map(function (director) {
-          return _react2.default.createElement(
-            'option',
-            { key: director.id, value: director.id },
-            director.name
-          );
-        });
-        return _react2.default.createElement(
-          'div',
-          { className: 'modal-container' },
-          _react2.default.createElement(
-            'form',
-            { onSubmit: handleSubmit },
-            _react2.default.createElement(
-              'div',
-              { className: 'form-group' },
-              _react2.default.createElement(
-                'label',
-                { htmlFor: 'title', className: 'mt-2' },
-                _react2.default.createElement(
-                  'strong',
-                  null,
-                  'Film title:'
-                )
-              ),
-              _react2.default.createElement('input', {
-                name: 'movieTitle',
-                value: movieTitle,
-                onChange: handleChange,
-                className: 'form-control',
-                placeholder: 'e.g. Gone with the Wind',
-                autoComplete: 'off'
-              })
-            ),
-            _react2.default.createElement(
-              'div',
-              { className: 'form-group' },
-              _react2.default.createElement(
-                'label',
-                { htmlFor: 'year', className: 'mt-2' },
-                _react2.default.createElement(
-                  'strong',
-                  null,
-                  'Year of release:'
-                )
-              ),
-              _react2.default.createElement('input', {
-                name: 'movieYear',
-                value: movieYear,
-                onChange: handleChange,
-                className: 'form-control',
-                placeholder: 'e.g. 1940',
-                autoComplete: 'off'
-              })
-            ),
-            _react2.default.createElement(
-              'div',
-              { className: 'form-group' },
-              _react2.default.createElement(
-                'label',
-                { htmlFor: 'director', className: 'mt-2' },
-                _react2.default.createElement(
-                  'strong',
-                  null,
-                  'Director:'
-                )
-              ),
-              _react2.default.createElement(
-                'select',
-                {
-                  value: dirSelect,
-                  onChange: handleChange,
-                  className: 'form-control',
-                  name: 'dirSelect'
-                },
-                _react2.default.createElement(
-                  'option',
-                  { value: -1, disabled: true },
-                  'Select director'
-                ),
-                dropdownItems
-              )
-            ),
-            _react2.default.createElement(
-              'div',
-              { className: 'form-group text-right' },
-              _react2.default.createElement(
-                'button',
-                { type: 'submit', className: 'btn btn-primary mr-auto movie-btn', action: 'submit' },
-                'Submit'
-              )
-            )
-          )
-        );
-      }return null;
-    }
-  }]);
-
-  return AddMovieForm;
-}(_react2.default.Component);
-
-AddMovieForm.propTypes = {
-  handleChange: _propTypes2.default.func,
-  handleSubmit: _propTypes2.default.func,
-  movieTitle: _propTypes2.default.string,
-  movieYear: _propTypes2.default.number,
-  dirSelect: _propTypes2.default.number,
-  session: _propTypes2.default.object
-};
-
-exports.default = AddMovieForm;
-
-/***/ }),
-/* 119 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = undefined;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = __webpack_require__(1);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _axios = __webpack_require__(8);
-
-var _axios2 = _interopRequireDefault(_axios);
-
-var _config = __webpack_require__(9);
-
-var _DirectorPanel = __webpack_require__(120);
-
-var _DirectorPanel2 = _interopRequireDefault(_DirectorPanel);
-
-var _DirectorTable = __webpack_require__(121);
-
-var _DirectorTable2 = _interopRequireDefault(_DirectorTable);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-// components
-
-
-var DirectorPage = function (_React$Component) {
-  _inherits(DirectorPage, _React$Component);
-
-  function DirectorPage(props) {
-    _classCallCheck(this, DirectorPage);
-
-    var _this = _possibleConstructorReturn(this, (DirectorPage.__proto__ || Object.getPrototypeOf(DirectorPage)).call(this, props));
-
-    _this.state = {
-      panelData: null,
-      rows: null
-    };
-    return _this;
-  }
-
-  _createClass(DirectorPage, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      _axios2.default.get(_config.fetchRoot + '/director/' + this.props.matchId).then(function (resp) {
-        _this2.setState({
-          panelData: resp.data,
-          rows: resp.data.director.movies
-        });
-      }).catch(function (e) {
-        return console.log(e);
-      });
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          'div',
-          { className: 'container-fluid' },
-          _react2.default.createElement(_DirectorPanel2.default, { session: this.props.session, panelData: this.state.panelData }),
-          _react2.default.createElement(_DirectorTable2.default, { rows: this.state.rows })
-        )
-      );
-    }
-  }]);
-
-  return DirectorPage;
-}(_react2.default.Component);
-
-DirectorPage.propTypes = {
-  matchId: _propTypes2.default.string,
-  session: _propTypes2.default.object
-};
-
-exports.default = DirectorPage;
-
-/***/ }),
-/* 120 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = undefined;
-
-var _propTypes = __webpack_require__(1);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _Panel = __webpack_require__(14);
-
-var _Panel2 = _interopRequireDefault(_Panel);
-
-var _PanelInfo = __webpack_require__(18);
-
-var _PanelInfo2 = _interopRequireDefault(_PanelInfo);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// components
-var DirectorPanel = function DirectorPanel(props) {
-  var session = props.session,
-      panelData = props.panelData;
-
-  var panelHeader = void 0;
-  var panelInfo = void 0;
-  if (panelData) {
-    panelHeader = panelData.director.name;
-    panelInfo = _react2.default.createElement(_PanelInfo2.default, {
-      text: _react2.default.createElement(
-        'span',
-        null,
-        _react2.default.createElement(
-          'strong',
-          null,
-          panelData.director.name,
-          ' '
-        ),
-        'has released',
-        _react2.default.createElement(
-          'strong',
-          null,
-          ' ',
-          panelData.count,
-          ' '
-        ),
-        ' film(s) on Movietown.'
-      ),
-      session: session
-    });
-  }
-
-  return _react2.default.createElement(_Panel2.default, { header: panelHeader, panelInfo: panelInfo });
-};
-
-DirectorPanel.propTypes = {
-  panelData: _propTypes2.default.object,
-  session: _propTypes2.default.object
-};
-
-exports.default = DirectorPanel;
-
-/***/ }),
-/* 121 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = undefined;
-
-var _propTypes = __webpack_require__(1);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _Table = __webpack_require__(19);
-
-var _Table2 = _interopRequireDefault(_Table);
-
-var _DirectorRow = __webpack_require__(122);
-
-var _DirectorRow2 = _interopRequireDefault(_DirectorRow);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// components
-var DirectorTable = function DirectorTable(props) {
-  return _react2.default.createElement(_Table2.default, {
-    headers: ['Movie', 'Released'],
-    RowClass: _DirectorRow2.default,
-    rows: props.rows
-  });
-};
-
-DirectorTable.propTypes = {
-  rows: _propTypes2.default.array
-};
-
-exports.default = DirectorTable;
-
-/***/ }),
-/* 122 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = undefined;
-
-var _propTypes = __webpack_require__(1);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactRouterDom = __webpack_require__(6);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var DirectorRow = function DirectorRow(props) {
-  return _react2.default.createElement(
-    'tr',
-    null,
-    _react2.default.createElement(
-      'td',
-      null,
-      _react2.default.createElement(
-        'h6',
-        null,
-        _react2.default.createElement(
-          _reactRouterDom.Link,
-          { className: 'mint', to: '/movies/film/' + props.row.id },
-          props.row.title
-        )
-      )
-    ),
-    _react2.default.createElement(
-      'td',
-      null,
-      props.row.year
-    )
-  );
-};
-
-DirectorRow.propTypes = {
-  row: _propTypes2.default.object.isRequired,
-  id: _propTypes2.default.number
-};
-
-exports.default = DirectorRow;
-
-/***/ }),
-/* 123 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = undefined;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = __webpack_require__(1);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _axios = __webpack_require__(8);
-
-var _axios2 = _interopRequireDefault(_axios);
-
-var _reactModal = __webpack_require__(124);
-
-var _reactModal2 = _interopRequireDefault(_reactModal);
-
-var _config = __webpack_require__(9);
-
-var _MovieReviewsPanel = __webpack_require__(131);
-
-var _MovieReviewsPanel2 = _interopRequireDefault(_MovieReviewsPanel);
-
-var _MovieReviewsTable = __webpack_require__(132);
-
-var _MovieReviewsTable2 = _interopRequireDefault(_MovieReviewsTable);
-
-var _AddReviewForm = __webpack_require__(134);
-
-var _AddReviewForm2 = _interopRequireDefault(_AddReviewForm);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-// components
-
-
-var MovieReviewsPage = function (_React$Component) {
-  _inherits(MovieReviewsPage, _React$Component);
-
-  function MovieReviewsPage(props) {
-    _classCallCheck(this, MovieReviewsPage);
-
-    var _this = _possibleConstructorReturn(this, (MovieReviewsPage.__proto__ || Object.getPrototypeOf(MovieReviewsPage)).call(this, props));
-
-    _this.state = {
-      movie: null,
-      rows: null,
-      stars: 1,
-      comment: ''
-    };
-    _this.handleOpenModal = _this.handleOpenModal.bind(_this);
-    _this.handleCloseModal = _this.handleCloseModal.bind(_this);
-    _this.handleFormChange = _this.handleFormChange.bind(_this);
-    _this.handleFormSubmit = _this.handleFormSubmit.bind(_this);
-    return _this;
-  }
-
-  _createClass(MovieReviewsPage, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      _axios2.default.get(_config.fetchRoot + '/movies/film/' + this.props.matchId).then(function (resp) {
-        var movie = resp.data.movie;
-
-        movie.avg = resp.data.avg;
-        _this2.setState({
-          movie: movie,
-          rows: movie.reviews,
-          modal: false
-        });
-      }).catch(console.log);
-    }
-  }, {
-    key: 'handleOpenModal',
-    value: function handleOpenModal(e) {
-      e.target.blur();
-      this.setState({ modal: true });
-    }
-  }, {
-    key: 'handleCloseModal',
-    value: function handleCloseModal() {
-      this.setState({ modal: false });
-    }
-  }, {
-    key: 'handleFormChange',
-    value: function handleFormChange(e) {
-      var _e$target = e.target,
-          name = _e$target.name,
-          value = _e$target.value;
-
-      this.setState(_defineProperty({}, name, value));
-    }
-  }, {
-    key: 'handleFormSubmit',
-    value: function handleFormSubmit(e) {
-      var _this3 = this;
-
-      e.preventDefault();
-      this.handleCloseModal();
-      var movieId = this.state.movie.id;
-      var userId = this.props.session.id;
-
-      _axios2.default.post(_config.fetchRoot + '/movies/film/' + movieId, {
-        stars: this.state.stars,
-        comment: this.state.comment,
-        movieId: movieId,
-        userId: userId
-      }).then(function (resp) {
-        return _this3.setState(function (prevState) {
-          return {
-            rows: [resp.data].concat(prevState.rows),
-            stars: 1,
-            comment: ''
-          };
-        });
-      }).catch(console.log);
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var session = this.props.session;
-      var _state = this.state,
-          movie = _state.movie,
-          rows = _state.rows,
-          modal = _state.modal;
-
-      if (movie && rows) {
-        return _react2.default.createElement(
-          'div',
-          null,
-          _react2.default.createElement(
-            'div',
-            { className: 'container-fluid' },
-            _react2.default.createElement(_MovieReviewsPanel2.default, {
-              session: session,
-              movie: movie,
-              handleOpenModal: this.handleOpenModal
-            }),
-            _react2.default.createElement(_MovieReviewsTable2.default, { rows: rows })
-          ),
-          session && _react2.default.createElement(
-            _reactModal2.default,
-            {
-              isOpen: modal,
-              onRequestClose: this.handleCloseModal,
-              ariaHideApp: false,
-              style: {
-                overlay: {
-                  backgroundColor: 'rgba(0, 0, 0, .5)'
-                },
-                content: {
-                  top: '10%',
-                  left: '25%',
-                  right: '25%',
-                  bottom: '30%',
-                  backgroundColor: '#E9F5FD',
-                  overflow: 'auto'
-                }
-              }
-            },
-            _react2.default.createElement(_AddReviewForm2.default, {
-              handleFormChange: this.handleFormChange,
-              handleFormSubmit: this.handleFormSubmit,
-              session: session,
-              movie: movie,
-              stars: this.state.stars,
-              comment: this.state.comment
-            })
-          )
-        );
-      }return null;
-    }
-  }]);
-
-  return MovieReviewsPage;
-}(_react2.default.Component);
-
-MovieReviewsPage.propTypes = {
-  matchId: _propTypes2.default.string,
-  session: _propTypes2.default.object
-};
-
-exports.default = MovieReviewsPage;
-
-/***/ }),
-/* 124 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _Modal = __webpack_require__(125);
-
-var _Modal2 = _interopRequireDefault(_Modal);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = _Modal2.default;
-module.exports = exports["default"];
-
-/***/ }),
-/* 125 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
 exports.bodyOpenClassName = exports.portalClassName = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -26849,7 +25889,7 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _ModalPortal = __webpack_require__(126);
+var _ModalPortal = __webpack_require__(113);
 
 var _ModalPortal2 = _interopRequireDefault(_ModalPortal);
 
@@ -27075,7 +26115,7 @@ Modal.defaultStyles = {
 exports.default = Modal;
 
 /***/ }),
-/* 126 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27099,11 +26139,11 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _focusManager = __webpack_require__(127);
+var _focusManager = __webpack_require__(114);
 
 var focusManager = _interopRequireWildcard(_focusManager);
 
-var _scopeTab = __webpack_require__(128);
+var _scopeTab = __webpack_require__(115);
 
 var _scopeTab2 = _interopRequireDefault(_scopeTab);
 
@@ -27111,7 +26151,7 @@ var _ariaAppHider = __webpack_require__(50);
 
 var ariaAppHider = _interopRequireWildcard(_ariaAppHider);
 
-var _classList = __webpack_require__(129);
+var _classList = __webpack_require__(116);
 
 var classList = _interopRequireWildcard(_classList);
 
@@ -27501,7 +26541,7 @@ module.exports = exports["default"];
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 127 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27601,7 +26641,7 @@ function teardownScopedFocus() {
 }
 
 /***/ }),
-/* 128 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27684,7 +26724,7 @@ function scopeTab(node, event) {
 module.exports = exports["default"];
 
 /***/ }),
-/* 129 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27798,7 +26838,7 @@ var remove = exports.remove = function remove(element, classString) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 130 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -27845,7 +26885,1020 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 
 /***/ }),
-/* 131 */
+/* 118 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _propTypes = __webpack_require__(1);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Panel = __webpack_require__(14);
+
+var _Panel2 = _interopRequireDefault(_Panel);
+
+var _PanelInfo = __webpack_require__(18);
+
+var _PanelInfo2 = _interopRequireDefault(_PanelInfo);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// components
+var AllMoviesPanel = function AllMoviesPanel(props) {
+  var session = props.session,
+      handleOpenModal = props.handleOpenModal;
+
+  return _react2.default.createElement(_Panel2.default, {
+    header: 'All Movies',
+    panelInfo: _react2.default.createElement(_PanelInfo2.default, {
+      session: session,
+      user: _react2.default.createElement(
+        'span',
+        null,
+        _react2.default.createElement(
+          'button',
+          {
+            name: 'addDirectorBtn',
+            onClick: handleOpenModal,
+            type: 'button',
+            className: 'btn movie-btn add-btn mx-2' },
+          '+ Add Director'
+        ),
+        _react2.default.createElement(
+          'button',
+          {
+            name: 'addMovieBtn',
+            onClick: handleOpenModal,
+            type: 'button',
+            className: 'btn movie-btn add-btn mx-2' },
+          '+ Add Film'
+        )
+      ),
+      guest: _react2.default.createElement(
+        'h6',
+        { className: 'mint' },
+        'Sign in to add directors and movies.'
+      )
+    })
+  });
+};
+
+AllMoviesPanel.propTypes = {
+  session: _propTypes2.default.object,
+  handleOpenModal: _propTypes2.default.func
+};
+
+exports.default = AllMoviesPanel;
+
+/***/ }),
+/* 119 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _propTypes = __webpack_require__(1);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Table = __webpack_require__(19);
+
+var _Table2 = _interopRequireDefault(_Table);
+
+var _AllMoviesRow = __webpack_require__(120);
+
+var _AllMoviesRow2 = _interopRequireDefault(_AllMoviesRow);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// components
+var AllMoviesTable = function AllMoviesTable(props) {
+  return _react2.default.createElement(_Table2.default, {
+    headers: ['Movie', 'Director', 'Year'],
+    RowClass: _AllMoviesRow2.default,
+    rows: props.rows
+  });
+};
+
+AllMoviesTable.propTypes = {
+  rows: _propTypes2.default.array
+};
+
+exports.default = AllMoviesTable;
+
+/***/ }),
+/* 120 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _propTypes = __webpack_require__(1);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(6);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var AllMoviesRow = function AllMoviesRow(props) {
+  return _react2.default.createElement(
+    'tr',
+    null,
+    _react2.default.createElement(
+      'td',
+      null,
+      _react2.default.createElement(
+        'h6',
+        null,
+        _react2.default.createElement(
+          _reactRouterDom.Link,
+          { to: '/movies/film/' + props.id, className: 'mint' },
+          props.row.title
+        )
+      )
+    ),
+    _react2.default.createElement(
+      'td',
+      null,
+      _react2.default.createElement(
+        _reactRouterDom.Link,
+        { to: '/director/' + props.row.director.id, className: 'white' },
+        props.row.director.name
+      )
+    ),
+    _react2.default.createElement(
+      'td',
+      null,
+      props.row.year
+    )
+  );
+};
+
+AllMoviesRow.propTypes = {
+  row: _propTypes2.default.object.isRequired,
+  id: _propTypes2.default.number
+};
+
+exports.default = AllMoviesRow;
+
+/***/ }),
+/* 121 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(1);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _axios = __webpack_require__(8);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _config = __webpack_require__(9);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var AddDirectorForm = function (_React$Component) {
+  _inherits(AddDirectorForm, _React$Component);
+
+  function AddDirectorForm(props) {
+    _classCallCheck(this, AddDirectorForm);
+
+    var _this = _possibleConstructorReturn(this, (AddDirectorForm.__proto__ || Object.getPrototypeOf(AddDirectorForm)).call(this, props));
+
+    _this.state = {
+      value: ''
+    };
+    _this.handleChange = _this.handleChange.bind(_this);
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
+    return _this;
+  }
+
+  _createClass(AddDirectorForm, [{
+    key: 'handleChange',
+    value: function handleChange(e) {
+      this.setState({ value: e.target.value });
+    }
+  }, {
+    key: 'handleSubmit',
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      if (this.state.value) {
+        _axios2.default.post(_config.fetchRoot + '/director', {
+          name: this.state.value
+        }).catch(console.log);
+        this.props.handleCloseModal();
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { className: 'modal-container' },
+        _react2.default.createElement(
+          'form',
+          { onSubmit: this.handleSubmit, method: 'post' },
+          _react2.default.createElement(
+            'div',
+            { className: 'form-group' },
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'name', className: 'mt-2 col-form-label-lg' },
+              _react2.default.createElement(
+                'strong',
+                null,
+                'Director Name:'
+              )
+            ),
+            _react2.default.createElement('input', {
+              type: 'input',
+              className: 'form-control form-control-lg',
+              id: 'name',
+              name: 'name',
+              placeholder: 'e.g. Robert Altman',
+              autoComplete: 'off',
+              value: this.state.value,
+              onChange: this.handleChange
+            })
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'form-group' },
+            _react2.default.createElement(
+              'button',
+              { type: 'submit',
+                className: 'btn btn-primary movie-btn btn-lg mt-2',
+                action: 'submit'
+              },
+              'Submit'
+            )
+          )
+        )
+      );
+    }
+  }]);
+
+  return AddDirectorForm;
+}(_react2.default.Component);
+
+AddDirectorForm.propTypes = {
+  handleCloseModal: _propTypes2.default.func
+};
+
+exports.default = AddDirectorForm;
+
+/***/ }),
+/* 122 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(1);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _axios = __webpack_require__(8);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _config = __webpack_require__(9);
+
+var _config2 = _interopRequireDefault(_config);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var AddMovieForm = function (_React$Component) {
+  _inherits(AddMovieForm, _React$Component);
+
+  function AddMovieForm(props) {
+    _classCallCheck(this, AddMovieForm);
+
+    var _this = _possibleConstructorReturn(this, (AddMovieForm.__proto__ || Object.getPrototypeOf(AddMovieForm)).call(this, props));
+
+    _this.state = { directors: null };
+    return _this;
+  }
+
+  _createClass(AddMovieForm, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      _axios2.default.get(_config2.default.fetchRoot + '/director').then(function (resp) {
+        _this2.setState({
+          directors: resp.data.directors
+        });
+      }).catch(function (e) {
+        return console.log(e);
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var directors = this.state.directors;
+
+      if (directors) {
+        var dropdownItems = directors.map(function (director) {
+          return _react2.default.createElement(
+            'option',
+            { key: director.id, value: director.id },
+            director.name
+          );
+        });
+        var _props = this.props,
+            handleChange = _props.handleChange,
+            handleSubmit = _props.handleSubmit,
+            movieTitle = _props.movieTitle,
+            movieYear = _props.movieYear,
+            dirSelect = _props.dirSelect;
+
+        return _react2.default.createElement(
+          'div',
+          { className: 'modal-container' },
+          _react2.default.createElement(
+            'form',
+            { onSubmit: handleSubmit },
+            _react2.default.createElement(
+              'div',
+              { className: 'form-group' },
+              _react2.default.createElement(
+                'label',
+                { htmlFor: 'title', className: 'mt-2' },
+                _react2.default.createElement(
+                  'strong',
+                  null,
+                  'Film title:'
+                )
+              ),
+              _react2.default.createElement('input', {
+                name: 'movieTitle',
+                value: movieTitle,
+                onChange: handleChange,
+                className: 'form-control',
+                placeholder: 'e.g. Gone with the Wind',
+                autoComplete: 'off'
+              })
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'form-group' },
+              _react2.default.createElement(
+                'label',
+                { htmlFor: 'year', className: 'mt-2' },
+                _react2.default.createElement(
+                  'strong',
+                  null,
+                  'Year of release:'
+                )
+              ),
+              _react2.default.createElement('input', {
+                name: 'movieYear',
+                value: movieYear,
+                onChange: handleChange,
+                className: 'form-control',
+                placeholder: 'e.g. 1940',
+                autoComplete: 'off'
+              })
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'form-group' },
+              _react2.default.createElement(
+                'label',
+                { htmlFor: 'director', className: 'mt-2' },
+                _react2.default.createElement(
+                  'strong',
+                  null,
+                  'Director:'
+                )
+              ),
+              _react2.default.createElement(
+                'select',
+                {
+                  value: dirSelect,
+                  onChange: handleChange,
+                  className: 'form-control',
+                  name: 'dirSelect'
+                },
+                _react2.default.createElement(
+                  'option',
+                  { value: '-1', disabled: true },
+                  'Select director'
+                ),
+                dropdownItems
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'form-group' },
+              _react2.default.createElement(
+                'button',
+                { type: 'submit', className: 'btn btn-primary movie-btn mt-2', action: 'submit' },
+                'Submit'
+              )
+            )
+          )
+        );
+      }return null;
+    }
+  }]);
+
+  return AddMovieForm;
+}(_react2.default.Component);
+
+AddMovieForm.propTypes = {
+  handleChange: _propTypes2.default.func,
+  handleSubmit: _propTypes2.default.func,
+  movieTitle: _propTypes2.default.string,
+  movieYear: _propTypes2.default.string,
+  dirSelect: _propTypes2.default.string,
+  session: _propTypes2.default.object
+};
+
+exports.default = AddMovieForm;
+
+/***/ }),
+/* 123 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(1);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _axios = __webpack_require__(8);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _config = __webpack_require__(9);
+
+var _DirectorPanel = __webpack_require__(124);
+
+var _DirectorPanel2 = _interopRequireDefault(_DirectorPanel);
+
+var _DirectorTable = __webpack_require__(125);
+
+var _DirectorTable2 = _interopRequireDefault(_DirectorTable);
+
+var _Panel = __webpack_require__(14);
+
+var _Panel2 = _interopRequireDefault(_Panel);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+// components
+
+
+var DirectorPage = function (_React$Component) {
+  _inherits(DirectorPage, _React$Component);
+
+  function DirectorPage(props) {
+    _classCallCheck(this, DirectorPage);
+
+    var _this = _possibleConstructorReturn(this, (DirectorPage.__proto__ || Object.getPrototypeOf(DirectorPage)).call(this, props));
+
+    _this.state = {
+      director: null,
+      rows: null,
+      err: null
+    };
+    return _this;
+  }
+
+  _createClass(DirectorPage, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      _axios2.default.get(_config.fetchRoot + '/director/' + this.props.matchId).then(function (resp) {
+        return _this2.setState({
+          director: resp.data.director,
+          rows: resp.data.director.movies
+        });
+      }).catch(function (err) {
+        var status = err.response.status;
+
+        if (status === 404 || status === 500) {
+          _this2.setState({
+            err: { header: 'Not found!', message: "That director doesn't exist." }
+          });
+        }
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var session = this.props.session;
+      var _state = this.state,
+          director = _state.director,
+          rows = _state.rows,
+          err = _state.err;
+
+      if (err) {
+        return _react2.default.createElement(_Panel2.default, { header: err.header, message: err.message });
+      }
+      if (director) {
+        return _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'div',
+            { className: 'container-fluid' },
+            _react2.default.createElement(_DirectorPanel2.default, {
+              session: session,
+              director: director,
+              count: director.movies.length
+            }),
+            _react2.default.createElement(_DirectorTable2.default, { rows: rows })
+          )
+        );
+      }return null;
+    }
+  }]);
+
+  return DirectorPage;
+}(_react2.default.Component);
+
+DirectorPage.propTypes = {
+  matchId: _propTypes2.default.string,
+  session: _propTypes2.default.object
+};
+
+exports.default = DirectorPage;
+
+/***/ }),
+/* 124 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _propTypes = __webpack_require__(1);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Panel = __webpack_require__(14);
+
+var _Panel2 = _interopRequireDefault(_Panel);
+
+var _PanelInfo = __webpack_require__(18);
+
+var _PanelInfo2 = _interopRequireDefault(_PanelInfo);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// components
+var DirectorPanel = function DirectorPanel(props) {
+  var session = props.session,
+      director = props.director,
+      count = props.count;
+
+  return _react2.default.createElement(_Panel2.default, {
+    header: director.name,
+    panelInfo: _react2.default.createElement(_PanelInfo2.default, {
+      text: _react2.default.createElement(
+        'span',
+        null,
+        _react2.default.createElement(
+          'strong',
+          null,
+          director.name,
+          ' '
+        ),
+        'has released',
+        _react2.default.createElement(
+          'strong',
+          null,
+          ' ',
+          count,
+          ' '
+        ),
+        ' film(s) on Movietown.'
+      ),
+      session: session
+    })
+  });
+};
+
+DirectorPanel.propTypes = {
+  session: _propTypes2.default.object,
+  director: _propTypes2.default.object,
+  count: _propTypes2.default.number
+};
+
+exports.default = DirectorPanel;
+
+/***/ }),
+/* 125 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _propTypes = __webpack_require__(1);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Table = __webpack_require__(19);
+
+var _Table2 = _interopRequireDefault(_Table);
+
+var _DirectorRow = __webpack_require__(126);
+
+var _DirectorRow2 = _interopRequireDefault(_DirectorRow);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// components
+var DirectorTable = function DirectorTable(props) {
+  return _react2.default.createElement(_Table2.default, {
+    headers: ['Movie', 'Released'],
+    RowClass: _DirectorRow2.default,
+    rows: props.rows
+  });
+};
+
+DirectorTable.propTypes = {
+  rows: _propTypes2.default.array
+};
+
+exports.default = DirectorTable;
+
+/***/ }),
+/* 126 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _propTypes = __webpack_require__(1);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(6);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var DirectorRow = function DirectorRow(props) {
+  return _react2.default.createElement(
+    'tr',
+    null,
+    _react2.default.createElement(
+      'td',
+      null,
+      _react2.default.createElement(
+        'h6',
+        null,
+        _react2.default.createElement(
+          _reactRouterDom.Link,
+          { className: 'mint', to: '/movies/film/' + props.row.id },
+          props.row.title
+        )
+      )
+    ),
+    _react2.default.createElement(
+      'td',
+      null,
+      props.row.year
+    )
+  );
+};
+
+DirectorRow.propTypes = {
+  row: _propTypes2.default.object.isRequired,
+  id: _propTypes2.default.number
+};
+
+exports.default = DirectorRow;
+
+/***/ }),
+/* 127 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(1);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _axios = __webpack_require__(8);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _reactModal = __webpack_require__(48);
+
+var _reactModal2 = _interopRequireDefault(_reactModal);
+
+var _config = __webpack_require__(9);
+
+var _MovieReviewsPanel = __webpack_require__(128);
+
+var _MovieReviewsPanel2 = _interopRequireDefault(_MovieReviewsPanel);
+
+var _MovieReviewsTable = __webpack_require__(129);
+
+var _MovieReviewsTable2 = _interopRequireDefault(_MovieReviewsTable);
+
+var _AddReviewForm = __webpack_require__(131);
+
+var _AddReviewForm2 = _interopRequireDefault(_AddReviewForm);
+
+var _Panel = __webpack_require__(14);
+
+var _Panel2 = _interopRequireDefault(_Panel);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+// components
+
+
+var MovieReviewsPage = function (_React$Component) {
+  _inherits(MovieReviewsPage, _React$Component);
+
+  function MovieReviewsPage(props) {
+    _classCallCheck(this, MovieReviewsPage);
+
+    var _this = _possibleConstructorReturn(this, (MovieReviewsPage.__proto__ || Object.getPrototypeOf(MovieReviewsPage)).call(this, props));
+
+    _this.state = {
+      movie: null,
+      rows: null,
+      stars: 1,
+      comment: '',
+      err: null
+    };
+    _this.handleOpenModal = _this.handleOpenModal.bind(_this);
+    _this.handleCloseModal = _this.handleCloseModal.bind(_this);
+    _this.handleFormChange = _this.handleFormChange.bind(_this);
+    _this.handleFormSubmit = _this.handleFormSubmit.bind(_this);
+    return _this;
+  }
+
+  _createClass(MovieReviewsPage, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      _axios2.default.get(_config.fetchRoot + '/movies/film/' + this.props.matchId).then(function (resp) {
+        var movie = resp.data.movie;
+
+        _this2.setState({
+          movie: movie,
+          rows: movie.reviews,
+          modal: false
+        });
+      }).catch(function (err) {
+        var status = err.response.status;
+
+        if (status === 404 || status === 500) {
+          _this2.setState({
+            err: { header: 'Not found!', message: "That movie doesn't exist." }
+          });
+        }
+      });
+    }
+  }, {
+    key: 'handleOpenModal',
+    value: function handleOpenModal(e) {
+      e.target.blur();
+      this.setState({ modal: true });
+    }
+  }, {
+    key: 'handleCloseModal',
+    value: function handleCloseModal() {
+      this.setState({ modal: false });
+    }
+  }, {
+    key: 'handleFormChange',
+    value: function handleFormChange(e) {
+      var _e$target = e.target,
+          name = _e$target.name,
+          value = _e$target.value;
+
+      this.setState(_defineProperty({}, name, value));
+    }
+  }, {
+    key: 'handleFormSubmit',
+    value: function handleFormSubmit(e) {
+      var _this3 = this;
+
+      e.preventDefault();
+      this.handleCloseModal();
+      var movieId = this.state.movie.id;
+      var userId = this.props.session.id;
+
+      _axios2.default.post(_config.fetchRoot + '/movies/film/' + movieId, {
+        stars: this.state.stars,
+        comment: this.state.comment,
+        movieId: movieId,
+        userId: userId
+      }).then(function (resp) {
+        return _this3.setState(function (prevState) {
+          var rows = [resp.data].concat(prevState.rows);
+          return {
+            rows: rows,
+            stars: 1,
+            comment: ''
+          };
+        });
+      }).catch(console.log);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var session = this.props.session;
+      var _state = this.state,
+          movie = _state.movie,
+          rows = _state.rows,
+          modal = _state.modal,
+          err = _state.err;
+
+      if (err) {
+        return _react2.default.createElement(_Panel2.default, { header: err.header, message: err.message });
+      }
+      if (movie) {
+        return _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'div',
+            { className: 'container-fluid' },
+            _react2.default.createElement(_MovieReviewsPanel2.default, {
+              session: session,
+              movie: movie,
+              avg: (0, _config.avgStars)(rows),
+              handleOpenModal: this.handleOpenModal
+            }),
+            _react2.default.createElement(_MovieReviewsTable2.default, { rows: rows })
+          ),
+          session && _react2.default.createElement(
+            _reactModal2.default,
+            {
+              isOpen: modal,
+              onRequestClose: this.handleCloseModal,
+              ariaHideApp: false,
+              style: _config.modalStyle
+            },
+            _react2.default.createElement(_AddReviewForm2.default, {
+              handleFormChange: this.handleFormChange,
+              handleFormSubmit: this.handleFormSubmit,
+              session: session,
+              movie: movie,
+              stars: this.state.stars,
+              comment: this.state.comment
+            })
+          )
+        );
+      }return null;
+    }
+  }]);
+
+  return MovieReviewsPage;
+}(_react2.default.Component);
+
+MovieReviewsPage.propTypes = {
+  matchId: _propTypes2.default.string,
+  session: _propTypes2.default.object
+};
+
+exports.default = MovieReviewsPage;
+
+/***/ }),
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27880,18 +27933,18 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var MovieReviewsPanel = function MovieReviewsPanel(props) {
   var session = props.session,
       movie = props.movie,
+      avg = props.avg,
       handleOpenModal = props.handleOpenModal;
 
-  var panelHeader = void 0;
-  var panelInfo = void 0;
-  if (movie) {
-    panelHeader = movie.title;
-    panelInfo = _react2.default.createElement(_PanelInfo2.default, {
-      stats: [['Avg. Score', movie.avg + ' \u2605'], ['Released', movie.year], ['Director', _react2.default.createElement(
-        _reactRouterDom.Link,
-        { key: 0, to: '/director/' + movie.director.id },
-        movie.director.name
-      )]],
+  var dirLink = _react2.default.createElement(
+    _reactRouterDom.Link,
+    { to: '/director/' + movie.director.id },
+    movie.director.name
+  );
+  return _react2.default.createElement(_Panel2.default, {
+    header: movie.title,
+    panelInfo: _react2.default.createElement(_PanelInfo2.default, {
+      stats: [['Avg. Score', avg + ' \u2605'], ['Released', movie.year], ['Director', dirLink]],
       session: session,
       user: _react2.default.createElement(
         'button',
@@ -27901,14 +27954,13 @@ var MovieReviewsPanel = function MovieReviewsPanel(props) {
           className: 'btn movie-btn add-btn mx-2' },
         '+ Add Review'
       )
-    });
-  }
-
-  return _react2.default.createElement(_Panel2.default, { header: panelHeader, panelInfo: panelInfo });
+    })
+  });
 };
 
 MovieReviewsPanel.propTypes = {
   movie: _propTypes2.default.object,
+  avg: _propTypes2.default.string,
   session: _propTypes2.default.object,
   handleOpenModal: _propTypes2.default.func
 };
@@ -27916,7 +27968,7 @@ MovieReviewsPanel.propTypes = {
 exports.default = MovieReviewsPanel;
 
 /***/ }),
-/* 132 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27939,7 +27991,7 @@ var _Table = __webpack_require__(19);
 
 var _Table2 = _interopRequireDefault(_Table);
 
-var _MovieReviewsRow = __webpack_require__(133);
+var _MovieReviewsRow = __webpack_require__(130);
 
 var _MovieReviewsRow2 = _interopRequireDefault(_MovieReviewsRow);
 
@@ -27963,7 +28015,7 @@ MovieReviewsTable.propTypes = {
 exports.default = MovieReviewsTable;
 
 /***/ }),
-/* 133 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28025,7 +28077,7 @@ MovieReviewsRow.propTypes = {
 exports.default = MovieReviewsRow;
 
 /***/ }),
-/* 134 */
+/* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28035,8 +28087,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = undefined;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(0);
 
@@ -28048,128 +28098,112 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var AddReviewForm = function AddReviewForm(props) {
+  var username = props.session.username;
+  var movie = props.movie,
+      stars = props.stars,
+      comment = props.comment,
+      handleFormSubmit = props.handleFormSubmit,
+      handleFormChange = props.handleFormChange;
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var AddReviewForm = function (_React$Component) {
-  _inherits(AddReviewForm, _React$Component);
-
-  function AddReviewForm() {
-    _classCallCheck(this, AddReviewForm);
-
-    return _possibleConstructorReturn(this, (AddReviewForm.__proto__ || Object.getPrototypeOf(AddReviewForm)).apply(this, arguments));
-  }
-
-  _createClass(AddReviewForm, [{
-    key: 'render',
-    value: function render() {
-      var username = this.props.session.username;
-      var _props = this.props,
-          stars = _props.stars,
-          comment = _props.comment,
-          handleFormSubmit = _props.handleFormSubmit,
-          handleFormChange = _props.handleFormChange;
-
-      return _react2.default.createElement(
+  return _react2.default.createElement(
+    'div',
+    { className: 'modal-container' },
+    _react2.default.createElement(
+      'form',
+      { onSubmit: handleFormSubmit },
+      _react2.default.createElement(
         'div',
-        { className: 'modal-container' },
+        { className: 'form-group' },
         _react2.default.createElement(
-          'form',
-          { onSubmit: handleFormSubmit },
+          'h2',
+          { className: 'mint' },
+          movie.title
+        ),
+        _react2.default.createElement(
+          'label',
+          { htmlFor: 'user', className: 'mt-2' },
           _react2.default.createElement(
-            'div',
-            { className: 'form-group' },
-            _react2.default.createElement(
-              'label',
-              { htmlFor: 'user', className: 'mt-2' },
-              _react2.default.createElement(
-                'strong',
-                null,
-                username + '\'s Rating:'
-              )
-            ),
-            _react2.default.createElement(
-              'select',
-              {
-                value: stars,
-                onChange: handleFormChange,
-                className: 'form-control',
-                id: 'stars',
-                name: 'stars'
-              },
-              _react2.default.createElement(
-                'option',
-                { value: 1 },
-                '1 ',
-                '★'.repeat(1)
-              ),
-              _react2.default.createElement(
-                'option',
-                { value: 2 },
-                '2 ',
-                '★'.repeat(2)
-              ),
-              _react2.default.createElement(
-                'option',
-                { value: 3 },
-                '3 ',
-                '★'.repeat(3)
-              ),
-              _react2.default.createElement(
-                'option',
-                { value: 4 },
-                '4 ',
-                '★'.repeat(4)
-              ),
-              _react2.default.createElement(
-                'option',
-                { value: 5 },
-                '5 ',
-                '★'.repeat(5)
-              )
-            )
+            'strong',
+            null,
+            username + '\'s Rating:'
+          )
+        ),
+        _react2.default.createElement(
+          'select',
+          {
+            value: stars,
+            onChange: handleFormChange,
+            className: 'form-control',
+            id: 'stars',
+            name: 'stars'
+          },
+          _react2.default.createElement(
+            'option',
+            { value: 1 },
+            '1 ',
+            '★'.repeat(1)
           ),
           _react2.default.createElement(
-            'div',
-            { className: 'form-group' },
-            _react2.default.createElement(
-              'label',
-              { htmlFor: 'comment', className: 'mt-2' },
-              _react2.default.createElement(
-                'strong',
-                null,
-                'Review:'
-              )
-            ),
-            _react2.default.createElement('textarea', {
-              value: comment,
-              onChange: handleFormChange,
-              className: 'form-control',
-              id: 'comment',
-              name: 'comment',
-              rows: '3',
-              placeholder: 'What did you think?'
-            })
+            'option',
+            { value: 2 },
+            '2 ',
+            '★'.repeat(2)
           ),
           _react2.default.createElement(
-            'div',
-            { className: 'form-group text-right' },
-            _react2.default.createElement(
-              'button',
-              { type: 'submit', className: 'btn btn-primary mr-auto movie-btn', action: 'submit' },
-              'Submit'
-            )
+            'option',
+            { value: 3 },
+            '3 ',
+            '★'.repeat(3)
+          ),
+          _react2.default.createElement(
+            'option',
+            { value: 4 },
+            '4 ',
+            '★'.repeat(4)
+          ),
+          _react2.default.createElement(
+            'option',
+            { value: 5 },
+            '5 ',
+            '★'.repeat(5)
           )
         )
-      );
-    }
-  }]);
-
-  return AddReviewForm;
-}(_react2.default.Component);
+      ),
+      _react2.default.createElement(
+        'div',
+        { className: 'form-group' },
+        _react2.default.createElement(
+          'label',
+          { htmlFor: 'comment', className: 'mt-2' },
+          _react2.default.createElement(
+            'strong',
+            null,
+            'Review:'
+          )
+        ),
+        _react2.default.createElement('textarea', {
+          value: comment,
+          onChange: handleFormChange,
+          className: 'form-control',
+          id: 'comment',
+          name: 'comment',
+          rows: '3',
+          placeholder: 'What did you think?'
+        })
+      ),
+      _react2.default.createElement(
+        'div',
+        { className: 'form-group' },
+        _react2.default.createElement(
+          'button',
+          { type: 'submit', className: 'btn btn-primary movie-btn mt-2', action: 'submit' },
+          'Submit'
+        )
+      )
+    )
+  );
+};
 
 AddReviewForm.propTypes = {
   session: _propTypes2.default.object,
@@ -28183,7 +28217,7 @@ AddReviewForm.propTypes = {
 exports.default = AddReviewForm;
 
 /***/ }),
-/* 135 */
+/* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28210,13 +28244,17 @@ var _axios2 = _interopRequireDefault(_axios);
 
 var _config = __webpack_require__(9);
 
-var _UserReviewsPanel = __webpack_require__(136);
+var _UserReviewsPanel = __webpack_require__(133);
 
 var _UserReviewsPanel2 = _interopRequireDefault(_UserReviewsPanel);
 
-var _UserReviewsTable = __webpack_require__(137);
+var _UserReviewsTable = __webpack_require__(134);
 
 var _UserReviewsTable2 = _interopRequireDefault(_UserReviewsTable);
+
+var _Panel = __webpack_require__(14);
+
+var _Panel2 = _interopRequireDefault(_Panel);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -28238,8 +28276,9 @@ var UserReviewsPage = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (UserReviewsPage.__proto__ || Object.getPrototypeOf(UserReviewsPage)).call(this, props));
 
     _this.state = {
-      panelData: null,
-      rows: null
+      user: null,
+      rows: null,
+      err: null
     };
     return _this;
   }
@@ -28250,27 +28289,48 @@ var UserReviewsPage = function (_React$Component) {
       var _this2 = this;
 
       _axios2.default.get(_config.fetchRoot + '/user/' + this.props.matchId).then(function (resp) {
-        _this2.setState({
-          panelData: resp.data,
+        return _this2.setState({
+          user: resp.data.user,
           rows: resp.data.user.reviews
         });
-      }).catch(function (e) {
-        return console.log(e);
+      }).catch(function (err) {
+        var status = err.response.status;
+
+        if (status === 404 || status === 500) {
+          _this2.setState({
+            err: { header: 'Not found!', message: "That user doesn't exist." }
+          });
+        }
       });
     }
   }, {
     key: 'render',
     value: function render() {
-      return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
+      var session = this.props.session;
+      var _state = this.state,
+          user = _state.user,
+          rows = _state.rows,
+          err = _state.err;
+
+      if (err) {
+        return _react2.default.createElement(_Panel2.default, { header: err.header, message: err.message });
+      }
+      if (user) {
+        return _react2.default.createElement(
           'div',
-          { className: 'container-fluid' },
-          _react2.default.createElement(_UserReviewsPanel2.default, { session: this.props.session, panelData: this.state.panelData }),
-          _react2.default.createElement(_UserReviewsTable2.default, { rows: this.state.rows })
-        )
-      );
+          null,
+          _react2.default.createElement(
+            'div',
+            { className: 'container-fluid' },
+            _react2.default.createElement(_UserReviewsPanel2.default, {
+              session: session,
+              user: user,
+              count: user.reviews.length
+            }),
+            _react2.default.createElement(_UserReviewsTable2.default, { rows: rows })
+          )
+        );
+      }return null;
     }
   }]);
 
@@ -28285,7 +28345,7 @@ UserReviewsPage.propTypes = {
 exports.default = UserReviewsPage;
 
 /***/ }),
-/* 136 */
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28317,20 +28377,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // components
 var UserReviewsPanel = function UserReviewsPanel(props) {
   var session = props.session,
-      panelData = props.panelData;
+      user = props.user,
+      count = props.count;
 
-  var panelHeader = void 0;
-  var panelInfo = void 0;
-  if (panelData) {
-    panelHeader = panelData.user.username;
-    panelInfo = _react2.default.createElement(_PanelInfo2.default, {
+  return _react2.default.createElement(_Panel2.default, {
+    header: user.username,
+    panelInfo: _react2.default.createElement(_PanelInfo2.default, {
       text: _react2.default.createElement(
         'span',
         null,
         _react2.default.createElement(
           'strong',
           null,
-          panelData.user.username,
+          user.username,
           ' '
         ),
         'has posted',
@@ -28338,27 +28397,26 @@ var UserReviewsPanel = function UserReviewsPanel(props) {
           'strong',
           null,
           ' ',
-          panelData.count,
+          count,
           ' '
         ),
         'review(s) on Movietown.'
       ),
       session: session
-    });
-  }
-
-  return _react2.default.createElement(_Panel2.default, { header: panelHeader, panelInfo: panelInfo });
+    })
+  });
 };
 
 UserReviewsPanel.propTypes = {
-  panelData: _propTypes2.default.object,
-  session: _propTypes2.default.object
+  session: _propTypes2.default.object,
+  user: _propTypes2.default.object,
+  count: _propTypes2.default.number
 };
 
 exports.default = UserReviewsPanel;
 
 /***/ }),
-/* 137 */
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28381,7 +28439,7 @@ var _Table = __webpack_require__(19);
 
 var _Table2 = _interopRequireDefault(_Table);
 
-var _UserReviewsRow = __webpack_require__(138);
+var _UserReviewsRow = __webpack_require__(135);
 
 var _UserReviewsRow2 = _interopRequireDefault(_UserReviewsRow);
 
@@ -28403,7 +28461,7 @@ UserReviewsTable.propTypes = {
 exports.default = UserReviewsTable;
 
 /***/ }),
-/* 138 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28465,7 +28523,7 @@ UserReviewsRow.propTypes = {
 exports.default = UserReviewsRow;
 
 /***/ }),
-/* 139 */
+/* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28536,15 +28594,14 @@ var AuthForm = function (_React$Component) {
             _react2.default.createElement(
               'form',
               {
-                onSubmit: register ? handleRegister : handleLogin,
-                className: 'mb-2'
+                onSubmit: register ? handleRegister : handleLogin
               },
               _react2.default.createElement(
                 'div',
                 { className: 'form-group' },
                 _react2.default.createElement(
                   'label',
-                  { htmlFor: 'username', className: 'mt-2' },
+                  { htmlFor: 'username' },
                   _react2.default.createElement(
                     'strong',
                     null,
@@ -28558,12 +28615,11 @@ var AuthForm = function (_React$Component) {
                   autoComplete: 'off',
                   value: authName,
                   onChange: handleAuthNameChange
-                }),
-                _react2.default.createElement('small', { id: 'access-warn' })
+                })
               ),
               _react2.default.createElement(
                 'button',
-                { className: 'btn btn-primary mb-2' },
+                { className: 'btn btn-primary' },
                 'Submit'
               )
             )
@@ -28577,11 +28633,11 @@ var AuthForm = function (_React$Component) {
 }(_react2.default.Component);
 
 AuthForm.propTypes = {
-  register: _propTypes2.default.bool,
-  session: _propTypes2.default.object,
   handleAuthNameChange: _propTypes2.default.func,
   handleRegister: _propTypes2.default.func,
   handleLogin: _propTypes2.default.func,
+  session: _propTypes2.default.object,
+  register: _propTypes2.default.bool,
   authName: _propTypes2.default.string
 };
 

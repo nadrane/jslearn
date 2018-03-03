@@ -6,33 +6,30 @@ import Panel from '../Panel';
 import PanelInfo from '../PanelInfo';
 
 const DirectorPanel = (props) => {
-  const { session, panelData } = props;
-  let panelHeader;
-  let panelInfo;
-  if (panelData) {
-    panelHeader = panelData.director.name;
-    panelInfo = (
-      <PanelInfo
-        text={(
-          <span>
-            <strong>{panelData.director.name} </strong>
-            has released
-            <strong> {panelData.count} </strong> film(s) on Movietown.
-          </span>
-        )}
-        session={session}
-      />
-    );
-  }
-
+  const { session, director, count } = props;
   return (
-    <Panel header={panelHeader} panelInfo={panelInfo} />
+    <Panel
+      header={director.name}
+      panelInfo={(
+        <PanelInfo
+          text={(
+            <span>
+              <strong>{director.name} </strong>
+              has released
+              <strong> {count} </strong> film(s) on Movietown.
+            </span>
+          )}
+          session={session}
+        />
+      )}
+    />
   );
 };
 
 DirectorPanel.propTypes = {
-  panelData: PropTypes.object,
   session: PropTypes.object,
+  director: PropTypes.object,
+  count: PropTypes.number,
 };
 
 export { DirectorPanel as default };
