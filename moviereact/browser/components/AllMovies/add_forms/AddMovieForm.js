@@ -29,6 +29,7 @@ class AddMovieForm extends React.Component {
       return (
         <div className="modal-container">
           <form onSubmit={handleSubmit}>
+            <h2 className="mint">New Movie</h2>
             <div className="form-group">
               <label htmlFor="title" className="mt-2"><strong>Film title:</strong></label>
               <input

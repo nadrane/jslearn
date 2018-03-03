@@ -9,8 +9,8 @@ const AddReviewForm = (props) => {
   return (
     <div className="modal-container">
       <form onSubmit={handleFormSubmit}>
+        <h2 className="mint">{movie.title}</h2>
         <div className="form-group">
-            <h2 className="mint">{movie.title}</h2>
             <label htmlFor="user" className="mt-2"><strong>{`${username}'s Rating:`}</strong></label>
             <select
               value={stars}

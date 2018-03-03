@@ -13,7 +13,7 @@ const config = {
       top: '10%',
       left: '25%',
       right: '25%',
-      bottom: '30%',
+      bottom: '25%',
       backgroundColor: '#E9F5FD',
       overflow: 'auto',
     },

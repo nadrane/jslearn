@@ -1,5 +1,0 @@
-1. Error handling within react
-
-2. Look at ModalButtons
-
-3. Work on express routes + sessions

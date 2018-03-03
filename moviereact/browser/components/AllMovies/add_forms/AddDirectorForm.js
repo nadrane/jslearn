@@ -32,6 +32,7 @@ class AddDirectorForm extends React.Component {
     return (
       <div className="modal-container">
         <form onSubmit={this.handleSubmit} method="post">
+          <h2 className="mint">New Director</h2>
           <div className="form-group">
               <label htmlFor="name" className="mt-2 col-form-label-lg">
                 <strong>Director Name:</strong>
