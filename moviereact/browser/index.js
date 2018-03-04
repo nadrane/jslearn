@@ -18,7 +18,6 @@ class App extends React.Component {
     super(props);
     this.state = {
       session: null,
-      // session: { id: 1, username: 'kubrickhead123' },
       authName: '',
     };
     this.handleAuthNameChange = this.handleAuthNameChange.bind(this);

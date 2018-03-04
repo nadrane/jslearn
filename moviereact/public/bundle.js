@@ -3607,7 +3607,6 @@ var App = function (_React$Component) {
 
     _this.state = {
       session: null,
-      // session: { id: 1, username: 'kubrickhead123' },
       authName: ''
     };
     _this.handleAuthNameChange = _this.handleAuthNameChange.bind(_this);
