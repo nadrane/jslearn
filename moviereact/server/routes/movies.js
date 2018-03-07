@@ -25,7 +25,7 @@ router.post('/', (req, res, next) => {
 });
 
 /*
-* GET /api/movies/film - serve individual film data + reviews
+* GET /api/movies/film - serve data + reviews for one film
 */
 router.get('/film/:id', (req, res, next) => {
   Movie.findById(req.params.id, {
@@ -37,7 +37,7 @@ router.get('/film/:id', (req, res, next) => {
 });
 
 /*
-* POST api/movies/film/:id - add new review
+* POST api/movies/film/:id - add new review for film
 */
 router.post('/film/:id', (req, res, next) => {
   Review.create(req.body, { fields: ['stars', 'comment', 'movieId', 'userId'] })

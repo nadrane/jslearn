@@ -3673,14 +3673,17 @@ var App = function (_React$Component) {
   }, {
     key: 'handleLogout',
     value: function handleLogout(e) {
+      var _this5 = this;
+
       e.preventDefault();
-      this.setState({ session: null });
-      _axios2.default.get(_config.fetchRoot + '/auth/logout');
+      _axios2.default.delete(_config.fetchRoot + '/auth/logout').then(function () {
+        return _this5.setState({ session: null });
+      });
     }
   }, {
     key: 'render',
     value: function render() {
-      var _this5 = this;
+      var _this6 = this;
 
       return _react2.default.createElement(
         _reactRouterDom.BrowserRouter,
@@ -3697,45 +3700,45 @@ var App = function (_React$Component) {
               } }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/movies', render: function render() {
                 return _react2.default.createElement(_AllMoviesPage2.default, {
-                  session: _this5.state.session
+                  session: _this6.state.session
                 });
               } }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/movies/film/:id', render: function render(_ref) {
                 var match = _ref.match;
                 return _react2.default.createElement(_MovieReviewsPage2.default, {
                   matchId: match.params.id,
-                  session: _this5.state.session
+                  session: _this6.state.session
                 });
               } }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/user/:id', render: function render(_ref2) {
                 var match = _ref2.match;
                 return _react2.default.createElement(_UserReviewsPage2.default, {
                   matchId: match.params.id,
-                  session: _this5.state.session
+                  session: _this6.state.session
                 });
               } }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/director/:id', render: function render(_ref3) {
                 var match = _ref3.match;
                 return _react2.default.createElement(_DirectorPage2.default, {
                   matchId: match.params.id,
-                  session: _this5.state.session
+                  session: _this6.state.session
                 });
               } }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/auth/login', render: function render() {
                 return _react2.default.createElement(_AuthForm2.default, {
-                  session: _this5.state.session,
-                  handleLogin: _this5.handleLogin,
-                  authName: _this5.state.authName,
-                  handleAuthNameChange: _this5.handleAuthNameChange
+                  session: _this6.state.session,
+                  handleLogin: _this6.handleLogin,
+                  authName: _this6.state.authName,
+                  handleAuthNameChange: _this6.handleAuthNameChange
                 });
               } }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/auth/register', render: function render() {
                 return _react2.default.createElement(_AuthForm2.default, {
                   register: true,
-                  session: _this5.state.session,
-                  handleRegister: _this5.handleRegister,
-                  authName: _this5.state.authName,
-                  handleAuthNameChange: _this5.handleAuthNameChange
+                  session: _this6.state.session,
+                  handleRegister: _this6.handleRegister,
+                  authName: _this6.state.authName,
+                  handleAuthNameChange: _this6.handleAuthNameChange
                 });
               } }),
             _react2.default.createElement(_reactRouterDom.Route, { render: function render() {

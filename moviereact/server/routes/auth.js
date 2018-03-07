@@ -27,9 +27,9 @@ router.post('/login', (req, res, next) => {
 router.get('/session', (req, res, next) => res.json((req.session.user ? req.session.user : null)));
 
 /*
-* GET api/auth/logout - destroy server session
+* DELETE api/auth/logout - destroy server session
 */
-router.get('/logout', (req, res, next) =>
+router.delete('/logout', (req, res, next) =>
   req.session.destroy(err => (err ? next(err) : res.status(200).send())));
 
 /*

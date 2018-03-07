@@ -7,6 +7,10 @@ const User = connection.define('user', {
     unique: true,
     allowNull: false,
   },
+  isAdmin: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+  },
 });
 
 module.exports = User;

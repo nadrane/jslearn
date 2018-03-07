@@ -4,7 +4,7 @@ const { Director, Movie } = require('../db/index');
 const router = express.Router();
 
 /*
-* GET /api/director - get all directors
+* GET /api/director - serve all directors
 */
 router.get('/', (req, res, next) => {
   Director.findAll({ order: [['id', 'ASC']] })
@@ -13,7 +13,7 @@ router.get('/', (req, res, next) => {
 });
 
 /*
-* GET /api/director/:id - get data and movies for single director
+* GET /api/director/:id - serve data and movies for single director
 */
 router.get('/:id', (req, res, next) => {
   Director.findById(req.params.id, { include: [Movie], order: [[Movie, 'year', 'ASC']] })

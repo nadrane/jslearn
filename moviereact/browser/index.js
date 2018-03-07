@@ -76,8 +76,8 @@ class App extends React.Component {
 
   handleLogout(e) {
     e.preventDefault();
-    this.setState({ session: null });
-    axios.get(`${fetchRoot}/auth/logout`);
+    axios.delete(`${fetchRoot}/auth/logout`)
+      .then(() => this.setState({ session: null }));
   }
 
   render() {
