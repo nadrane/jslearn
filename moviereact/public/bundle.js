@@ -3641,10 +3641,12 @@ var App = function (_React$Component) {
         username: this.state.authName
       }).then(function (resp) {
         if (resp.data.id) {
+          console.log(resp.data);
           _this3.setState({
             session: {
               id: resp.data.id,
-              username: resp.data.username
+              username: resp.data.username,
+              isAdmin: resp.data.isAdmin
             }
           });
         }
@@ -3664,7 +3666,8 @@ var App = function (_React$Component) {
           _this4.setState({
             session: {
               id: resp.data.id,
-              username: resp.data.username
+              username: resp.data.username,
+              isAdmin: resp.data.isAdmin
             }
           });
         }
@@ -3685,13 +3688,17 @@ var App = function (_React$Component) {
     value: function render() {
       var _this6 = this;
 
+      var _state = this.state,
+          session = _state.session,
+          authName = _state.authName;
+
       return _react2.default.createElement(
         _reactRouterDom.BrowserRouter,
         null,
         _react2.default.createElement(
           'div',
           null,
-          _react2.default.createElement(_NavBar2.default, { session: this.state.session, onLogout: this.handleLogout }),
+          _react2.default.createElement(_NavBar2.default, { session: session, onLogout: this.handleLogout }),
           _react2.default.createElement(
             _reactRouterDom.Switch,
             null,
@@ -3700,45 +3707,45 @@ var App = function (_React$Component) {
               } }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/movies', render: function render() {
                 return _react2.default.createElement(_AllMoviesPage2.default, {
-                  session: _this6.state.session
+                  session: session
                 });
               } }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/movies/film/:id', render: function render(_ref) {
                 var match = _ref.match;
                 return _react2.default.createElement(_MovieReviewsPage2.default, {
-                  matchId: match.params.id,
-                  session: _this6.state.session
+                  session: session,
+                  matchId: match.params.id
                 });
               } }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/user/:id', render: function render(_ref2) {
                 var match = _ref2.match;
                 return _react2.default.createElement(_UserReviewsPage2.default, {
-                  matchId: match.params.id,
-                  session: _this6.state.session
+                  session: session,
+                  matchId: match.params.id
                 });
               } }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/director/:id', render: function render(_ref3) {
                 var match = _ref3.match;
                 return _react2.default.createElement(_DirectorPage2.default, {
-                  matchId: match.params.id,
-                  session: _this6.state.session
+                  session: session,
+                  matchId: match.params.id
                 });
               } }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/auth/login', render: function render() {
                 return _react2.default.createElement(_AuthForm2.default, {
-                  session: _this6.state.session,
-                  handleLogin: _this6.handleLogin,
-                  authName: _this6.state.authName,
-                  handleAuthNameChange: _this6.handleAuthNameChange
+                  session: session,
+                  authName: authName,
+                  handleAuthNameChange: _this6.handleAuthNameChange,
+                  handleLogin: _this6.handleLogin
                 });
               } }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/auth/register', render: function render() {
                 return _react2.default.createElement(_AuthForm2.default, {
+                  session: session,
                   register: true,
-                  session: _this6.state.session,
-                  handleRegister: _this6.handleRegister,
-                  authName: _this6.state.authName,
-                  handleAuthNameChange: _this6.handleAuthNameChange
+                  authName: authName,
+                  handleAuthNameChange: _this6.handleAuthNameChange,
+                  handleRegister: _this6.handleRegister
                 });
               } }),
             _react2.default.createElement(_reactRouterDom.Route, { render: function render() {

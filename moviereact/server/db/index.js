@@ -2,7 +2,7 @@ const Director = require('./models/director');
 const Movie = require('./models/movie');
 const User = require('./models/user');
 const Review = require('./models/review');
-const { seedDB } = require('./seed');
+// const { seedDB } = require('./seed');
 
 // define model associations
 Movie.Director = Movie.belongsTo(Director);
@@ -13,7 +13,7 @@ Review.Movie = Review.belongsTo(Movie);
 Movie.hasMany(Review);
 
 // seed dev database
-seedDB();
+// seedDB();
 
 module.exports = {
   Director, Movie, User, Review,

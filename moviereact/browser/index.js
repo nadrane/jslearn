@@ -44,10 +44,12 @@ class App extends React.Component {
     })
       .then((resp) => {
         if (resp.data.id) {
+          console.log(resp.data);
           this.setState({
             session: {
               id: resp.data.id,
               username: resp.data.username,
+              isAdmin: resp.data.isAdmin,
             },
           });
         }
@@ -67,6 +69,7 @@ class App extends React.Component {
             session: {
               id: resp.data.id,
               username: resp.data.username,
+              isAdmin: resp.data.isAdmin,
             },
           });
         }
@@ -81,52 +84,53 @@ class App extends React.Component {
   }
 
   render() {
+    const { session, authName } = this.state;
     return (
       <Router>
         <div>
-          <NavBar session={this.state.session} onLogout={this.handleLogout}/>
+          <NavBar session={session} onLogout={this.handleLogout}/>
           <Switch>
             <Route exact path='/' render={() => (
               <Redirect to='/movies'/>
             )}/>
             <Route exact path='/movies' render={() => (
               <AllMoviesPage
-                session={this.state.session}
+                session={session}
               />
             )}/>
             <Route exact path='/movies/film/:id' render={({ match }) => (
               <MovieReviewsPage
+                session={session}
                 matchId={match.params.id}
-                session={this.state.session}
               />
             )}/>
             <Route exact path='/user/:id' render={({ match }) => (
               <UserReviewsPage
+                session={session}
                 matchId={match.params.id}
-                session={this.state.session}
               />
             )}/>
             <Route exact path='/director/:id' render={({ match }) => (
               <DirectorPage
+                session={session}
                 matchId={match.params.id}
-                session={this.state.session}
               />
             )}/>
             <Route exact path='/auth/login' render={() => (
               <AuthForm
-                session={this.state.session}
-                handleLogin={this.handleLogin}
-                authName={this.state.authName}
+                session={session}
+                authName={authName}
                 handleAuthNameChange={this.handleAuthNameChange}
+                handleLogin={this.handleLogin}
               />
             )}/>
             <Route exact path='/auth/register' render={() => (
               <AuthForm
+                session={session}
                 register={true}
-                session={this.state.session}
-                handleRegister={this.handleRegister}
-                authName={this.state.authName}
+                authName={authName}
                 handleAuthNameChange={this.handleAuthNameChange}
+                handleRegister={this.handleRegister}
               />
             )}/>
             <Route render={() => (

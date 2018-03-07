@@ -10,6 +10,7 @@ const User = connection.define('user', {
   isAdmin: {
     type: Sequelize.BOOLEAN,
     defaultValue: false,
+    allowNull: false,
   },
 });
 
