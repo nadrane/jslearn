@@ -2,6 +2,7 @@
 
 1. Only send relevant fields from DB. e.g. when logging in and sending user info to session in React, don't need to send "createdAt" "updatedAt" etc.
 2. Add front-end and server side form validation for login/register forms?
+3. When deleting movie or user, delete all corresponding reviews
 
 /// Questions
 

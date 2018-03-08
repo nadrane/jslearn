@@ -22,8 +22,8 @@ class MovieReviewsPage extends React.Component {
     };
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
-    this.handleFormChange = this.handleFormChange.bind(this);
-    this.handleFormSubmit = this.handleFormSubmit.bind(this);
+    this.handleReviewChange = this.handleReviewChange.bind(this);
+    this.handleReviewSubmit = this.handleReviewSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -55,14 +55,14 @@ class MovieReviewsPage extends React.Component {
     this.setState({ modal: false });
   }
 
-  handleFormChange(e) {
+  handleReviewChange(e) {
     const { name, value } = e.target;
     this.setState({
       [name]: value,
     });
   }
 
-  handleFormSubmit(e) {
+  handleReviewSubmit(e) {
     e.preventDefault();
     this.handleCloseModal();
     const { id: movieId } = this.state.movie;
@@ -113,8 +113,8 @@ class MovieReviewsPage extends React.Component {
               style={modalStyle}
             >
               <AddReviewForm
-                handleFormChange={this.handleFormChange}
-                handleFormSubmit={this.handleFormSubmit}
+                handleFormChange={this.handleReviewChange}
+                handleFormSubmit={this.handleReviewSubmit}
                 session={session}
                 movie={movie}
                 stars={this.state.stars}

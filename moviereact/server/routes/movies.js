@@ -20,12 +20,12 @@ router.get('/', (req, res, next) => {
 router.post('/', (req, res, next) => {
   Movie.create(req.body, { fields: ['title', 'year', 'directorId'] })
     .then(dbRes => Movie.findById(dbRes.id, { include: [Director] }))
-    .then(movie => res.json(movie))
+    .then(movie => res.status(201).json(movie))
     .catch(next);
 });
 
 /*
-* GET /api/movies/film - serve data + reviews for one film
+* GET /api/movies/film/id - serve data + reviews for film by id
 */
 router.get('/film/:id', (req, res, next) => {
   Movie.findById(req.params.id, {
@@ -37,12 +37,21 @@ router.get('/film/:id', (req, res, next) => {
 });
 
 /*
+* DELETE /api/movies/film - delete film by id
+*/
+router.delete('/film/:id', (req, res, next) => {
+  Movie.destroy({ where: { id: req.params.id } })
+    .then(() => res.status(200).send())
+    .catch(next);
+});
+
+/*
 * POST api/movies/film/:id - add new review for film
 */
 router.post('/film/:id', (req, res, next) => {
   Review.create(req.body, { fields: ['stars', 'comment', 'movieId', 'userId'] })
     .then(dbReturn => Review.findById(dbReturn.id, { include: [User] }))
-    .then(newRow => res.json(newRow))
+    .then(newRow => res.status(201).json(newRow))
     .catch(next);
 });
 

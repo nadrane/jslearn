@@ -24,7 +24,8 @@ router.post('/login', (req, res, next) => {
 /*
 * GET api/auth/session - check for current server session
 */
-router.get('/session', (req, res, next) => res.json((req.session.user ? req.session.user : { username: 'david', id: 6, isAdmin: true })));
+router.get('/session', (req, res, next) => res.json((req.session.user ? req.session.user : null)));
+// router.get('/session', (req, res, next) => res.json((req.session.user ? req.session.user : { username: 'david', id: 6, isAdmin: true })));
 
 /*
 * DELETE api/auth/logout - destroy server session

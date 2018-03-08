@@ -843,6 +843,55 @@ module.exports = emptyFunction;
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = __webpack_require__(91);
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function roundedToFixed(float, digits) {
+  var rounder = Math.pow(10, digits);
+  return (Math.round(float * rounder) / rounder).toFixed(digits);
+}
+
+var config = {
+  fetchRoot: 'http://localhost:8080/api',
+  modalStyle: {
+    overlay: {
+      backgroundColor: 'rgba(0, 0, 0, .5)'
+    },
+    content: {
+      top: '10%',
+      left: '25%',
+      right: '25%',
+      bottom: '25%',
+      backgroundColor: '#E9F5FD',
+      overflow: 'auto'
+    }
+  },
+  avgStars: function avgStars(arr) {
+    var avg = 0;
+    if (arr) {
+      avg = arr.reduce(function (accum, obj) {
+        return accum + obj.stars;
+      }, 0) / arr.length;
+      if (typeof avg !== 'number' || Number.isNaN(avg)) {
+        avg = 0;
+      }
+    }
+    return roundedToFixed(avg, 1);
+  }
+};
+
+module.exports = config;
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 
 
@@ -890,55 +939,6 @@ Panel.propTypes = {
 };
 
 exports.default = Panel;
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(91);
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-function roundedToFixed(float, digits) {
-  var rounder = Math.pow(10, digits);
-  return (Math.round(float * rounder) / rounder).toFixed(digits);
-}
-
-var config = {
-  fetchRoot: 'http://localhost:8080/api',
-  modalStyle: {
-    overlay: {
-      backgroundColor: 'rgba(0, 0, 0, .5)'
-    },
-    content: {
-      top: '10%',
-      left: '25%',
-      right: '25%',
-      bottom: '25%',
-      backgroundColor: '#E9F5FD',
-      overflow: 'auto'
-    }
-  },
-  avgStars: function avgStars(arr) {
-    var avg = 0;
-    if (arr) {
-      avg = arr.reduce(function (accum, obj) {
-        return accum + obj.stars;
-      }, 0) / arr.length;
-      if (typeof avg !== 'number' || Number.isNaN(avg)) {
-        avg = 0;
-      }
-    }
-    return roundedToFixed(avg, 1);
-  }
-};
-
-module.exports = config;
 
 /***/ }),
 /* 11 */
@@ -3552,11 +3552,11 @@ var _reactDom = __webpack_require__(36);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _axios = __webpack_require__(9);
+var _axios = __webpack_require__(8);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _config = __webpack_require__(10);
+var _config = __webpack_require__(9);
 
 var _NavBar = __webpack_require__(109);
 
@@ -3578,7 +3578,7 @@ var _UserReviewsPage = __webpack_require__(132);
 
 var _UserReviewsPage2 = _interopRequireDefault(_UserReviewsPage);
 
-var _Panel = __webpack_require__(8);
+var _Panel = __webpack_require__(10);
 
 var _Panel2 = _interopRequireDefault(_Panel);
 
@@ -25700,11 +25700,11 @@ var _reactModal = __webpack_require__(48);
 
 var _reactModal2 = _interopRequireDefault(_reactModal);
 
-var _axios = __webpack_require__(9);
+var _axios = __webpack_require__(8);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _config = __webpack_require__(10);
+var _config = __webpack_require__(9);
 
 var _AllMoviesPanel = __webpack_require__(118);
 
@@ -26913,7 +26913,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Panel = __webpack_require__(8);
+var _Panel = __webpack_require__(10);
 
 var _Panel2 = _interopRequireDefault(_Panel);
 
@@ -27102,11 +27102,11 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _axios = __webpack_require__(9);
+var _axios = __webpack_require__(8);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _config = __webpack_require__(10);
+var _config = __webpack_require__(9);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -27233,11 +27233,11 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _axios = __webpack_require__(9);
+var _axios = __webpack_require__(8);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _config = __webpack_require__(10);
+var _config = __webpack_require__(9);
 
 var _config2 = _interopRequireDefault(_config);
 
@@ -27426,11 +27426,11 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _axios = __webpack_require__(9);
+var _axios = __webpack_require__(8);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _config = __webpack_require__(10);
+var _config = __webpack_require__(9);
 
 var _DirectorPanel = __webpack_require__(124);
 
@@ -27440,7 +27440,7 @@ var _DirectorTable = __webpack_require__(125);
 
 var _DirectorTable2 = _interopRequireDefault(_DirectorTable);
 
-var _Panel = __webpack_require__(8);
+var _Panel = __webpack_require__(10);
 
 var _Panel2 = _interopRequireDefault(_Panel);
 
@@ -27552,7 +27552,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Panel = __webpack_require__(8);
+var _Panel = __webpack_require__(10);
 
 var _Panel2 = _interopRequireDefault(_Panel);
 
@@ -27726,7 +27726,7 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _axios = __webpack_require__(9);
+var _axios = __webpack_require__(8);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -27734,7 +27734,7 @@ var _reactModal = __webpack_require__(48);
 
 var _reactModal2 = _interopRequireDefault(_reactModal);
 
-var _config = __webpack_require__(10);
+var _config = __webpack_require__(9);
 
 var _MovieReviewsPanel = __webpack_require__(128);
 
@@ -27748,7 +27748,7 @@ var _AddReviewForm = __webpack_require__(131);
 
 var _AddReviewForm2 = _interopRequireDefault(_AddReviewForm);
 
-var _Panel = __webpack_require__(8);
+var _Panel = __webpack_require__(10);
 
 var _Panel2 = _interopRequireDefault(_Panel);
 
@@ -27782,8 +27782,8 @@ var MovieReviewsPage = function (_React$Component) {
     };
     _this.handleOpenModal = _this.handleOpenModal.bind(_this);
     _this.handleCloseModal = _this.handleCloseModal.bind(_this);
-    _this.handleFormChange = _this.handleFormChange.bind(_this);
-    _this.handleFormSubmit = _this.handleFormSubmit.bind(_this);
+    _this.handleReviewChange = _this.handleReviewChange.bind(_this);
+    _this.handleReviewSubmit = _this.handleReviewSubmit.bind(_this);
     return _this;
   }
 
@@ -27822,8 +27822,8 @@ var MovieReviewsPage = function (_React$Component) {
       this.setState({ modal: false });
     }
   }, {
-    key: 'handleFormChange',
-    value: function handleFormChange(e) {
+    key: 'handleReviewChange',
+    value: function handleReviewChange(e) {
       var _e$target = e.target,
           name = _e$target.name,
           value = _e$target.value;
@@ -27831,8 +27831,8 @@ var MovieReviewsPage = function (_React$Component) {
       this.setState(_defineProperty({}, name, value));
     }
   }, {
-    key: 'handleFormSubmit',
-    value: function handleFormSubmit(e) {
+    key: 'handleReviewSubmit',
+    value: function handleReviewSubmit(e) {
       var _this3 = this;
 
       e.preventDefault();
@@ -27893,8 +27893,8 @@ var MovieReviewsPage = function (_React$Component) {
               style: _config.modalStyle
             },
             _react2.default.createElement(_AddReviewForm2.default, {
-              handleFormChange: this.handleFormChange,
-              handleFormSubmit: this.handleFormSubmit,
+              handleFormChange: this.handleReviewChange,
+              handleFormSubmit: this.handleReviewSubmit,
               session: session,
               movie: movie,
               stars: this.state.stars,
@@ -27940,7 +27940,13 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(6);
 
-var _Panel = __webpack_require__(8);
+var _axios = __webpack_require__(8);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _config = __webpack_require__(9);
+
+var _Panel = __webpack_require__(10);
 
 var _Panel2 = _interopRequireDefault(_Panel);
 
@@ -27974,15 +27980,16 @@ var MovieReviewsPanel = function (_React$Component) {
     return _this;
   }
 
-  // in progress
-
-
   _createClass(MovieReviewsPanel, [{
     key: 'handleDeleteMovie',
     value: function handleDeleteMovie(e) {
+      var _this2 = this;
+
       e.target.blur();
-      if (window.confirm('hi')) {
-        this.setState({ redirect: true });
+      if (window.confirm('Are you sure you want to delete this movie?')) {
+        _axios2.default.delete(_config.fetchRoot + '/movies/film/' + this.props.movie.id).then(function () {
+          return _this2.setState({ redirect: true });
+        });
       }
     }
   }, {
@@ -28000,7 +28007,6 @@ var MovieReviewsPanel = function (_React$Component) {
         { to: '/director/' + movie.director.id },
         movie.director.name
       );
-      // in progress
       if (session && session.isAdmin) {
         adminControls = _react2.default.createElement(
           'span',
@@ -28336,11 +28342,11 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _axios = __webpack_require__(9);
+var _axios = __webpack_require__(8);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _config = __webpack_require__(10);
+var _config = __webpack_require__(9);
 
 var _UserReviewsPanel = __webpack_require__(133);
 
@@ -28350,7 +28356,7 @@ var _UserReviewsTable = __webpack_require__(134);
 
 var _UserReviewsTable2 = _interopRequireDefault(_UserReviewsTable);
 
-var _Panel = __webpack_require__(8);
+var _Panel = __webpack_require__(10);
 
 var _Panel2 = _interopRequireDefault(_Panel);
 
@@ -28474,7 +28480,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Panel = __webpack_require__(8);
+var _Panel = __webpack_require__(10);
 
 var _Panel2 = _interopRequireDefault(_Panel);
 

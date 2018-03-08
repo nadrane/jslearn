@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
+import axios from 'axios';
+import { fetchRoot } from '../../config';
 
 // components
 import Panel from '../Panel';
@@ -15,11 +17,11 @@ class MovieReviewsPanel extends React.Component {
     this.handleDeleteMovie = this.handleDeleteMovie.bind(this);
   }
 
-  // in progress
   handleDeleteMovie(e) {
     e.target.blur();
-    if (window.confirm('hi')) {
-      this.setState({ redirect: true });
+    if (window.confirm('Are you sure?')) {
+      axios.delete(`${fetchRoot}/movies/film/${this.props.movie.id}`)
+        .then(() => this.setState({ redirect: true }));
     }
   }
 
@@ -31,7 +33,6 @@ class MovieReviewsPanel extends React.Component {
     const dirLink = (
       <Link to={`/director/${movie.director.id}`}>{movie.director.name}</Link>
     );
-    // in progress
     if (session && session.isAdmin) {
       adminControls = (
         <span>
