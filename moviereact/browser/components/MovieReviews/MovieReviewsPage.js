@@ -19,6 +19,7 @@ class MovieReviewsPage extends React.Component {
       stars: 1,
       comment: '',
       err: null,
+      modal: false,
     };
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
