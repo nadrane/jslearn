@@ -11,18 +11,20 @@ import AddReviewForm from './add_forms/AddReviewForm';
 import AddMovieForm from '../AllMovies/add_forms/AddMovieForm';
 import Panel from '../Panel';
 
+const initialState = {
+  movie: null,
+  rows: null,
+  stars: 1,
+  comment: '',
+  err: null,
+  showReviewModal: false,
+  showEditMovieModal: false,
+};
+
 class MovieReviewsPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      movie: null,
-      rows: null,
-      stars: 1,
-      comment: '',
-      err: null,
-      showReviewModal: false,
-      showEditMovieModal: false,
-    };
+    this.state = initialState;
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.handleReviewChange = this.handleReviewChange.bind(this);
@@ -96,6 +98,7 @@ class MovieReviewsPage extends React.Component {
   handleMovieEdit(e) {
     const { name, value } = e.target;
     this.setState(prevState => ({
+
       movie: Object.assign({}, prevState.movie, { [name]: value }),
     }));
   }

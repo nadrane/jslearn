@@ -56,7 +56,7 @@ router.put('/film/:id', (req, res, next) => {
       include: [{ all: true, nested: true }],
       order: [[Review, 'createdAt', 'DESC']],
     }))
-    .then(updatedMovie => res.status(200).json(updatedMovie))
+    .then(updatedMovie => res.json(updatedMovie))
     .catch(next);
 });
 

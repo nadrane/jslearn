@@ -27771,6 +27771,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 // components
 
 
+var initialState = {
+  movie: null,
+  rows: null,
+  stars: 1,
+  comment: '',
+  err: null,
+  showReviewModal: false,
+  showEditMovieModal: false
+};
+
 var MovieReviewsPage = function (_React$Component) {
   _inherits(MovieReviewsPage, _React$Component);
 
@@ -27779,15 +27789,7 @@ var MovieReviewsPage = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (MovieReviewsPage.__proto__ || Object.getPrototypeOf(MovieReviewsPage)).call(this, props));
 
-    _this.state = {
-      movie: null,
-      rows: null,
-      stars: 1,
-      comment: '',
-      err: null,
-      showReviewModal: false,
-      showEditMovieModal: false
-    };
+    _this.state = initialState;
     _this.handleOpenModal = _this.handleOpenModal.bind(_this);
     _this.handleCloseModal = _this.handleCloseModal.bind(_this);
     _this.handleReviewChange = _this.handleReviewChange.bind(_this);
@@ -27878,6 +27880,7 @@ var MovieReviewsPage = function (_React$Component) {
 
       this.setState(function (prevState) {
         return {
+
           movie: Object.assign({}, prevState.movie, _defineProperty({}, name, value))
         };
       });
