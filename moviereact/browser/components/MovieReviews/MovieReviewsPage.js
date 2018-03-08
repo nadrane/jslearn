@@ -50,6 +50,7 @@ class MovieReviewsPage extends React.Component {
     e.target.blur();
     this.setState({ modal: true });
   }
+
   handleCloseModal() {
     this.setState({ modal: false });
   }

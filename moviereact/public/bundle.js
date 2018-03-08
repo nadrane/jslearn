@@ -26941,7 +26941,7 @@ var AllMoviesPanel = function AllMoviesPanel(props) {
             name: 'addDirectorBtn',
             onClick: handleOpenModal,
             type: 'button',
-            className: 'btn movie-btn add-btn mx-2' },
+            className: 'btn movie-btn control-btn mx-2' },
           '+ Add Director'
         ),
         _react2.default.createElement(
@@ -26950,7 +26950,7 @@ var AllMoviesPanel = function AllMoviesPanel(props) {
             name: 'addMovieBtn',
             onClick: handleOpenModal,
             type: 'button',
-            className: 'btn movie-btn add-btn mx-2' },
+            className: 'btn movie-btn control-btn mx-2' },
           '+ Add Film'
         )
       ),
@@ -27928,6 +27928,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = undefined;
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
@@ -27948,40 +27950,117 @@ var _PanelInfo2 = _interopRequireDefault(_PanelInfo);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// components
-var MovieReviewsPanel = function MovieReviewsPanel(props) {
-  var session = props.session,
-      movie = props.movie,
-      avg = props.avg,
-      handleOpenModal = props.handleOpenModal;
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  var dirLink = _react2.default.createElement(
-    _reactRouterDom.Link,
-    { to: '/director/' + movie.director.id },
-    movie.director.name
-  );
-  return _react2.default.createElement(_Panel2.default, {
-    header: movie.title,
-    panelInfo: _react2.default.createElement(_PanelInfo2.default, {
-      stats: [['Avg. Score', avg + ' \u2605'], ['Released', movie.year], ['Director', dirLink]],
-      session: session,
-      user: _react2.default.createElement(
-        'button',
-        {
-          onClick: handleOpenModal,
-          type: 'button',
-          className: 'btn movie-btn add-btn mx-2' },
-        '+ Add Review'
-      )
-    })
-  });
-};
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+// components
+
+
+var MovieReviewsPanel = function (_React$Component) {
+  _inherits(MovieReviewsPanel, _React$Component);
+
+  function MovieReviewsPanel(props) {
+    _classCallCheck(this, MovieReviewsPanel);
+
+    var _this = _possibleConstructorReturn(this, (MovieReviewsPanel.__proto__ || Object.getPrototypeOf(MovieReviewsPanel)).call(this, props));
+
+    _this.state = {
+      redirect: false
+    };
+    _this.handleDeleteMovie = _this.handleDeleteMovie.bind(_this);
+    return _this;
+  }
+
+  // in progress
+
+
+  _createClass(MovieReviewsPanel, [{
+    key: 'handleDeleteMovie',
+    value: function handleDeleteMovie(e) {
+      e.target.blur();
+      if (window.confirm('hi')) {
+        this.setState({ redirect: true });
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var adminControls = void 0;
+      var _props = this.props,
+          session = _props.session,
+          movie = _props.movie,
+          avg = _props.avg,
+          handleOpenModal = _props.handleOpenModal;
+
+      var dirLink = _react2.default.createElement(
+        _reactRouterDom.Link,
+        { to: '/director/' + movie.director.id },
+        movie.director.name
+      );
+      // in progress
+      if (session && session.isAdmin) {
+        adminControls = _react2.default.createElement(
+          'span',
+          null,
+          _react2.default.createElement(
+            'button',
+            {
+              onClick: handleOpenModal,
+              type: 'button',
+              className: 'btn btn-secondary control-btn mx-2' },
+            'Edit Movie'
+          ),
+          _react2.default.createElement(
+            'button',
+            {
+              onClick: this.handleDeleteMovie,
+              type: 'button',
+              className: 'btn btn-danger control-btn mx-2' },
+            'Delete Movie'
+          )
+        );
+      }
+
+      if (this.state.redirect) {
+        return _react2.default.createElement(_reactRouterDom.Redirect, { to: '/movies' });
+      }
+
+      return _react2.default.createElement(_Panel2.default, {
+        header: movie.title,
+        panelInfo: _react2.default.createElement(_PanelInfo2.default, {
+          stats: [['Avg. Score', avg + ' \u2605'], ['Released', movie.year], ['Director', dirLink]],
+          session: session,
+          user: _react2.default.createElement(
+            'span',
+            null,
+            _react2.default.createElement(
+              'button',
+              {
+                onClick: handleOpenModal,
+                type: 'button',
+                className: 'btn movie-btn control-btn mx-2'
+              },
+              '+ Add Review'
+            ),
+            adminControls
+          )
+        })
+      });
+    }
+  }]);
+
+  return MovieReviewsPanel;
+}(_react2.default.Component);
 
 MovieReviewsPanel.propTypes = {
   movie: _propTypes2.default.object,
   avg: _propTypes2.default.string,
   session: _propTypes2.default.object,
-  handleOpenModal: _propTypes2.default.func
+  handleOpenModal: _propTypes2.default.func,
+  handleDeleteMovie: _propTypes2.default.func
 };
 
 exports.default = MovieReviewsPanel;

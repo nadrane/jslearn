@@ -19,14 +19,14 @@ const AllMoviesPanel = (props) => {
                   name="addDirectorBtn"
                   onClick={handleOpenModal}
                   type="button"
-                  className="btn movie-btn add-btn mx-2">
+                  className="btn movie-btn control-btn mx-2">
                 + Add Director
               </button>
               <button
                   name="addMovieBtn"
                   onClick={handleOpenModal}
                   type="button"
-                  className="btn movie-btn add-btn mx-2">
+                  className="btn movie-btn control-btn mx-2">
                 + Add Film
               </button>
             </span>
