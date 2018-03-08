@@ -2,13 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
-import ReactModal from 'react-modal';
-import { fetchRoot, modalStyle } from '../../config';
+import { fetchRoot } from '../../config';
 
 // components
 import Panel from '../Panel';
 import PanelInfo from '../PanelInfo';
-import AddMovieForm from '../AllMovies/add_forms/AddMovieForm';
 
 class MovieReviewsPanel extends React.Component {
   constructor(props) {
@@ -17,18 +15,7 @@ class MovieReviewsPanel extends React.Component {
       modal: false,
       redirect: false,
     };
-    this.handleOpenModal = this.handleOpenModal.bind(this);
-    this.handleCloseModal = this.handleCloseModal.bind(this);
     this.handleDeleteMovie = this.handleDeleteMovie.bind(this);
-  }
-
-  handleOpenModal(e) {
-    e.target.blur();
-    this.setState({ modal: true });
-  }
-
-  handleCloseModal() {
-    this.setState({ modal: false });
   }
 
   handleDeleteMovie(e) {
@@ -51,7 +38,8 @@ class MovieReviewsPanel extends React.Component {
       adminControls = (
         <span>
           <button
-              onClick={this.handleOpenModal}
+              name="editMovieBtn"
+              onClick={handleOpenModal}
               type="button"
               className="btn btn-secondary control-btn mx-2">
             Edit Movie
@@ -65,11 +53,9 @@ class MovieReviewsPanel extends React.Component {
         </span>
       );
     }
-
     if (this.state.redirect) {
       return (<Redirect to='/movies'/>);
     }
-
     return (
       <div>
         <Panel
@@ -85,6 +71,7 @@ class MovieReviewsPanel extends React.Component {
               user={(
                 <span>
                   <button
+                    name="addReviewBtn"
                     onClick={handleOpenModal}
                     type="button"
                     className="btn movie-btn control-btn mx-2"
@@ -97,20 +84,6 @@ class MovieReviewsPanel extends React.Component {
             />
           )}
         />
-        {session && (
-            <ReactModal
-              isOpen={this.state.modal}
-              onRequestClose={this.handleCloseModal}
-              ariaHideApp={false}
-              style={modalStyle}
-            >
-              <AddMovieForm
-                movieTitle={movie.title}
-                movieYear={movie.year}
-                dirSelect={movie.director.id}
-              />
-            </ReactModal>
-          )}
       </div>
     );
   }

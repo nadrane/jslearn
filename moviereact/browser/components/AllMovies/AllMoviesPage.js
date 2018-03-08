@@ -17,9 +17,9 @@ class AllMoviesPage extends React.Component {
       rows: null,
       showDirModal: false,
       showMovieModal: false,
-      movieTitle: '',
-      movieYear: '',
-      dirSelect: '-1',
+      title: '',
+      year: '',
+      directorId: '-1',
     };
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
@@ -56,7 +56,7 @@ class AllMoviesPage extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     const {
-      movieTitle: title, movieYear: year, dirSelect: directorId,
+      title, year, directorId,
     } = this.state;
     if (title && year && directorId) {
       axios.post(`${fetchRoot}/movies`, {
@@ -65,9 +65,9 @@ class AllMoviesPage extends React.Component {
         .then((movie) => {
           this.setState(prevState => ({
             rows: [movie.data].concat(prevState.rows).sort((a, b) => a.year - b.year),
-            movieTitle: '',
-            movieYear: '',
-            dirSelect: '-1',
+            title: '',
+            year: '',
+            directorId: '-1',
           }));
           return this.handleCloseModal();
         })
@@ -77,7 +77,9 @@ class AllMoviesPage extends React.Component {
 
   render() {
     const { session } = this.props;
-    const { rows, showDirModal, showMovieModal } = this.state;
+    const {
+      rows, showDirModal, showMovieModal, title, year, directorId,
+    } = this.state;
     return (
       <div>
         <div className="container-fluid">
@@ -95,9 +97,9 @@ class AllMoviesPage extends React.Component {
               {showMovieModal && <AddMovieForm
                       handleChange={this.handleChange}
                       handleSubmit={this.handleSubmit}
-                      movieTitle={this.state.movieTitle}
-                      movieYear={this.state.movieYear}
-                      dirSelect={this.state.dirSelect}
+                      title={title}
+                      year={year}
+                      directorId={directorId}
               />}
             </ReactModal>
         )}

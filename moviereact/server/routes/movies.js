@@ -46,12 +46,27 @@ router.delete('/film/:id', (req, res, next) => {
 });
 
 /*
+* PUT /api/movies/film - update film by id
+*/
+router.put('/film/:id', (req, res, next) => {
+  const { id } = req.params;
+  const { title, year, directorId } = req.body;
+  Movie.update({ title, year, directorId }, { where: { id } })
+    .then(() => Movie.findById(id, {
+      include: [{ all: true, nested: true }],
+      order: [[Review, 'createdAt', 'DESC']],
+    }))
+    .then(updatedMovie => res.status(200).json(updatedMovie))
+    .catch(next);
+});
+
+/*
 * POST api/movies/film/:id - add new review for film
 */
 router.post('/film/:id', (req, res, next) => {
   Review.create(req.body, { fields: ['stars', 'comment', 'movieId', 'userId'] })
     .then(dbReturn => Review.findById(dbReturn.id, { include: [User] }))
-    .then(newRow => res.status(201).json(newRow))
+    .then(newReview => res.status(201).json(newReview))
     .catch(next);
 });
 

@@ -44,7 +44,6 @@ class App extends React.Component {
     })
       .then((resp) => {
         if (resp.data.id) {
-          console.log(resp.data);
           this.setState({
             session: {
               id: resp.data.id,

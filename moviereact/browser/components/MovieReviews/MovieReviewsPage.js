@@ -8,6 +8,7 @@ import { fetchRoot, avgStars, modalStyle } from '../../config';
 import MovieReviewsPanel from './MovieReviewsPanel';
 import MovieReviewsTable from './MovieReviewsTable';
 import AddReviewForm from './add_forms/AddReviewForm';
+import AddMovieForm from '../AllMovies/add_forms/AddMovieForm';
 import Panel from '../Panel';
 
 class MovieReviewsPage extends React.Component {
@@ -19,12 +20,15 @@ class MovieReviewsPage extends React.Component {
       stars: 1,
       comment: '',
       err: null,
-      modal: false,
+      showReviewModal: false,
+      showEditMovieModal: false,
     };
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.handleReviewChange = this.handleReviewChange.bind(this);
     this.handleReviewSubmit = this.handleReviewSubmit.bind(this);
+    this.handleMovieEdit = this.handleMovieEdit.bind(this);
+    this.handleMovieEditSubmit = this.handleMovieEditSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -34,7 +38,6 @@ class MovieReviewsPage extends React.Component {
         this.setState({
           movie,
           rows: movie.reviews,
-          modal: false,
         });
       })
       .catch((err) => {
@@ -49,11 +52,15 @@ class MovieReviewsPage extends React.Component {
 
   handleOpenModal(e) {
     e.target.blur();
-    this.setState({ modal: true });
+    if (e.target.name === 'addReviewBtn') {
+      this.setState({ showReviewModal: true });
+    } else if (e.target.name === 'editMovieBtn') {
+      this.setState({ showEditMovieModal: true });
+    }
   }
 
   handleCloseModal() {
-    this.setState({ modal: false });
+    this.setState({ showReviewModal: false, showEditMovieModal: false });
   }
 
   handleReviewChange(e) {
@@ -86,10 +93,32 @@ class MovieReviewsPage extends React.Component {
       .catch(console.log);
   }
 
+  handleMovieEdit(e) {
+    const { name, value } = e.target;
+    this.setState(prevState => ({
+      movie: Object.assign({}, prevState.movie, { [name]: value }),
+    }));
+  }
+
+  handleMovieEditSubmit(e) {
+    e.preventDefault();
+    this.handleCloseModal();
+    const {
+      id, title, year, directorId,
+    } = this.state.movie;
+    axios.put(`${fetchRoot}/movies/film/${id}`, {
+      title,
+      year,
+      directorId,
+    })
+      .then(resp => this.setState({ movie: resp.data }))
+      .catch(console.log);
+  }
+
   render() {
     const { session } = this.props;
     const {
-      movie, rows, modal, err,
+      movie, rows, err, showReviewModal, showEditMovieModal,
     } = this.state;
     if (err) {
       return (<Panel header={err.header} message={err.message} />);
@@ -107,21 +136,28 @@ class MovieReviewsPage extends React.Component {
             <MovieReviewsTable rows={rows} />
           </div>
           {session && (
-            <ReactModal
-              isOpen={modal}
-              onRequestClose={this.handleCloseModal}
-              ariaHideApp={false}
-              style={modalStyle}
-            >
-              <AddReviewForm
-                handleFormChange={this.handleReviewChange}
-                handleFormSubmit={this.handleReviewSubmit}
-                session={session}
-                movie={movie}
-                stars={this.state.stars}
-                comment={this.state.comment}
-              />
-            </ReactModal>
+          <ReactModal
+            isOpen={showReviewModal || showEditMovieModal}
+            onRequestClose={this.handleCloseModal}
+            ariaHideApp={false}
+            style={modalStyle}
+          >
+            {showEditMovieModal && <AddMovieForm
+              title={movie.title}
+              year={movie.year}
+              directorId={movie.directorId}
+              handleChange={this.handleMovieEdit}
+              handleSubmit={this.handleMovieEditSubmit}
+            />}
+            {showReviewModal && <AddReviewForm
+              handleFormChange={this.handleReviewChange}
+              handleFormSubmit={this.handleReviewSubmit}
+              session={session}
+              movie={movie}
+              stars={this.state.stars}
+              comment={this.state.comment}
+            />}
+          </ReactModal>
           )}
         </div>
       );

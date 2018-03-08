@@ -24,7 +24,7 @@ class AddMovieForm extends React.Component {
       const dropdownItems = directors.map(director =>
         (<option key={director.id} value={director.id}>{director.name}</option>));
       const {
-        handleChange, handleSubmit, movieTitle, movieYear, dirSelect,
+        handleChange, handleSubmit, title, year, directorId,
       } = this.props;
       return (
         <div className="modal-container">
@@ -33,8 +33,8 @@ class AddMovieForm extends React.Component {
             <div className="form-group">
               <label htmlFor="title" className="mt-2"><strong>Film title:</strong></label>
               <input
-                name="movieTitle"
-                value={movieTitle}
+                name="title"
+                value={title}
                 onChange={handleChange}
                 className="form-control"
                 placeholder="e.g. Gone with the Wind"
@@ -44,8 +44,8 @@ class AddMovieForm extends React.Component {
             <div className="form-group">
               <label htmlFor="year" className="mt-2"><strong>Year of release:</strong></label>
               <input
-                name="movieYear"
-                value={movieYear}
+                name="year"
+                value={year}
                 onChange={handleChange}
                 className="form-control"
                 placeholder="e.g. 1940"
@@ -55,10 +55,10 @@ class AddMovieForm extends React.Component {
             <div className="form-group">
               <label htmlFor="director" className="mt-2"><strong>Director:</strong></label>
               <select
-                value={dirSelect}
+                name="directorId"
+                value={directorId}
                 onChange={handleChange}
                 className="form-control"
-                name="dirSelect"
               >
                 <option value="-1" disabled>Select director</option>
                   {dropdownItems}
@@ -79,9 +79,9 @@ class AddMovieForm extends React.Component {
 AddMovieForm.propTypes = {
   handleChange: PropTypes.func,
   handleSubmit: PropTypes.func,
-  movieTitle: PropTypes.string,
-  movieYear: PropTypes.string,
-  dirSelect: PropTypes.string,
+  title: PropTypes.string,
+  year: PropTypes.string,
+  directorId: PropTypes.string,
   session: PropTypes.object,
 };
 

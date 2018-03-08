@@ -15,6 +15,7 @@ router.post('/login', (req, res, next) => {
       req.session.user = {
         id: user.id,
         username: user.username,
+        isAdmin: user.isAdmin,
       };
       return res.json(user);
     })
