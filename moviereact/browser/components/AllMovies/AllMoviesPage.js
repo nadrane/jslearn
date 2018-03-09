@@ -17,13 +17,9 @@ class AllMoviesPage extends React.Component {
       rows: null,
       showDirModal: false,
       showMovieModal: false,
-      title: '',
-      year: '',
-      directorId: '-1',
     };
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
-    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -48,38 +44,20 @@ class AllMoviesPage extends React.Component {
     this.setState({ showDirModal: false, showMovieModal: false });
   }
 
-  handleChange(e) {
-    const { name, value } = e.target;
-    this.setState({ [name]: value });
-  }
-
-  handleSubmit(e) {
-    e.preventDefault();
-    const {
-      title, year, directorId,
-    } = this.state;
-    if (title && year && directorId) {
-      axios.post(`${fetchRoot}/movies`, {
-        title, year, directorId,
+  handleSubmit(newMovie) {
+    axios.post(`${fetchRoot}/movies`, newMovie)
+      .then((movie) => {
+        this.setState(prevState => ({
+          rows: [movie.data].concat(prevState.rows).sort((a, b) => a.year - b.year),
+        }));
+        return this.handleCloseModal();
       })
-        .then((movie) => {
-          this.setState(prevState => ({
-            rows: [movie.data].concat(prevState.rows).sort((a, b) => a.year - b.year),
-            title: '',
-            year: '',
-            directorId: '-1',
-          }));
-          return this.handleCloseModal();
-        })
-        .catch(console.log);
-    }
+      .catch(console.log);
   }
 
   render() {
     const { session } = this.props;
-    const {
-      rows, showDirModal, showMovieModal, title, year, directorId,
-    } = this.state;
+    const { rows, showDirModal, showMovieModal } = this.state;
     return (
       <div>
         <div className="container-fluid">
@@ -88,20 +66,14 @@ class AllMoviesPage extends React.Component {
         </div>
         {session && (
           <ReactModal
-              isOpen={showDirModal || showMovieModal}
-              onRequestClose={this.handleCloseModal}
-              ariaHideApp={false}
-              style={modalStyle}
-            >
-              {showDirModal && <AddDirectorForm handleCloseModal={this.handleCloseModal} />}
-              {showMovieModal && <AddMovieForm
-                      handleChange={this.handleChange}
-                      handleSubmit={this.handleSubmit}
-                      title={title}
-                      year={year}
-                      directorId={directorId}
-              />}
-            </ReactModal>
+            isOpen={showDirModal || showMovieModal}
+            onRequestClose={this.handleCloseModal}
+            ariaHideApp={false}
+            style={modalStyle}
+          >
+            {showDirModal && <AddDirectorForm handleCloseModal={this.handleCloseModal} />}
+            {showMovieModal && <AddMovieForm handleSubmit={this.handleSubmit} />}
+          </ReactModal>
         )}
       </div>
     );

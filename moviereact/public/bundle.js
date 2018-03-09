@@ -378,7 +378,7 @@ process.umask = function() { return 0; };
 "use strict";
 
 
-var bind = __webpack_require__(44);
+var bind = __webpack_require__(43);
 var isBuffer = __webpack_require__(93);
 
 /*global toString:true*/
@@ -748,7 +748,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "BrowserRouter", function() { return __WEBPACK_IMPORTED_MODULE_0__BrowserRouter__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__HashRouter__ = __webpack_require__(60);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "HashRouter", function() { return __WEBPACK_IMPORTED_MODULE_1__HashRouter__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Link__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Link__ = __webpack_require__(32);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Link", function() { return __WEBPACK_IMPORTED_MODULE_2__Link__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__MemoryRouter__ = __webpack_require__(62);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "MemoryRouter", function() { return __WEBPACK_IMPORTED_MODULE_3__MemoryRouter__["a"]; });
@@ -758,7 +758,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Prompt", function() { return __WEBPACK_IMPORTED_MODULE_5__Prompt__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Redirect__ = __webpack_require__(70);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Redirect", function() { return __WEBPACK_IMPORTED_MODULE_6__Redirect__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Route__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Route__ = __webpack_require__(33);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Route", function() { return __WEBPACK_IMPORTED_MODULE_7__Route__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Router__ = __webpack_require__(24);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Router", function() { return __WEBPACK_IMPORTED_MODULE_8__Router__["a"]; });
@@ -1335,8 +1335,8 @@ module.exports = warning;
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return createLocation; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return locationsAreEqual; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_resolve_pathname__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_value_equal__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_resolve_pathname__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_value_equal__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__PathUtils__ = __webpack_require__(14);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -1651,11 +1651,11 @@ exports.locationsAreEqual = exports.createLocation = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _resolvePathname = __webpack_require__(30);
+var _resolvePathname = __webpack_require__(29);
 
 var _resolvePathname2 = _interopRequireDefault(_resolvePathname);
 
-var _valueEqual = __webpack_require__(31);
+var _valueEqual = __webpack_require__(30);
 
 var _valueEqual2 = _interopRequireDefault(_valueEqual);
 
@@ -2130,10 +2130,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(45);
+    adapter = __webpack_require__(44);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(45);
+    adapter = __webpack_require__(44);
   }
   return adapter;
 }
@@ -2212,26 +2212,6 @@ module.exports = defaults;
 
 /***/ }),
 /* 29 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _Modal = __webpack_require__(113);
-
-var _Modal2 = _interopRequireDefault(_Modal);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = _Modal2.default;
-module.exports = exports["default"];
-
-/***/ }),
-/* 30 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2308,7 +2288,7 @@ function resolvePathname(to) {
 /* harmony default export */ __webpack_exports__["default"] = (resolvePathname);
 
 /***/ }),
-/* 31 */
+/* 30 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2353,7 +2333,7 @@ function valueEqual(a, b) {
 /* harmony default export */ __webpack_exports__["default"] = (valueEqual);
 
 /***/ }),
-/* 32 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2414,7 +2394,7 @@ var isExtraneousPopstateEvent = exports.isExtraneousPopstateEvent = function isE
 };
 
 /***/ }),
-/* 33 */
+/* 32 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2524,18 +2504,18 @@ Link.contextTypes = {
 /* harmony default export */ __webpack_exports__["a"] = (Link);
 
 /***/ }),
-/* 34 */
+/* 33 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_router_es_Route__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_router_es_Route__ = __webpack_require__(34);
 // Written in this round about way for babel-transform-imports
 
 
 /* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_0_react_router_es_Route__["a" /* default */]);
 
 /***/ }),
-/* 35 */
+/* 34 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2684,7 +2664,7 @@ Route.childContextTypes = {
 /* harmony default export */ __webpack_exports__["a"] = (Route);
 
 /***/ }),
-/* 36 */
+/* 35 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2750,7 +2730,7 @@ var isExtraneousPopstateEvent = function isExtraneousPopstateEvent(event) {
 };
 
 /***/ }),
-/* 37 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2796,7 +2776,7 @@ if (process.env.NODE_ENV === 'production') {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 38 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2835,7 +2815,7 @@ var ExecutionEnvironment = {
 module.exports = ExecutionEnvironment;
 
 /***/ }),
-/* 39 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2916,7 +2896,7 @@ module.exports = EventListener;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 40 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2958,7 +2938,7 @@ function getActiveElement(doc) /*?DOMElement*/{
 module.exports = getActiveElement;
 
 /***/ }),
-/* 41 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3029,7 +3009,7 @@ function shallowEqual(objA, objB) {
 module.exports = shallowEqual;
 
 /***/ }),
-/* 42 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3072,7 +3052,7 @@ function containsNode(outerNode, innerNode) {
 module.exports = containsNode;
 
 /***/ }),
-/* 43 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3102,7 +3082,7 @@ function focusNode(node) {
 module.exports = focusNode;
 
 /***/ }),
-/* 44 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3120,7 +3100,7 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 45 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3131,7 +3111,7 @@ var settle = __webpack_require__(96);
 var buildURL = __webpack_require__(98);
 var parseHeaders = __webpack_require__(99);
 var isURLSameOrigin = __webpack_require__(100);
-var createError = __webpack_require__(46);
+var createError = __webpack_require__(45);
 var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(101);
 
 module.exports = function xhrAdapter(config) {
@@ -3308,7 +3288,7 @@ module.exports = function xhrAdapter(config) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 46 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3333,7 +3313,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 
 /***/ }),
-/* 47 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3345,7 +3325,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 48 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3369,6 +3349,26 @@ Cancel.prototype.__CANCEL__ = true;
 
 module.exports = Cancel;
 
+
+/***/ }),
+/* 48 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _Modal = __webpack_require__(113);
+
+var _Modal2 = _interopRequireDefault(_Modal);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = _Modal2.default;
+module.exports = exports["default"];
 
 /***/ }),
 /* 49 */
@@ -3565,6 +3565,8 @@ var _config2 = _interopRequireDefault(_config);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -3579,7 +3581,19 @@ var AddMovieForm = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (AddMovieForm.__proto__ || Object.getPrototypeOf(AddMovieForm)).call(this, props));
 
-    _this.state = { directors: null };
+    var _this$props = _this.props,
+        title = _this$props.title,
+        year = _this$props.year,
+        directorId = _this$props.directorId;
+
+    _this.state = {
+      directors: [],
+      title: title || '',
+      year: year || '',
+      directorId: directorId || ''
+    };
+    _this.handleChange = _this.handleChange.bind(_this);
+    _this.submit = _this.submit.bind(_this);
     return _this;
   }
 
@@ -3597,118 +3611,134 @@ var AddMovieForm = function (_React$Component) {
       });
     }
   }, {
+    key: 'handleChange',
+    value: function handleChange(e) {
+      var _e$target = e.target,
+          name = _e$target.name,
+          value = _e$target.value;
+
+      this.setState(_defineProperty({}, name, value));
+    }
+  }, {
+    key: 'submit',
+    value: function submit(e) {
+      e.preventDefault();
+      var _state = this.state,
+          title = _state.title,
+          year = _state.year,
+          directorId = _state.directorId;
+
+      if (title && year && directorId) {
+        this.props.handleSubmit({ title: title, year: year, directorId: directorId });
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
-      var directors = this.state.directors;
+      var _state2 = this.state,
+          directors = _state2.directors,
+          title = _state2.title,
+          year = _state2.year,
+          directorId = _state2.directorId;
 
-      if (directors) {
-        var dropdownItems = directors.map(function (director) {
-          return _react2.default.createElement(
-            'option',
-            { key: director.id, value: director.id },
-            director.name
-          );
-        });
-        var _props = this.props,
-            handleChange = _props.handleChange,
-            handleSubmit = _props.handleSubmit,
-            title = _props.title,
-            year = _props.year,
-            directorId = _props.directorId;
-
-        return _react2.default.createElement(
-          'div',
-          { className: 'modal-container' },
+      return _react2.default.createElement(
+        'div',
+        { className: 'modal-container' },
+        _react2.default.createElement(
+          'form',
+          { onSubmit: this.submit },
           _react2.default.createElement(
-            'form',
-            { onSubmit: handleSubmit },
+            'h2',
+            { className: 'mint' },
+            'New Movie'
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'form-group' },
             _react2.default.createElement(
-              'h2',
-              { className: 'mint' },
-              'New Movie'
+              'label',
+              { htmlFor: 'title', className: 'mt-2' },
+              _react2.default.createElement(
+                'strong',
+                null,
+                'Film title:'
+              )
+            ),
+            _react2.default.createElement('input', {
+              name: 'title',
+              value: title,
+              onChange: this.handleChange,
+              className: 'form-control',
+              placeholder: 'e.g. Gone with the Wind',
+              autoComplete: 'off'
+            })
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'form-group' },
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'year', className: 'mt-2' },
+              _react2.default.createElement(
+                'strong',
+                null,
+                'Year of release:'
+              )
+            ),
+            _react2.default.createElement('input', {
+              name: 'year',
+              value: year,
+              onChange: this.handleChange,
+              className: 'form-control',
+              placeholder: 'e.g. 1940',
+              autoComplete: 'off'
+            })
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'form-group' },
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'director', className: 'mt-2' },
+              _react2.default.createElement(
+                'strong',
+                null,
+                'Director:'
+              )
             ),
             _react2.default.createElement(
-              'div',
-              { className: 'form-group' },
+              'select',
+              {
+                name: 'directorId',
+                value: directorId,
+                onChange: this.handleChange,
+                className: 'form-control'
+              },
               _react2.default.createElement(
-                'label',
-                { htmlFor: 'title', className: 'mt-2' },
-                _react2.default.createElement(
-                  'strong',
-                  null,
-                  'Film title:'
-                )
+                'option',
+                { value: '' },
+                'Select director'
               ),
-              _react2.default.createElement('input', {
-                name: 'title',
-                value: title,
-                onChange: handleChange,
-                className: 'form-control',
-                placeholder: 'e.g. Gone with the Wind',
-                autoComplete: 'off'
-              })
-            ),
-            _react2.default.createElement(
-              'div',
-              { className: 'form-group' },
-              _react2.default.createElement(
-                'label',
-                { htmlFor: 'year', className: 'mt-2' },
-                _react2.default.createElement(
-                  'strong',
-                  null,
-                  'Year of release:'
-                )
-              ),
-              _react2.default.createElement('input', {
-                name: 'year',
-                value: year,
-                onChange: handleChange,
-                className: 'form-control',
-                placeholder: 'e.g. 1940',
-                autoComplete: 'off'
-              })
-            ),
-            _react2.default.createElement(
-              'div',
-              { className: 'form-group' },
-              _react2.default.createElement(
-                'label',
-                { htmlFor: 'director', className: 'mt-2' },
-                _react2.default.createElement(
-                  'strong',
-                  null,
-                  'Director:'
-                )
-              ),
-              _react2.default.createElement(
-                'select',
-                {
-                  name: 'directorId',
-                  value: directorId,
-                  onChange: handleChange,
-                  className: 'form-control'
-                },
-                _react2.default.createElement(
+              directors.map(function (director) {
+                return _react2.default.createElement(
                   'option',
-                  { value: '-1', disabled: true },
-                  'Select director'
-                ),
-                dropdownItems
-              )
-            ),
+                  { key: director.id, value: director.id },
+                  director.name
+                );
+              })
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'form-group' },
             _react2.default.createElement(
-              'div',
-              { className: 'form-group' },
-              _react2.default.createElement(
-                'button',
-                { type: 'submit', className: 'btn btn-primary movie-btn mt-2', action: 'submit' },
-                'Submit'
-              )
+              'button',
+              { type: 'submit', className: 'btn btn-primary movie-btn mt-2', action: 'submit' },
+              'Submit'
             )
           )
-        );
-      }return null;
+        )
+      );
     }
   }]);
 
@@ -3716,12 +3746,10 @@ var AddMovieForm = function (_React$Component) {
 }(_react2.default.Component);
 
 AddMovieForm.propTypes = {
-  handleChange: _propTypes2.default.func,
   handleSubmit: _propTypes2.default.func,
   title: _propTypes2.default.string,
   year: _propTypes2.default.string,
-  directorId: _propTypes2.default.string,
-  session: _propTypes2.default.object
+  directorId: _propTypes2.default.string
 };
 
 exports.default = AddMovieForm;
@@ -3733,6 +3761,8 @@ exports.default = AddMovieForm;
 "use strict";
 
 
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _reactRouterDom = __webpack_require__(6);
@@ -3741,7 +3771,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(37);
+var _reactDom = __webpack_require__(36);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -3799,12 +3829,9 @@ var App = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
     _this.state = {
-      session: null,
-      authName: ''
+      session: null
     };
-    _this.handleAuthNameChange = _this.handleAuthNameChange.bind(_this);
-    _this.handleLogin = _this.handleLogin.bind(_this);
-    _this.handleRegister = _this.handleRegister.bind(_this);
+    _this.handleLoginRegister = _this.handleLoginRegister.bind(_this);
     _this.handleLogout = _this.handleLogout.bind(_this);
     return _this;
   }
@@ -3819,20 +3846,16 @@ var App = function (_React$Component) {
       }).catch(console.log);
     }
   }, {
-    key: 'handleAuthNameChange',
-    value: function handleAuthNameChange(e) {
-      this.setState({ authName: e.target.value });
-    }
-  }, {
-    key: 'handleLogin',
-    value: function handleLogin(e) {
+    key: 'handleLoginRegister',
+    value: function handleLoginRegister(_ref) {
       var _this3 = this;
 
-      e.preventDefault();
-      this.setState({ authName: '' });
-      _axios2.default.post(_config.fetchRoot + '/auth/login', {
-        username: this.state.authName
-      }).then(function (resp) {
+      var _ref2 = _slicedToArray(_ref, 2),
+          isRegister = _ref2[0],
+          username = _ref2[1];
+
+      var slug = isRegister ? 'register' : 'login';
+      _axios2.default.post(_config.fetchRoot + '/auth/' + slug, { username: username }).then(function (resp) {
         if (resp.data.id) {
           _this3.setState({
             session: {
@@ -3845,44 +3868,21 @@ var App = function (_React$Component) {
       }).catch(console.log);
     }
   }, {
-    key: 'handleRegister',
-    value: function handleRegister(e) {
+    key: 'handleLogout',
+    value: function handleLogout(e) {
       var _this4 = this;
 
       e.preventDefault();
-      this.setState({ authName: '' });
-      _axios2.default.post(_config.fetchRoot + '/auth/register', {
-        username: this.state.authName
-      }).then(function (resp) {
-        if (resp.data.id) {
-          _this4.setState({
-            session: {
-              id: resp.data.id,
-              username: resp.data.username,
-              isAdmin: resp.data.isAdmin
-            }
-          });
-        }
-      }).catch(console.log);
-    }
-  }, {
-    key: 'handleLogout',
-    value: function handleLogout(e) {
-      var _this5 = this;
-
-      e.preventDefault();
       _axios2.default.delete(_config.fetchRoot + '/auth/logout').then(function () {
-        return _this5.setState({ session: null });
+        return _this4.setState({ session: null });
       });
     }
   }, {
     key: 'render',
     value: function render() {
-      var _this6 = this;
+      var _this5 = this;
 
-      var _state = this.state,
-          session = _state.session,
-          authName = _state.authName;
+      var session = this.state.session;
 
       return _react2.default.createElement(
         _reactRouterDom.BrowserRouter,
@@ -3902,22 +3902,22 @@ var App = function (_React$Component) {
                   session: session
                 });
               } }),
-            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/movies/film/:id', render: function render(_ref) {
-                var match = _ref.match;
+            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/movies/film/:id', render: function render(_ref3) {
+                var match = _ref3.match;
                 return _react2.default.createElement(_MovieReviewsPage2.default, {
                   session: session,
                   matchId: match.params.id
                 });
               } }),
-            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/user/:id', render: function render(_ref2) {
-                var match = _ref2.match;
+            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/user/:id', render: function render(_ref4) {
+                var match = _ref4.match;
                 return _react2.default.createElement(_UserReviewsPage2.default, {
                   session: session,
                   matchId: match.params.id
                 });
               } }),
-            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/director/:id', render: function render(_ref3) {
-                var match = _ref3.match;
+            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/director/:id', render: function render(_ref5) {
+                var match = _ref5.match;
                 return _react2.default.createElement(_DirectorPage2.default, {
                   session: session,
                   matchId: match.params.id
@@ -3926,18 +3926,14 @@ var App = function (_React$Component) {
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/auth/login', render: function render() {
                 return _react2.default.createElement(_AuthForm2.default, {
                   session: session,
-                  authName: authName,
-                  handleAuthNameChange: _this6.handleAuthNameChange,
-                  handleLogin: _this6.handleLogin
+                  handleSubmit: _this5.handleLoginRegister
                 });
               } }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/auth/register', render: function render() {
                 return _react2.default.createElement(_AuthForm2.default, {
                   session: session,
-                  register: true,
-                  authName: authName,
-                  handleAuthNameChange: _this6.handleAuthNameChange,
-                  handleRegister: _this6.handleRegister
+                  handleSubmit: _this5.handleLoginRegister,
+                  isRegister: true
                 });
               } }),
             _react2.default.createElement(_reactRouterDom.Route, { render: function render() {
@@ -6058,7 +6054,7 @@ var _createTransitionManager = __webpack_require__(23);
 
 var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 
-var _DOMUtils = __webpack_require__(32);
+var _DOMUtils = __webpack_require__(31);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -6435,7 +6431,7 @@ var _createTransitionManager = __webpack_require__(23);
 
 var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 
-var _DOMUtils = __webpack_require__(32);
+var _DOMUtils = __webpack_require__(31);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7001,8 +6997,8 @@ exports.default = createMemoryHistory;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Route__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Link__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Route__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Link__ = __webpack_require__(32);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -7774,7 +7770,7 @@ Redirect.contextTypes = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__LocationUtils__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__PathUtils__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__createTransitionManager__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__DOMUtils__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__DOMUtils__ = __webpack_require__(35);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -8078,7 +8074,7 @@ var createBrowserHistory = function createBrowserHistory() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__LocationUtils__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__PathUtils__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__createTransitionManager__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__DOMUtils__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__DOMUtils__ = __webpack_require__(35);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 
@@ -8887,7 +8883,7 @@ Switch.propTypes = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_hoist_non_react_statics__ = __webpack_require__(83);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_hoist_non_react_statics___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_hoist_non_react_statics__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Route__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Route__ = __webpack_require__(34);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
@@ -9016,7 +9012,7 @@ var withRouter = function withRouter(Component) {
 /*
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(0),l=__webpack_require__(38),B=__webpack_require__(11),C=__webpack_require__(7),ba=__webpack_require__(39),da=__webpack_require__(40),ea=__webpack_require__(41),fa=__webpack_require__(42),ia=__webpack_require__(43),D=__webpack_require__(15);
+var aa=__webpack_require__(0),l=__webpack_require__(37),B=__webpack_require__(11),C=__webpack_require__(7),ba=__webpack_require__(38),da=__webpack_require__(39),ea=__webpack_require__(40),fa=__webpack_require__(41),ia=__webpack_require__(42),D=__webpack_require__(15);
 function E(a){for(var b=arguments.length-1,c="Minified React error #"+a+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d"+a,d=0;d<b;d++)c+="\x26args[]\x3d"+encodeURIComponent(arguments[d+1]);b=Error(c+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.");b.name="Invariant Violation";b.framesToPop=1;throw b;}aa?void 0:E("227");
 var oa={children:!0,dangerouslySetInnerHTML:!0,defaultValue:!0,defaultChecked:!0,innerHTML:!0,suppressContentEditableWarning:!0,suppressHydrationWarning:!0,style:!0};function pa(a,b){return(a&b)===b}
 var ta={MUST_USE_PROPERTY:1,HAS_BOOLEAN_VALUE:4,HAS_NUMERIC_VALUE:8,HAS_POSITIVE_NUMERIC_VALUE:24,HAS_OVERLOADED_BOOLEAN_VALUE:32,HAS_STRING_BOOLEAN_VALUE:64,injectDOMPropertyConfig:function(a){var b=ta,c=a.Properties||{},d=a.DOMAttributeNamespaces||{},e=a.DOMAttributeNames||{};a=a.DOMMutationMethods||{};for(var f in c){ua.hasOwnProperty(f)?E("48",f):void 0;var g=f.toLowerCase(),h=c[f];g={attributeName:g,attributeNamespace:null,propertyName:f,mutationMethod:null,mustUseProperty:pa(h,b.MUST_USE_PROPERTY),
@@ -9316,14 +9312,14 @@ if (process.env.NODE_ENV !== "production") {
 var React = __webpack_require__(0);
 var invariant = __webpack_require__(12);
 var warning = __webpack_require__(16);
-var ExecutionEnvironment = __webpack_require__(38);
+var ExecutionEnvironment = __webpack_require__(37);
 var _assign = __webpack_require__(11);
 var emptyFunction = __webpack_require__(7);
-var EventListener = __webpack_require__(39);
-var getActiveElement = __webpack_require__(40);
-var shallowEqual = __webpack_require__(41);
-var containsNode = __webpack_require__(42);
-var focusNode = __webpack_require__(43);
+var EventListener = __webpack_require__(38);
+var getActiveElement = __webpack_require__(39);
+var shallowEqual = __webpack_require__(40);
+var containsNode = __webpack_require__(41);
+var focusNode = __webpack_require__(42);
 var emptyObject = __webpack_require__(15);
 var checkPropTypes = __webpack_require__(20);
 var hyphenateStyleName = __webpack_require__(88);
@@ -24857,7 +24853,7 @@ module.exports = camelize;
 
 
 var utils = __webpack_require__(4);
-var bind = __webpack_require__(44);
+var bind = __webpack_require__(43);
 var Axios = __webpack_require__(94);
 var defaults = __webpack_require__(28);
 
@@ -24892,9 +24888,9 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(48);
+axios.Cancel = __webpack_require__(47);
 axios.CancelToken = __webpack_require__(108);
-axios.isCancel = __webpack_require__(47);
+axios.isCancel = __webpack_require__(46);
 
 // Expose all/spread
 axios.all = function all(promises) {
@@ -25047,7 +25043,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 "use strict";
 
 
-var createError = __webpack_require__(46);
+var createError = __webpack_require__(45);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -25480,7 +25476,7 @@ module.exports = InterceptorManager;
 
 var utils = __webpack_require__(4);
 var transformData = __webpack_require__(105);
-var isCancel = __webpack_require__(47);
+var isCancel = __webpack_require__(46);
 var defaults = __webpack_require__(28);
 var isAbsoluteURL = __webpack_require__(106);
 var combineURLs = __webpack_require__(107);
@@ -25640,7 +25636,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 "use strict";
 
 
-var Cancel = __webpack_require__(48);
+var Cancel = __webpack_require__(47);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -25888,7 +25884,7 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactModal = __webpack_require__(29);
+var _reactModal = __webpack_require__(48);
 
 var _reactModal2 = _interopRequireDefault(_reactModal);
 
@@ -25916,8 +25912,6 @@ var _AddMovieForm2 = _interopRequireDefault(_AddMovieForm);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -25938,14 +25932,10 @@ var AllMoviesPage = function (_React$Component) {
     _this.state = {
       rows: null,
       showDirModal: false,
-      showMovieModal: false,
-      title: '',
-      year: '',
-      directorId: '-1'
+      showMovieModal: false
     };
     _this.handleOpenModal = _this.handleOpenModal.bind(_this);
     _this.handleCloseModal = _this.handleCloseModal.bind(_this);
-    _this.handleChange = _this.handleChange.bind(_this);
     _this.handleSubmit = _this.handleSubmit.bind(_this);
     return _this;
   }
@@ -25977,54 +25967,29 @@ var AllMoviesPage = function (_React$Component) {
       this.setState({ showDirModal: false, showMovieModal: false });
     }
   }, {
-    key: 'handleChange',
-    value: function handleChange(e) {
-      var _e$target = e.target,
-          name = _e$target.name,
-          value = _e$target.value;
-
-      this.setState(_defineProperty({}, name, value));
-    }
-  }, {
     key: 'handleSubmit',
-    value: function handleSubmit(e) {
+    value: function handleSubmit(newMovie) {
       var _this3 = this;
 
-      e.preventDefault();
-      var _state = this.state,
-          title = _state.title,
-          year = _state.year,
-          directorId = _state.directorId;
-
-      if (title && year && directorId) {
-        _axios2.default.post(_config.fetchRoot + '/movies', {
-          title: title, year: year, directorId: directorId
-        }).then(function (movie) {
-          _this3.setState(function (prevState) {
-            return {
-              rows: [movie.data].concat(prevState.rows).sort(function (a, b) {
-                return a.year - b.year;
-              }),
-              title: '',
-              year: '',
-              directorId: '-1'
-            };
-          });
-          return _this3.handleCloseModal();
-        }).catch(console.log);
-      }
+      _axios2.default.post(_config.fetchRoot + '/movies', newMovie).then(function (movie) {
+        _this3.setState(function (prevState) {
+          return {
+            rows: [movie.data].concat(prevState.rows).sort(function (a, b) {
+              return a.year - b.year;
+            })
+          };
+        });
+        return _this3.handleCloseModal();
+      }).catch(console.log);
     }
   }, {
     key: 'render',
     value: function render() {
       var session = this.props.session;
-      var _state2 = this.state,
-          rows = _state2.rows,
-          showDirModal = _state2.showDirModal,
-          showMovieModal = _state2.showMovieModal,
-          title = _state2.title,
-          year = _state2.year,
-          directorId = _state2.directorId;
+      var _state = this.state,
+          rows = _state.rows,
+          showDirModal = _state.showDirModal,
+          showMovieModal = _state.showMovieModal;
 
       return _react2.default.createElement(
         'div',
@@ -26044,13 +26009,7 @@ var AllMoviesPage = function (_React$Component) {
             style: _config.modalStyle
           },
           showDirModal && _react2.default.createElement(_AddDirectorForm2.default, { handleCloseModal: this.handleCloseModal }),
-          showMovieModal && _react2.default.createElement(_AddMovieForm2.default, {
-            handleChange: this.handleChange,
-            handleSubmit: this.handleSubmit,
-            title: title,
-            year: year,
-            directorId: directorId
-          })
+          showMovieModal && _react2.default.createElement(_AddMovieForm2.default, { handleSubmit: this.handleSubmit })
         )
       );
     }
@@ -26085,7 +26044,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(37);
+var _reactDom = __webpack_require__(36);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -27732,7 +27691,7 @@ var _axios = __webpack_require__(8);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _reactModal = __webpack_require__(29);
+var _reactModal = __webpack_require__(48);
 
 var _reactModal2 = _interopRequireDefault(_reactModal);
 
@@ -27760,8 +27719,6 @@ var _Panel2 = _interopRequireDefault(_Panel);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -27774,11 +27731,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var initialState = {
   movie: null,
   rows: null,
-  stars: 1,
-  comment: '',
-  err: null,
   showReviewModal: false,
-  showEditMovieModal: false
+  showEditMovieModal: false,
+  err: null
 };
 
 var MovieReviewsPage = function (_React$Component) {
@@ -27792,9 +27747,7 @@ var MovieReviewsPage = function (_React$Component) {
     _this.state = initialState;
     _this.handleOpenModal = _this.handleOpenModal.bind(_this);
     _this.handleCloseModal = _this.handleCloseModal.bind(_this);
-    _this.handleReviewChange = _this.handleReviewChange.bind(_this);
     _this.handleReviewSubmit = _this.handleReviewSubmit.bind(_this);
-    _this.handleMovieEdit = _this.handleMovieEdit.bind(_this);
     _this.handleMovieEditSubmit = _this.handleMovieEditSubmit.bind(_this);
     return _this;
   }
@@ -27837,72 +27790,34 @@ var MovieReviewsPage = function (_React$Component) {
       this.setState({ showReviewModal: false, showEditMovieModal: false });
     }
   }, {
-    key: 'handleReviewChange',
-    value: function handleReviewChange(e) {
-      var _e$target = e.target,
-          name = _e$target.name,
-          value = _e$target.value;
-
-      this.setState(_defineProperty({}, name, value));
-    }
-  }, {
     key: 'handleReviewSubmit',
-    value: function handleReviewSubmit(e) {
+    value: function handleReviewSubmit(newReview) {
       var _this3 = this;
 
-      e.preventDefault();
-      this.handleCloseModal();
       var movieId = this.state.movie.id;
       var userId = this.props.session.id;
 
       _axios2.default.post(_config.fetchRoot + '/movies/film/' + movieId, {
-        stars: this.state.stars,
-        comment: this.state.comment,
+        stars: newReview.stars,
+        comment: newReview.comment,
         movieId: movieId,
         userId: userId
       }).then(function (resp) {
         return _this3.setState(function (prevState) {
-          var rows = [resp.data].concat(prevState.rows);
-          return {
-            rows: rows,
-            stars: 1,
-            comment: ''
-          };
+          return { rows: [resp.data].concat(prevState.rows) };
         });
       }).catch(console.log);
-    }
-  }, {
-    key: 'handleMovieEdit',
-    value: function handleMovieEdit(e) {
-      var _e$target2 = e.target,
-          name = _e$target2.name,
-          value = _e$target2.value;
-
-      this.setState(function (prevState) {
-        return {
-
-          movie: Object.assign({}, prevState.movie, _defineProperty({}, name, value))
-        };
-      });
+      this.handleCloseModal();
     }
   }, {
     key: 'handleMovieEditSubmit',
-    value: function handleMovieEditSubmit(e) {
+    value: function handleMovieEditSubmit(editedMovie) {
       var _this4 = this;
 
-      e.preventDefault();
       this.handleCloseModal();
-      var _state$movie = this.state.movie,
-          id = _state$movie.id,
-          title = _state$movie.title,
-          year = _state$movie.year,
-          directorId = _state$movie.directorId;
+      var id = this.state.movie.id;
 
-      _axios2.default.put(_config.fetchRoot + '/movies/film/' + id, {
-        title: title,
-        year: year,
-        directorId: directorId
-      }).then(function (resp) {
+      _axios2.default.put(_config.fetchRoot + '/movies/film/' + id, editedMovie).then(function (resp) {
         return _this4.setState({ movie: resp.data });
       }).catch(console.log);
     }
@@ -27947,16 +27862,11 @@ var MovieReviewsPage = function (_React$Component) {
               title: movie.title,
               year: movie.year,
               directorId: movie.directorId,
-              handleChange: this.handleMovieEdit,
               handleSubmit: this.handleMovieEditSubmit
             }),
             showReviewModal && _react2.default.createElement(_AddReviewForm2.default, {
-              handleFormChange: this.handleReviewChange,
-              handleFormSubmit: this.handleReviewSubmit,
-              session: session,
-              movie: movie,
-              stars: this.state.stars,
-              comment: this.state.comment
+              handleSubmit: this.handleReviewSubmit,
+              session: session
             })
           )
         );
@@ -28255,6 +28165,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = undefined;
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
@@ -28265,120 +28177,163 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var AddReviewForm = function AddReviewForm(props) {
-  var username = props.session.username;
-  var movie = props.movie,
-      stars = props.stars,
-      comment = props.comment,
-      handleFormSubmit = props.handleFormSubmit,
-      handleFormChange = props.handleFormChange;
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-  return _react2.default.createElement(
-    'div',
-    { className: 'modal-container' },
-    _react2.default.createElement(
-      'form',
-      { onSubmit: handleFormSubmit },
-      _react2.default.createElement(
-        'h2',
-        { className: 'mint' },
-        movie.title
-      ),
-      _react2.default.createElement(
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var initialState = { stars: '1', comment: '' };
+
+var AddReviewForm = function (_React$Component) {
+  _inherits(AddReviewForm, _React$Component);
+
+  function AddReviewForm(props) {
+    _classCallCheck(this, AddReviewForm);
+
+    var _this = _possibleConstructorReturn(this, (AddReviewForm.__proto__ || Object.getPrototypeOf(AddReviewForm)).call(this, props));
+
+    _this.state = initialState;
+    _this.handleChange = _this.handleChange.bind(_this);
+    _this.submit = _this.submit.bind(_this);
+    return _this;
+  }
+
+  _createClass(AddReviewForm, [{
+    key: 'handleChange',
+    value: function handleChange(e) {
+      var _e$target = e.target,
+          name = _e$target.name,
+          value = _e$target.value;
+
+      this.setState(_defineProperty({}, name, value));
+    }
+  }, {
+    key: 'submit',
+    value: function submit(e) {
+      e.preventDefault();
+      var _state = this.state,
+          stars = _state.stars,
+          comment = _state.comment;
+
+      if (stars && comment) {
+        this.props.handleSubmit({ stars: stars, comment: comment });
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var username = this.props.session.username;
+      var _state2 = this.state,
+          stars = _state2.stars,
+          comment = _state2.comment;
+
+      return _react2.default.createElement(
         'div',
-        { className: 'form-group' },
+        { className: 'modal-container' },
         _react2.default.createElement(
-          'label',
-          { htmlFor: 'user', className: 'mt-2' },
+          'form',
+          { onSubmit: this.submit },
           _react2.default.createElement(
-            'strong',
-            null,
-            username + '\'s Rating:'
-          )
-        ),
-        _react2.default.createElement(
-          'select',
-          {
-            value: stars,
-            onChange: handleFormChange,
-            className: 'form-control',
-            id: 'stars',
-            name: 'stars'
-          },
-          _react2.default.createElement(
-            'option',
-            { value: 1 },
-            '1 ',
-            '★'.repeat(1)
+            'h2',
+            { className: 'mint' },
+            'Add Review'
           ),
           _react2.default.createElement(
-            'option',
-            { value: 2 },
-            '2 ',
-            '★'.repeat(2)
+            'div',
+            { className: 'form-group' },
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'user', className: 'mt-2' },
+              _react2.default.createElement(
+                'strong',
+                null,
+                username + '\'s Rating:'
+              )
+            ),
+            _react2.default.createElement(
+              'select',
+              {
+                name: 'stars',
+                value: stars,
+                onChange: this.handleChange,
+                className: 'form-control'
+              },
+              _react2.default.createElement(
+                'option',
+                { value: 1 },
+                '1 ',
+                '★'.repeat(1)
+              ),
+              _react2.default.createElement(
+                'option',
+                { value: 2 },
+                '2 ',
+                '★'.repeat(2)
+              ),
+              _react2.default.createElement(
+                'option',
+                { value: 3 },
+                '3 ',
+                '★'.repeat(3)
+              ),
+              _react2.default.createElement(
+                'option',
+                { value: 4 },
+                '4 ',
+                '★'.repeat(4)
+              ),
+              _react2.default.createElement(
+                'option',
+                { value: 5 },
+                '5 ',
+                '★'.repeat(5)
+              )
+            )
           ),
           _react2.default.createElement(
-            'option',
-            { value: 3 },
-            '3 ',
-            '★'.repeat(3)
+            'div',
+            { className: 'form-group' },
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'comment', className: 'mt-2' },
+              _react2.default.createElement(
+                'strong',
+                null,
+                'Review:'
+              )
+            ),
+            _react2.default.createElement('textarea', {
+              name: 'comment',
+              value: comment,
+              rows: '3',
+              placeholder: 'What did you think?',
+              onChange: this.handleChange,
+              className: 'form-control'
+            })
           ),
           _react2.default.createElement(
-            'option',
-            { value: 4 },
-            '4 ',
-            '★'.repeat(4)
-          ),
-          _react2.default.createElement(
-            'option',
-            { value: 5 },
-            '5 ',
-            '★'.repeat(5)
+            'div',
+            { className: 'form-group' },
+            _react2.default.createElement(
+              'button',
+              { type: 'submit', className: 'btn btn-primary movie-btn mt-2', action: 'submit' },
+              'Submit'
+            )
           )
         )
-      ),
-      _react2.default.createElement(
-        'div',
-        { className: 'form-group' },
-        _react2.default.createElement(
-          'label',
-          { htmlFor: 'comment', className: 'mt-2' },
-          _react2.default.createElement(
-            'strong',
-            null,
-            'Review:'
-          )
-        ),
-        _react2.default.createElement('textarea', {
-          value: comment,
-          onChange: handleFormChange,
-          className: 'form-control',
-          id: 'comment',
-          name: 'comment',
-          rows: '3',
-          placeholder: 'What did you think?'
-        })
-      ),
-      _react2.default.createElement(
-        'div',
-        { className: 'form-group' },
-        _react2.default.createElement(
-          'button',
-          { type: 'submit', className: 'btn btn-primary movie-btn mt-2', action: 'submit' },
-          'Submit'
-        )
-      )
-    )
-  );
-};
+      );
+    }
+  }]);
+
+  return AddReviewForm;
+}(_react2.default.Component);
 
 AddReviewForm.propTypes = {
   session: _propTypes2.default.object,
-  movie: _propTypes2.default.object,
-  stars: _propTypes2.default.number,
-  comment: _propTypes2.default.string,
-  handleFormSubmit: _propTypes2.default.func,
-  handleFormChange: _propTypes2.default.func
+  handleSubmit: _propTypes2.default.func
 };
 
 exports.default = AddReviewForm;
@@ -28733,25 +28688,48 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var initialState = { username: '' };
+
 var AuthForm = function (_React$Component) {
   _inherits(AuthForm, _React$Component);
 
-  function AuthForm() {
+  function AuthForm(props) {
     _classCallCheck(this, AuthForm);
 
-    return _possibleConstructorReturn(this, (AuthForm.__proto__ || Object.getPrototypeOf(AuthForm)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (AuthForm.__proto__ || Object.getPrototypeOf(AuthForm)).call(this, props));
+
+    _this.state = initialState;
+    _this.handleChange = _this.handleChange.bind(_this);
+    _this.submit = _this.submit.bind(_this);
+    return _this;
   }
 
   _createClass(AuthForm, [{
+    key: 'handleChange',
+    value: function handleChange(e) {
+      this.setState({ username: e.target.value });
+    }
+  }, {
+    key: 'submit',
+    value: function submit(e) {
+      e.preventDefault();
+      var username = this.state.username;
+      var _props = this.props,
+          isRegister = _props.isRegister,
+          handleSubmit = _props.handleSubmit;
+
+      if (username) {
+        this.setState(initialState);
+        handleSubmit([isRegister, username]);
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
-      var _props = this.props,
-          handleAuthNameChange = _props.handleAuthNameChange,
-          handleRegister = _props.handleRegister,
-          handleLogin = _props.handleLogin,
-          session = _props.session,
-          register = _props.register,
-          authName = _props.authName;
+      var _props2 = this.props,
+          session = _props2.session,
+          isRegister = _props2.isRegister;
+      var username = this.state.username;
 
       if (session) {
         return _react2.default.createElement(_reactRouterDom.Redirect, { to: '/movies' });
@@ -28768,12 +28746,12 @@ var AuthForm = function (_React$Component) {
             _react2.default.createElement(
               'h3',
               { className: 'mint' },
-              register ? 'Register' : 'Sign in'
+              isRegister ? 'Register' : 'Sign in'
             ),
             _react2.default.createElement(
               'form',
               {
-                onSubmit: register ? handleRegister : handleLogin
+                onSubmit: this.submit
               },
               _react2.default.createElement(
                 'div',
@@ -28792,8 +28770,8 @@ var AuthForm = function (_React$Component) {
                   name: 'username',
                   placeholder: 'username',
                   autoComplete: 'off',
-                  value: authName,
-                  onChange: handleAuthNameChange
+                  value: username,
+                  onChange: this.handleChange
                 })
               ),
               _react2.default.createElement(
@@ -28812,12 +28790,9 @@ var AuthForm = function (_React$Component) {
 }(_react2.default.Component);
 
 AuthForm.propTypes = {
-  handleAuthNameChange: _propTypes2.default.func,
-  handleRegister: _propTypes2.default.func,
-  handleLogin: _propTypes2.default.func,
   session: _propTypes2.default.object,
-  register: _propTypes2.default.bool,
-  authName: _propTypes2.default.string
+  handleSubmit: _propTypes2.default.func,
+  isRegister: _propTypes2.default.bool
 };
 
 exports.default = AuthForm;

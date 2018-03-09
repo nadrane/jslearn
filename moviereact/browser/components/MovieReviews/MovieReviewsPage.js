@@ -14,11 +14,9 @@ import Panel from '../Panel';
 const initialState = {
   movie: null,
   rows: null,
-  stars: 1,
-  comment: '',
-  err: null,
   showReviewModal: false,
   showEditMovieModal: false,
+  err: null,
 };
 
 class MovieReviewsPage extends React.Component {
@@ -27,9 +25,7 @@ class MovieReviewsPage extends React.Component {
     this.state = initialState;
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
-    this.handleReviewChange = this.handleReviewChange.bind(this);
     this.handleReviewSubmit = this.handleReviewSubmit.bind(this);
-    this.handleMovieEdit = this.handleMovieEdit.bind(this);
     this.handleMovieEditSubmit = this.handleMovieEditSubmit.bind(this);
   }
 
@@ -65,55 +61,25 @@ class MovieReviewsPage extends React.Component {
     this.setState({ showReviewModal: false, showEditMovieModal: false });
   }
 
-  handleReviewChange(e) {
-    const { name, value } = e.target;
-    this.setState({
-      [name]: value,
-    });
-  }
-
-  handleReviewSubmit(e) {
-    e.preventDefault();
-    this.handleCloseModal();
+  handleReviewSubmit(newReview) {
     const { id: movieId } = this.state.movie;
     const { id: userId } = this.props.session;
     axios.post(`${fetchRoot}/movies/film/${movieId}`, {
-      stars: this.state.stars,
-      comment: this.state.comment,
+      stars: newReview.stars,
+      comment: newReview.comment,
       movieId,
       userId,
     })
       .then(resp =>
-        this.setState((prevState) => {
-          const rows = [resp.data].concat(prevState.rows);
-          return {
-            rows,
-            stars: 1,
-            comment: '',
-          };
-        }))
+        this.setState(prevState => ({ rows: [resp.data].concat(prevState.rows) })))
       .catch(console.log);
-  }
-
-  handleMovieEdit(e) {
-    const { name, value } = e.target;
-    this.setState(prevState => ({
-
-      movie: Object.assign({}, prevState.movie, { [name]: value }),
-    }));
-  }
-
-  handleMovieEditSubmit(e) {
-    e.preventDefault();
     this.handleCloseModal();
-    const {
-      id, title, year, directorId,
-    } = this.state.movie;
-    axios.put(`${fetchRoot}/movies/film/${id}`, {
-      title,
-      year,
-      directorId,
-    })
+  }
+
+  handleMovieEditSubmit(editedMovie) {
+    this.handleCloseModal();
+    const { id } = this.state.movie;
+    axios.put(`${fetchRoot}/movies/film/${id}`, editedMovie)
       .then(resp => this.setState({ movie: resp.data }))
       .catch(console.log);
   }
@@ -149,16 +115,11 @@ class MovieReviewsPage extends React.Component {
               title={movie.title}
               year={movie.year}
               directorId={movie.directorId}
-              handleChange={this.handleMovieEdit}
               handleSubmit={this.handleMovieEditSubmit}
             />}
             {showReviewModal && <AddReviewForm
-              handleFormChange={this.handleReviewChange}
-              handleFormSubmit={this.handleReviewSubmit}
+              handleSubmit={this.handleReviewSubmit}
               session={session}
-              movie={movie}
-              stars={this.state.stars}
-              comment={this.state.comment}
             />}
           </ReactModal>
           )}

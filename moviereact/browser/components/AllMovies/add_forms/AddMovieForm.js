@@ -6,7 +6,15 @@ import config from '../../../config';
 class AddMovieForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { directors: null };
+    const { title, year, directorId } = this.props;
+    this.state = {
+      directors: [],
+      title: title || '',
+      year: year || '',
+      directorId: directorId || '',
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.submit = this.submit.bind(this);
   }
 
   componentDidMount() {
@@ -15,74 +23,83 @@ class AddMovieForm extends React.Component {
         this.setState({
           directors: resp.data.directors,
         });
-      }).catch(e => console.log(e));
+      })
+      .catch(e => console.log(e));
+  }
+
+  handleChange(e) {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
+  }
+
+  submit(e) {
+    e.preventDefault();
+    const { title, year, directorId } = this.state;
+    if (title && year && directorId) {
+      this.props.handleSubmit({ title, year, directorId });
+    }
   }
 
   render() {
-    const { directors } = this.state;
-    if (directors) {
-      const dropdownItems = directors.map(director =>
-        (<option key={director.id} value={director.id}>{director.name}</option>));
-      const {
-        handleChange, handleSubmit, title, year, directorId,
-      } = this.props;
-      return (
-        <div className="modal-container">
-          <form onSubmit={handleSubmit}>
-            <h2 className="mint">New Movie</h2>
-            <div className="form-group">
-              <label htmlFor="title" className="mt-2"><strong>Film title:</strong></label>
-              <input
-                name="title"
-                value={title}
-                onChange={handleChange}
-                className="form-control"
-                placeholder="e.g. Gone with the Wind"
-                autoComplete="off"
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="year" className="mt-2"><strong>Year of release:</strong></label>
-              <input
-                name="year"
-                value={year}
-                onChange={handleChange}
-                className="form-control"
-                placeholder="e.g. 1940"
-                autoComplete="off"
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="director" className="mt-2"><strong>Director:</strong></label>
-              <select
-                name="directorId"
-                value={directorId}
-                onChange={handleChange}
-                className="form-control"
-              >
-                <option value="-1" disabled>Select director</option>
-                  {dropdownItems}
-              </select>
-            </div>
-            <div className="form-group">
-              <button type="submit" className="btn btn-primary movie-btn mt-2" action="submit">
-                Submit
-              </button>
-            </div>
-          </form>
-        </div>
-      );
-    } return null;
+    const {
+      directors, title, year, directorId,
+    } = this.state;
+    return (
+      <div className="modal-container">
+        <form onSubmit={this.submit}>
+          <h2 className="mint">New Movie</h2>
+          <div className="form-group">
+            <label htmlFor="title" className="mt-2"><strong>Film title:</strong></label>
+            <input
+              name="title"
+              value={title}
+              onChange={this.handleChange}
+              className="form-control"
+              placeholder="e.g. Gone with the Wind"
+              autoComplete="off"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="year" className="mt-2"><strong>Year of release:</strong></label>
+            <input
+              name="year"
+              value={year}
+              onChange={this.handleChange}
+              className="form-control"
+              placeholder="e.g. 1940"
+              autoComplete="off"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="director" className="mt-2"><strong>Director:</strong></label>
+            <select
+              name="directorId"
+              value={directorId}
+              onChange={this.handleChange}
+              className="form-control"
+            >
+              <option value=''>Select director</option>
+              {directors.map(director => (
+                <option key={director.id} value={director.id}>{director.name}</option>
+              ))}
+            </select>
+          </div>
+          <div className="form-group">
+            <button type="submit" className="btn btn-primary movie-btn mt-2" action="submit">
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    );
   }
 }
 
 AddMovieForm.propTypes = {
-  handleChange: PropTypes.func,
   handleSubmit: PropTypes.func,
   title: PropTypes.string,
   year: PropTypes.string,
   directorId: PropTypes.string,
-  session: PropTypes.object,
 };
 
 export { AddMovieForm as default };

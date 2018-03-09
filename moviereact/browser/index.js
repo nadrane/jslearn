@@ -18,11 +18,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       session: null,
-      authName: '',
     };
-    this.handleAuthNameChange = this.handleAuthNameChange.bind(this);
-    this.handleLogin = this.handleLogin.bind(this);
-    this.handleRegister = this.handleRegister.bind(this);
+    this.handleLoginRegister = this.handleLoginRegister.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
   }
 
@@ -32,36 +29,9 @@ class App extends React.Component {
       .catch(console.log);
   }
 
-  handleAuthNameChange(e) {
-    this.setState({ authName: e.target.value });
-  }
-
-  handleLogin(e) {
-    e.preventDefault();
-    this.setState({ authName: '' });
-    axios.post(`${fetchRoot}/auth/login`, {
-      username: this.state.authName,
-    })
-      .then((resp) => {
-        if (resp.data.id) {
-          this.setState({
-            session: {
-              id: resp.data.id,
-              username: resp.data.username,
-              isAdmin: resp.data.isAdmin,
-            },
-          });
-        }
-      })
-      .catch(console.log);
-  }
-
-  handleRegister(e) {
-    e.preventDefault();
-    this.setState({ authName: '' });
-    axios.post(`${fetchRoot}/auth/register`, {
-      username: this.state.authName,
-    })
+  handleLoginRegister([isRegister, username]) {
+    const slug = (isRegister ? 'register' : 'login');
+    axios.post(`${fetchRoot}/auth/${slug}`, { username })
       .then((resp) => {
         if (resp.data.id) {
           this.setState({
@@ -83,7 +53,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { session, authName } = this.state;
+    const { session } = this.state;
     return (
       <Router>
         <div>
@@ -118,18 +88,14 @@ class App extends React.Component {
             <Route exact path='/auth/login' render={() => (
               <AuthForm
                 session={session}
-                authName={authName}
-                handleAuthNameChange={this.handleAuthNameChange}
-                handleLogin={this.handleLogin}
+                handleSubmit={this.handleLoginRegister}
               />
             )}/>
             <Route exact path='/auth/register' render={() => (
               <AuthForm
                 session={session}
-                register={true}
-                authName={authName}
-                handleAuthNameChange={this.handleAuthNameChange}
-                handleRegister={this.handleRegister}
+                handleSubmit={this.handleLoginRegister}
+                isRegister={true}
               />
             )}/>
             <Route render={() => (
