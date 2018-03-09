@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Table = (props) => {
-  const { headers, RowClass, rows } = props;
+  const { headers } = props;
 
   return (
     <div className="row justify-content-center">
@@ -18,14 +18,7 @@ const Table = (props) => {
               </tr>
             </thead>
             <tbody>
-              {rows ? (
-                rows.map(row => (
-                  <RowClass
-                    row={row}
-                    key={row.id}
-                    id={row.id} />
-                  ))
-              ) : (<tr><td colSpan={headers.length} align="center">Loading...</td></tr>)}
+              {props.children}
             </tbody>
           </table>
       </div>
@@ -35,8 +28,7 @@ const Table = (props) => {
 
 Table.propTypes = {
   headers: PropTypes.array,
-  RowClass: PropTypes.func,
-  rows: PropTypes.array,
+  children: PropTypes.array,
 };
 
 export { Table as default };

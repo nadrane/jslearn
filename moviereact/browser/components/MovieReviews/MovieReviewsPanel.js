@@ -6,7 +6,6 @@ import { fetchRoot } from '../../config';
 
 // components
 import Panel from '../Panel';
-import PanelInfo from '../PanelInfo';
 
 class MovieReviewsPanel extends React.Component {
   constructor(props) {
@@ -60,28 +59,24 @@ class MovieReviewsPanel extends React.Component {
       <div>
         <Panel
           header={movie.title}
-          panelInfo={(
-            <PanelInfo
-              stats={[
-                ['Avg. Score', `${avg} ★`],
-                ['Released', movie.year],
-                ['Director', dirLink],
-              ]}
-              session={session}
-              user={(
-                <span>
-                  <button
-                    name="addReviewBtn"
-                    onClick={handleOpenModal}
-                    type="button"
-                    className="btn movie-btn control-btn mx-2"
-                  >
-                    + Add Review
-                  </button>
-                  {adminControls}
-                </span>
-              )}
-            />
+          stats={[
+            ['Avg. Score', `${avg} ★`],
+            ['Released', movie.year],
+            ['Director', dirLink],
+          ]}
+          session={session}
+          user={(
+            <span>
+              <button
+                name="addReviewBtn"
+                onClick={handleOpenModal}
+                type="button"
+                className="btn movie-btn control-btn mx-2"
+              >
+                + Add Review
+              </button>
+              {adminControls}
+            </span>
           )}
         />
       </div>

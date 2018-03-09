@@ -3,24 +3,19 @@ import React from 'react';
 
 // components
 import Panel from '../Panel';
-import PanelInfo from '../PanelInfo';
 
 const UserReviewsPanel = (props) => {
   const { session, user, count } = props;
   return (
     <Panel
+      session={session}
       header={user.username}
-      panelInfo={(
-        <PanelInfo
-          text={(
-            <span>
-              <strong>{user.username} </strong>
-              has posted
-              <strong> {count} </strong>review(s) on Movietown.
-            </span>
-          )}
-          session={session}
-        />
+      text={(
+        <span>
+          <strong>{user.username} </strong>
+            has posted
+          <strong> {count} </strong>review(s) on Movietown.
+        </span>
       )}
     />
   );

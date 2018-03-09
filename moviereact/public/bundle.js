@@ -900,6 +900,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = undefined;
 
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
@@ -911,6 +913,27 @@ var _react2 = _interopRequireDefault(_react);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Panel = function Panel(props) {
+  var stats = void 0;
+  if (props.stats) {
+    stats = props.stats.map(function (_ref, i) {
+      var _ref2 = _slicedToArray(_ref, 2),
+          field = _ref2[0],
+          value = _ref2[1];
+
+      return _react2.default.createElement(
+        'div',
+        { key: i },
+        _react2.default.createElement(
+          'strong',
+          null,
+          field,
+          ':'
+        ),
+        ' ',
+        value
+      );
+    });
+  }
   return _react2.default.createElement(
     'div',
     { className: 'row justify-content-center' },
@@ -926,16 +949,27 @@ var Panel = function Panel(props) {
           props.header
         ),
         props.message,
-        props.panelInfo
+        _react2.default.createElement(
+          'div',
+          { className: 'panel-info' },
+          _react2.default.createElement('hr', null),
+          stats,
+          props.text,
+          props.session ? props.user : props.guest
+        )
       )
     )
   );
 };
 
 Panel.propTypes = {
+  session: _propTypes2.default.object,
   header: _propTypes2.default.string,
   message: _propTypes2.default.string,
-  panelInfo: _propTypes2.default.object
+  stats: _propTypes2.default.array,
+  text: _propTypes2.default.object,
+  user: _propTypes2.default.object,
+  guest: _propTypes2.default.object
 };
 
 exports.default = Panel;
@@ -1405,72 +1439,7 @@ var locationsAreEqual = function locationsAreEqual(a, b) {
 };
 
 /***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = undefined;
-
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
-var _propTypes = __webpack_require__(1);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var PanelInfo = function PanelInfo(props) {
-  var stats = void 0;
-  if (props.stats) {
-    stats = props.stats.map(function (_ref, i) {
-      var _ref2 = _slicedToArray(_ref, 2),
-          field = _ref2[0],
-          value = _ref2[1];
-
-      return _react2.default.createElement(
-        'div',
-        { key: i },
-        _react2.default.createElement(
-          'strong',
-          null,
-          field,
-          ':'
-        ),
-        ' ',
-        value
-      );
-    });
-  }
-  return _react2.default.createElement(
-    'div',
-    { className: 'panel-info' },
-    _react2.default.createElement('hr', null),
-    stats,
-    props.text,
-    props.session ? props.user : props.guest
-  );
-};
-
-PanelInfo.propTypes = {
-  text: _propTypes2.default.object,
-  stats: _propTypes2.default.array,
-  session: _propTypes2.default.object,
-  user: _propTypes2.default.object,
-  guest: _propTypes2.default.object
-};
-
-exports.default = PanelInfo;
-
-/***/ }),
+/* 18 */,
 /* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1493,9 +1462,7 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Table = function Table(props) {
-  var headers = props.headers,
-      RowClass = props.RowClass,
-      rows = props.rows;
+  var headers = props.headers;
 
 
   return _react2.default.createElement(
@@ -1525,20 +1492,7 @@ var Table = function Table(props) {
         _react2.default.createElement(
           'tbody',
           null,
-          rows ? rows.map(function (row) {
-            return _react2.default.createElement(RowClass, {
-              row: row,
-              key: row.id,
-              id: row.id });
-          }) : _react2.default.createElement(
-            'tr',
-            null,
-            _react2.default.createElement(
-              'td',
-              { colSpan: headers.length, align: 'center' },
-              'Loading...'
-            )
-          )
+          props.children
         )
       )
     )
@@ -1547,8 +1501,7 @@ var Table = function Table(props) {
 
 Table.propTypes = {
   headers: _propTypes2.default.array,
-  RowClass: _propTypes2.default.func,
-  rows: _propTypes2.default.array
+  children: _propTypes2.default.array
 };
 
 exports.default = Table;
@@ -27071,51 +27024,47 @@ var _Panel = __webpack_require__(10);
 
 var _Panel2 = _interopRequireDefault(_Panel);
 
-var _PanelInfo = __webpack_require__(18);
-
-var _PanelInfo2 = _interopRequireDefault(_PanelInfo);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// components
 var AllMoviesPanel = function AllMoviesPanel(props) {
   var session = props.session,
       handleOpenModal = props.handleOpenModal;
 
   return _react2.default.createElement(_Panel2.default, {
+    session: session,
     header: 'All Movies',
-    panelInfo: _react2.default.createElement(_PanelInfo2.default, {
-      session: session,
-      user: _react2.default.createElement(
-        'span',
-        null,
-        _react2.default.createElement(
-          'button',
-          {
-            name: 'addDirectorBtn',
-            onClick: handleOpenModal,
-            type: 'button',
-            className: 'btn movie-btn control-btn mx-2' },
-          '+ Add Director'
-        ),
-        _react2.default.createElement(
-          'button',
-          {
-            name: 'addMovieBtn',
-            onClick: handleOpenModal,
-            type: 'button',
-            className: 'btn movie-btn control-btn mx-2' },
-          '+ Add Film'
-        )
+    user: _react2.default.createElement(
+      'span',
+      null,
+      _react2.default.createElement(
+        'button',
+        {
+          name: 'addDirectorBtn',
+          onClick: handleOpenModal,
+          type: 'button',
+          className: 'btn movie-btn control-btn mx-2' },
+        '+ Add Director'
       ),
-      guest: _react2.default.createElement(
-        'h6',
-        { className: 'mint' },
-        'Sign in to add directors and movies.'
+      _react2.default.createElement(
+        'button',
+        {
+          name: 'addMovieBtn',
+          onClick: handleOpenModal,
+          type: 'button',
+          className: 'btn movie-btn control-btn mx-2' },
+        '+ Add Film'
       )
-    })
+    ),
+    guest: _react2.default.createElement(
+      'h6',
+      { className: 'mint' },
+      'Sign in to add directors and movies.'
+    )
   });
 };
+
+// components
+
 
 AllMoviesPanel.propTypes = {
   session: _propTypes2.default.object,
@@ -27144,24 +27093,67 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRouterDom = __webpack_require__(6);
+
 var _Table = __webpack_require__(19);
 
 var _Table2 = _interopRequireDefault(_Table);
 
-var _AllMoviesRow = __webpack_require__(121);
-
-var _AllMoviesRow2 = _interopRequireDefault(_AllMoviesRow);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// components
 var AllMoviesTable = function AllMoviesTable(props) {
-  return _react2.default.createElement(_Table2.default, {
-    headers: ['Movie', 'Director', 'Year'],
-    RowClass: _AllMoviesRow2.default,
-    rows: props.rows
-  });
+  var rows = props.rows;
+
+  var headers = ['Movie', 'Director', 'Year'];
+  return _react2.default.createElement(
+    _Table2.default,
+    { headers: headers },
+    rows ? rows.map(function (row) {
+      return _react2.default.createElement(
+        'tr',
+        { key: row.id },
+        _react2.default.createElement(
+          'td',
+          null,
+          _react2.default.createElement(
+            'h6',
+            null,
+            _react2.default.createElement(
+              _reactRouterDom.Link,
+              { to: '/movies/film/' + row.id, className: 'mint' },
+              row.title
+            )
+          )
+        ),
+        _react2.default.createElement(
+          'td',
+          null,
+          _react2.default.createElement(
+            _reactRouterDom.Link,
+            { to: '/director/' + row.director.id, className: 'white' },
+            row.director.name
+          )
+        ),
+        _react2.default.createElement(
+          'td',
+          null,
+          row.year
+        )
+      );
+    }) : _react2.default.createElement(
+      'tr',
+      null,
+      _react2.default.createElement(
+        'td',
+        { colSpan: headers.length, align: 'center' },
+        'Loading...'
+      )
+    )
+  );
 };
+
+// components
+
 
 AllMoviesTable.propTypes = {
   rows: _propTypes2.default.array
@@ -27170,71 +27162,7 @@ AllMoviesTable.propTypes = {
 exports.default = AllMoviesTable;
 
 /***/ }),
-/* 121 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = undefined;
-
-var _propTypes = __webpack_require__(1);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactRouterDom = __webpack_require__(6);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var AllMoviesRow = function AllMoviesRow(props) {
-  return _react2.default.createElement(
-    'tr',
-    null,
-    _react2.default.createElement(
-      'td',
-      null,
-      _react2.default.createElement(
-        'h6',
-        null,
-        _react2.default.createElement(
-          _reactRouterDom.Link,
-          { to: '/movies/film/' + props.id, className: 'mint' },
-          props.row.title
-        )
-      )
-    ),
-    _react2.default.createElement(
-      'td',
-      null,
-      _react2.default.createElement(
-        _reactRouterDom.Link,
-        { to: '/director/' + props.row.director.id, className: 'white' },
-        props.row.director.name
-      )
-    ),
-    _react2.default.createElement(
-      'td',
-      null,
-      props.row.year
-    )
-  );
-};
-
-AllMoviesRow.propTypes = {
-  row: _propTypes2.default.object.isRequired,
-  id: _propTypes2.default.number
-};
-
-exports.default = AllMoviesRow;
-
-/***/ }),
+/* 121 */,
 /* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -27517,44 +27445,40 @@ var _Panel = __webpack_require__(10);
 
 var _Panel2 = _interopRequireDefault(_Panel);
 
-var _PanelInfo = __webpack_require__(18);
-
-var _PanelInfo2 = _interopRequireDefault(_PanelInfo);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// components
 var DirectorPanel = function DirectorPanel(props) {
   var session = props.session,
       director = props.director,
       count = props.count;
 
   return _react2.default.createElement(_Panel2.default, {
+    session: session,
     header: director.name,
-    panelInfo: _react2.default.createElement(_PanelInfo2.default, {
-      text: _react2.default.createElement(
-        'span',
+    text: _react2.default.createElement(
+      'span',
+      null,
+      _react2.default.createElement(
+        'strong',
         null,
-        _react2.default.createElement(
-          'strong',
-          null,
-          director.name,
-          ' '
-        ),
-        'has released',
-        _react2.default.createElement(
-          'strong',
-          null,
-          ' ',
-          count,
-          ' '
-        ),
-        ' film(s) on Movietown.'
+        director.name,
+        ' '
       ),
-      session: session
-    })
+      'has released',
+      _react2.default.createElement(
+        'strong',
+        null,
+        ' ',
+        count,
+        ' '
+      ),
+      ' film(s) on Movietown.'
+    )
   });
 };
+
+// components
+
 
 DirectorPanel.propTypes = {
   session: _propTypes2.default.object,
@@ -27918,10 +27842,6 @@ var _Panel = __webpack_require__(10);
 
 var _Panel2 = _interopRequireDefault(_Panel);
 
-var _PanelInfo = __webpack_require__(18);
-
-var _PanelInfo2 = _interopRequireDefault(_PanelInfo);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -28007,25 +27927,23 @@ var MovieReviewsPanel = function (_React$Component) {
         null,
         _react2.default.createElement(_Panel2.default, {
           header: movie.title,
-          panelInfo: _react2.default.createElement(_PanelInfo2.default, {
-            stats: [['Avg. Score', avg + ' \u2605'], ['Released', movie.year], ['Director', dirLink]],
-            session: session,
-            user: _react2.default.createElement(
-              'span',
-              null,
-              _react2.default.createElement(
-                'button',
-                {
-                  name: 'addReviewBtn',
-                  onClick: handleOpenModal,
-                  type: 'button',
-                  className: 'btn movie-btn control-btn mx-2'
-                },
-                '+ Add Review'
-              ),
-              adminControls
-            )
-          })
+          stats: [['Avg. Score', avg + ' \u2605'], ['Released', movie.year], ['Director', dirLink]],
+          session: session,
+          user: _react2.default.createElement(
+            'span',
+            null,
+            _react2.default.createElement(
+              'button',
+              {
+                name: 'addReviewBtn',
+                onClick: handleOpenModal,
+                type: 'button',
+                className: 'btn movie-btn control-btn mx-2'
+              },
+              '+ Add Review'
+            ),
+            adminControls
+          )
         })
       );
     }
@@ -28502,44 +28420,40 @@ var _Panel = __webpack_require__(10);
 
 var _Panel2 = _interopRequireDefault(_Panel);
 
-var _PanelInfo = __webpack_require__(18);
-
-var _PanelInfo2 = _interopRequireDefault(_PanelInfo);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// components
 var UserReviewsPanel = function UserReviewsPanel(props) {
   var session = props.session,
       user = props.user,
       count = props.count;
 
   return _react2.default.createElement(_Panel2.default, {
+    session: session,
     header: user.username,
-    panelInfo: _react2.default.createElement(_PanelInfo2.default, {
-      text: _react2.default.createElement(
-        'span',
+    text: _react2.default.createElement(
+      'span',
+      null,
+      _react2.default.createElement(
+        'strong',
         null,
-        _react2.default.createElement(
-          'strong',
-          null,
-          user.username,
-          ' '
-        ),
-        'has posted',
-        _react2.default.createElement(
-          'strong',
-          null,
-          ' ',
-          count,
-          ' '
-        ),
-        'review(s) on Movietown.'
+        user.username,
+        ' '
       ),
-      session: session
-    })
+      'has posted',
+      _react2.default.createElement(
+        'strong',
+        null,
+        ' ',
+        count,
+        ' '
+      ),
+      'review(s) on Movietown.'
+    )
   });
 };
+
+// components
+
 
 UserReviewsPanel.propTypes = {
   session: _propTypes2.default.object,
