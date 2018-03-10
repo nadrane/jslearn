@@ -1,9 +1,9 @@
 /// To-do
 
-1. Only send relevant fields from DB. e.g. when logging in and sending user info to session in React, don't need to send "createdAt" "updatedAt" etc.
-2. Add front-end and server side form validation for login/register forms?
-3. When deleting movie or user, delete all corresponding reviews
+1. When deleting movie or user, delete all corresponding reviews - app crashes if you try to get user reviews for deleted films
+2. Only send relevant fields from DB. e.g. when logging in and sending user info to session in React, don't need to send "createdAt" "updatedAt" etc.
+3. Add front-end and server side form validation for login/register forms?
 
 /// Questions
 
-1. Is the way I've handled server errors appropriate? Is there a cleaner/more granular way to do this? (e.g. like my own specific error codes if a user doesn't provide a valid email, leaves something blank, etc.)
+1. If you use empty objects instead of NULL, what if you need to access props of that object before component mounting?

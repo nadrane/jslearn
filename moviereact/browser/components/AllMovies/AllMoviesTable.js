@@ -9,25 +9,29 @@ const AllMoviesTable = (props) => {
   const { rows } = props;
   const headers = ['Movie', 'Director', 'Year'];
   return (
-    <Table headers={headers}>
-      {rows ? rows.map(row => (
-        <tr key={row.id}>
-          <td>
-            <h6>
-              <Link to={`/movies/film/${row.id}`} className="mint">
-                {row.title}
-              </Link>
-            </h6>
-          </td>
-          <td>
-            <Link to={`/director/${row.director.id}`} className="white">
-              {row.director.name}
-            </Link>
-          </td>
-          <td>{row.year}</td>
-        </tr>
-      )) : (<tr><td colSpan={headers.length} align="center">Loading...</td></tr>)}
-    </Table>
+    <div className="row justify-content-center">
+      <div className="col-sm-12 col-lg-8">
+        <Table headers={headers}>
+          {rows ? rows.map(row => (
+            <tr key={row.id}>
+              <td>
+                <h6>
+                  <Link to={`/movies/film/${row.id}`} className="mint">
+                    {row.title}
+                  </Link>
+                </h6>
+              </td>
+              <td>
+                <Link to={`/director/${row.director.id}`} className="white">
+                  {row.director.name}
+                </Link>
+              </td>
+              <td>{row.year}</td>
+            </tr>
+          )) : [<tr key={0}><td colSpan={headers.length} align="center">Loading...</td></tr>]}
+        </Table>
+      </div>
+    </div>
   );
 };
 

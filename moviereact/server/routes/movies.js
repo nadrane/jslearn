@@ -5,12 +5,14 @@ const {
 
 const router = express.Router();
 
+// TODO: update model with scope
 router.get('/', (req, res, next) => {
   Movie.findAll({ include: [Director], order: [['year', 'ASC']] })
     .then(movies => res.json(movies))
     .catch(next);
 });
 
+// TODO: update model with scope
 router.post('/', (req, res, next) => {
   Movie.create(req.body, { fields: ['title', 'year', 'directorId'] })
     .then(dbRes => Movie.findById(dbRes.id, { include: [Director] }))
@@ -18,6 +20,7 @@ router.post('/', (req, res, next) => {
     .catch(next);
 });
 
+// TODO: update model with scope
 router.get('/film/:id', (req, res, next) => {
   Movie.findById(req.params.id, {
     include: [{ all: true, nested: true }],

@@ -9,20 +9,20 @@ const Panel = (props) => {
     ));
   }
   return (
-  <div className="row justify-content-center">
-    <div className="col-sm-12 col-lg-5">
-      <div className="panel">
-        <h1>{props.header}</h1>
-        {props.message}
-        <div className="panel-info">
-          <hr/>
-          {stats}
-          {props.text}
-          {props.session ? props.user : props.guest}
+    <div className="row justify-content-center">
+      <div className="col-sm-12 col-lg-5">
+        <div className="panel">
+          <h1>{props.header}</h1>
+          {props.message}
+          <div className="panel-info">
+            <hr/>
+            {stats}
+            {props.text}
+            {props.session ? props.user : props.guest}
+          </div>
         </div>
       </div>
     </div>
-  </div>
   );
 };
 

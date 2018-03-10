@@ -8,6 +8,9 @@ import DirectorPanel from './DirectorPanel';
 import DirectorTable from './DirectorTable';
 import Panel from '../Panel';
 
+// Nick - mentioned initial state for something like director should be {} instead of null
+// if I use {} here, on first render it tries to access director.movies.length, it crashes
+// should I go with empty object then handle any checking in render functions?
 class DirectorPage extends React.Component {
   constructor(props) {
     super(props);

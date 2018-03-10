@@ -8,7 +8,7 @@ import { fetchRoot, modalStyle } from '../../config';
 import AllMoviesPanel from './AllMoviesPanel';
 import AllMoviesTable from './AllMoviesTable';
 import AddDirectorForm from './add_forms/AddDirectorForm';
-import AddMovieForm from './add_forms/AddMovieForm';
+import MovieForm from '../MovieForm';
 
 class AllMoviesPage extends React.Component {
   constructor(props) {
@@ -31,6 +31,7 @@ class AllMoviesPage extends React.Component {
       .catch(console.log);
   }
 
+  // TO-DO: each of these should have separate event handlers? (I think?)
   handleOpenModal(e) {
     e.target.blur();
     if (e.target.name === 'addDirectorBtn') {
@@ -72,7 +73,7 @@ class AllMoviesPage extends React.Component {
             style={modalStyle}
           >
             {showDirModal && <AddDirectorForm handleCloseModal={this.handleCloseModal} />}
-            {showMovieModal && <AddMovieForm handleSubmit={this.handleSubmit} />}
+            {showMovieModal && <MovieForm handleSubmit={this.handleSubmit} />}
           </ReactModal>
         )}
       </div>

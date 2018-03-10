@@ -8,7 +8,7 @@ import { fetchRoot, avgStars, modalStyle } from '../../config';
 import MovieReviewsPanel from './MovieReviewsPanel';
 import MovieReviewsTable from './MovieReviewsTable';
 import AddReviewForm from './add_forms/AddReviewForm';
-import AddMovieForm from '../AllMovies/add_forms/AddMovieForm';
+import MovieForm from '../MovieForm';
 import Panel from '../Panel';
 
 const initialState = {
@@ -111,7 +111,7 @@ class MovieReviewsPage extends React.Component {
             ariaHideApp={false}
             style={modalStyle}
           >
-            {showEditMovieModal && <AddMovieForm
+            {showEditMovieModal && <MovieForm
               title={movie.title}
               year={movie.year}
               directorId={movie.directorId}

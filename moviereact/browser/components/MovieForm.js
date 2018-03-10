@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import config from '../../../config';
+import config from '../config';
 
-class AddMovieForm extends React.Component {
+// TODO: director list shouldn't be fetched in this component. Should be props from higher level
+class MovieForm extends React.Component {
   constructor(props) {
     super(props);
     const { title, year, directorId } = this.props;
@@ -95,11 +96,11 @@ class AddMovieForm extends React.Component {
   }
 }
 
-AddMovieForm.propTypes = {
+MovieForm.propTypes = {
   handleSubmit: PropTypes.func,
   title: PropTypes.string,
   year: PropTypes.string,
   directorId: PropTypes.string,
 };
 
-export { AddMovieForm as default };
+export { MovieForm as default };
