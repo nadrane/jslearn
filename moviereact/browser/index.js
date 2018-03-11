@@ -63,6 +63,7 @@ class App extends React.Component {
               <Redirect to='/movies'/>
             )}/>
             <Route exact path='/movies' render={() => (
+              // Another possibility we didn't discuss is the exact opposite of the one we did discuss. Instead of managing state at the topmost level, you could literally just grab everything a given component needs in its componentDidMount. It's not server-friendly, but it definitely results in readable code, and it will save you here from having to use the render prop as opposed to the component one.
               <AllMoviesPage
                 session={session}
               />

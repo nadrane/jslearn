@@ -8,6 +8,8 @@ class MovieForm extends React.Component {
   constructor(props) {
     super(props);
     const { title, year, directorId } = this.props;
+
+
     this.state = {
       directors: [],
       title: title || '',
@@ -33,6 +35,7 @@ class MovieForm extends React.Component {
     this.setState({ [name]: value });
   }
 
+  // I like that name my event handlers similarly. If you go with handleChange, maybe handleSubmit wouldn't be a bad idea
   submit(e) {
     e.preventDefault();
     const { title, year, directorId } = this.state;
@@ -86,6 +89,7 @@ class MovieForm extends React.Component {
             </select>
           </div>
           <div className="form-group">
+            {/* If it's possible for a submission to be rejected (because some things are not filled out), then you should disable the button if form isn't valid. Use the html disabled attribute */}
             <button type="submit" className="btn btn-primary movie-btn mt-2" action="submit">
               Submit
             </button>

@@ -15,9 +15,10 @@ class DirectorPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      director: null,
-      rows: null,
-      err: null,
+      // You should always initialize your state with the types they will assume after hitting the server. This will protect you from all kinds of access errors. I can maybe see an argument against initializing the error to {} but definitely not for the other 2.
+      director: null, // Initialize as {}.
+      rows: null, //same naming issues. Initialize as []
+      err: null,  // Initialize as {}.
     };
   }
 
@@ -29,6 +30,8 @@ class DirectorPage extends React.Component {
       }))
       .catch((err) => {
         const { status } = err.response;
+        // This is not true... 500 is not a not found error
+        // The error message should just come down from the server, and we can use that.
         if (status === 404 || status === 500) {
           this.setState({
             err: { header: 'Not found!', message: "That director doesn't exist." },

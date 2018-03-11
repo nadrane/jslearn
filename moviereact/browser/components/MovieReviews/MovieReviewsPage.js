@@ -12,8 +12,8 @@ import MovieForm from '../MovieForm';
 import Panel from '../Panel';
 
 const initialState = {
-  movie: null,
-  rows: null,
+  movie: null, // initialize as an empty object
+  rows: null, // Naming. Also initialize it as an empty array
   showReviewModal: false,
   showEditMovieModal: false,
   err: null,
@@ -64,6 +64,8 @@ class MovieReviewsPage extends React.Component {
   handleReviewSubmit(newReview) {
     const { id: movieId } = this.state.movie;
     const { id: userId } = this.props.session;
+    // This route looks funny. movies/film is redundant.
+    // a route to add a movie should just be /api/movies/:id
     axios.post(`${fetchRoot}/movies/film/${movieId}`, {
       stars: newReview.stars,
       comment: newReview.comment,
@@ -99,7 +101,7 @@ class MovieReviewsPage extends React.Component {
             <MovieReviewsPanel
               session={session}
               movie={movie}
-              avg={avgStars(rows)}
+              avg={avgStars(rows)} // This is the exact opposite of what you did before. Now you are computing on rendering as opposed to on storage (in state). I prefer this
               handleOpenModal={this.handleOpenModal}
             />
             <MovieReviewsTable rows={rows} />

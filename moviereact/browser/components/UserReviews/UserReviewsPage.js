@@ -38,6 +38,7 @@ class UserReviewsPage extends React.Component {
       });
   }
 
+  // Good find!
   componentWillReceiveProps(nextProps) {
     if (nextProps.matchId !== this.props.matchId) {
       this.fetch(`${fetchRoot}/user/${nextProps.matchId}`);
